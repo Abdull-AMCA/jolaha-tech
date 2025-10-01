@@ -8,6 +8,13 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="resources/css/style.css">
 </head>
+
+<?php
+// Include the functions file at the top
+include 'includes/database.php';
+include 'includes/functions.php';
+?>
+
 <body>
   <!-- Header / Navigation -->
   <header>
@@ -164,7 +171,8 @@
       <div class="col-lg-6">
         <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
           <h3 class="mb-4" style="color: var(--secondary);">Send Us a Message</h3>
-          <form>
+          <form method="POST" action="">
+            <input type="hidden" name="contact_form" value="1">
             <div class="mb-3"><input type="text" class="form-control" placeholder="Full Name" required></div>
             <div class="mb-3"><input type="email" class="form-control" placeholder="Email Address" required></div>
             <div class="mb-3"><input type="text" class="form-control" placeholder="Subject"></div>
@@ -250,6 +258,27 @@
     © 2025 Jolaha Technologies. All rights reserved.
   </p>
 </footer>
+
+<?php
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_form'])) {
+    $result = handle_contact_submission();
+    if ($result['success']) {
+        $success_message = $result['message'];
+    } else {
+        $error_message = $result['message'];
+    }
+}
+?>
+
+<?php if (isset($success_message)): ?>
+    <div class="alert alert-success"><?php echo $success_message; ?></div>
+<?php endif; ?>
+
+<?php if (isset($error_message)): ?>
+    <div class="alert alert-danger"><?php echo $error_message; ?></div>
+<?php endif; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="resources/js/main.js" defer></script>

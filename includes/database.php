@@ -1,13 +1,24 @@
 <?php
-$host = "localhost";
-$username = "root";
-$password = "";
-$database = "jolaha";
+class Database {
+    private $host = "localhost";
+    private $db_name = "jolaha_tech";
+    private $username = "root";
+    private $password = "";
+    public $conn;
 
-$conn = mysqli_connect($host, $username, $password, $database);
-
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+    public function getConnection() {
+        $this->conn = null;
+        try {
+            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+            $this->conn->exec("set names utf8");
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch(PDOException $exception) {
+            echo "Connection error: " . $exception->getMessage();
+        }
+        return $this->conn;
+    }
 }
-echo "Connected successfully";
+
+$database = new Database();
+$connection = $database->getConnection();
 ?>
