@@ -1,7 +1,7 @@
 <?php
 class Database {
     private $host = "localhost";
-    private $db_name = "jolaha_tech";
+    private $db_name = "jolaha";
     private $username = "root";
     private $password = "";
     public $conn;
@@ -12,6 +12,7 @@ class Database {
             $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
             $this->conn->exec("set names utf8");
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            echo "Connection successful.";
         } catch(PDOException $exception) {
             echo "Connection error: " . $exception->getMessage();
         }

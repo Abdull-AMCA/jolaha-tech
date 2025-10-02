@@ -11,885 +11,719 @@
 </head>
 <body>
 
- <!-- Header / Navigation -->
-  <header>
-    <div class="container nav">
-    <a class="brand d-flex align-items-center" href="index.html">
-      <img src="resources/img/logo.svg" alt="Jolaha Tech Logo" class="logo-img me-2" />
-      <span></span>
-    </a>
-
-    <nav class="menu navbar navbar-expand-lg" id="menu" style="height: 40px;">
-      <div class="container-fluid">
-        <ul class="navbar-nav mx-auto">
-
-          <!-- About -->
-          <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
-          </li>
-
-          <!-- Industry Dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="industryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Industries
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="industryDropdown">
-              <li><a class="dropdown-item" href="audit-accounting.html">Audit & Accounting</a></li>
-              <li><a class="dropdown-item" href="real-estate.html">Real Estate</a></li>
-              <li><a class="dropdown-item" href="info-tech.html">IT</a></li>
-            </ul>
-          </li>
-
-          <!-- Product Dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="our-products.html" id="productDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Our Products
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="productDropdown">
-              <li><a class="dropdown-item" href="jolaha-hrms.html">Jolaha HRMS</a></li>
-              <li><a class="dropdown-item" href="jolaha-accountrix.html">Jolaha Accountrix</a></li>
-              <li><a class="dropdown-item" href="jolaha-crms.html">Jolaha CRMS</a></li>
-              <li><a class="dropdown-item" href="jolaha-pms.html">Jolaha PMS</a></li>
-              <li><a class="dropdown-item" href="jolaha-help-desk.html">Jolaha Help Desk</a></li>
-              <li><a class="dropdown-item" href="jolaha-aml.html">Jolaha AML</a></li>
-              <li><a class="dropdown-item" href="jolaha-lms.html">Jolaha LMS</a></li>
-            </ul>
-          </li>
-
-          <!-- Services Dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="our-services.html" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Our Services
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-              <li><a class="dropdown-item" href="web-design-dev.html">Web Design & Development</a></li>
-              <li><a class="dropdown-item" href="mobile-app.html">Mobile Application</a></li>
-              <li><a class="dropdown-item" href="online-marketing.html">Online Marketing</a></li>
-              <li><a class="dropdown-item" href="creative-design.html">Creative Design</a></li>
-              <li><a class="dropdown-item" href="software-testing.html">Software Testing</a></li>
-            </ul>
-          </li>
-
-          <!-- Solutions Dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="solutionsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Solutions
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="solutionsDropdown">
-              <li><a class="dropdown-item" href="server-management.html">Server Management</a></li>
-              <li><a class="dropdown-item" href="it-support.html">IT Support</a></li>
-              <li><a class="dropdown-item" href="cloud-solution.html">Cloud Solutions</a></li>
-              <li><a class="dropdown-item" href="hosting-solutions.html">Hosting Solutions</a></li>
-            </ul>
-          </li>
-
-          <!-- Resources Dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Resources
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="resourcesDropdown">
-              <li><a class="dropdown-item" href="knowledge-base.html">Knowledge Base</a></li>
-              <li><a class="dropdown-item" href="newsletter.html">Newsletter</a></li>
-              <li><a class="dropdown-item" href="blog.html">Blog</a></li>
-            </ul>
-          </li>
-
-          <!-- Careers -->
-          <li class="nav-item">
-            <a class="nav-link" href="careers.html">Careers</a>
-          </li>
-
-          <!-- Contact -->
-          <li class="nav-item">
-            <a class="nav-link" href="contact-us.html">Contact</a>
-          </li>
-
-          <!-- CTA / Request Proposal -->
-          <li class="nav-item">
-            <a href="contact-us.html" class="btn btn-ghost">Request Proposal</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <button id="menu-toggle" class="menu-toggle" aria-label="Toggle menu">
-    <span></span>
-    <span></span>
-    <span></span>
-    </button>
-    </div>
-  </header>
+  <!-- Header / Navigation -->
+  <?php
+  include 'includes/header-navbar.php';
+  ?>
 
   <!-- Hero Section -->
-<section class="about-hero d-flex align-items-center text-center py-5 px-3 px-md-5 text-white">
-  <div class="container py-5 px-md-5">
-    <h1 class="display-4 fw-bold">Jolaha <span style="color: var(--secondary);">Product Suite</span></h1>
-    <p class="lead px-2 px-md-5">Comprehensive software solutions designed to streamline your business operations and drive growth</p>
-  </div>
-</section>
+  <section class="about-hero d-flex align-items-center text-center py-5 px-3 px-md-5 text-white">
+    <div class="container py-5 px-md-5">
+      <h1 class="display-4 fw-bold">Jolaha <span style="color: var(--secondary);">Product Suite</span></h1>
+      <p class="lead px-2 px-md-5">Comprehensive software solutions designed to streamline your business operations and drive growth</p>
+    </div>
+  </section>
 
-<!-- Products Navigation -->
-<section class="py-4 d-flex align-items-center text-center" style="background-color: var(--surface); position: sticky; top: 0; z-index: 100;">
-    <div class="container">
-        <div class="row g-2">
-          <p class="lead px-2 px-md-5">Click any service to view details below</p>
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="product-trigger active text-center p-3" data-product="crm" style="background-color: var(--card); border-radius: var(--radius);">
-                    <i class="bi bi-people-fill d-block mb-2" style="color: var(--primary); font-size: 1.5rem;"></i>
-                    <span style="color: var(--heading); font-size: 0.9rem;">Jolaha CRMS</span>
+  <!-- Products Navigation -->
+  <section class="py-4 d-flex align-items-center text-center" style="background-color: var(--surface); position: sticky; top: 0; z-index: 100;">
+      <div class="container">
+          <div class="row g-2">
+            <p class="lead px-2 px-md-5">Click any service to view details below</p>
+              <div class="col-6 col-md-3 col-lg-2">
+                  <div class="product-trigger active text-center p-3" data-product="crm" style="background-color: var(--card); border-radius: var(--radius);">
+                      <i class="bi bi-people-fill d-block mb-2" style="color: var(--primary); font-size: 1.5rem;"></i>
+                      <span style="color: var(--heading); font-size: 0.9rem;">Jolaha CRMS</span>
+                  </div>
+              </div>
+              <div class="col-6 col-md-3 col-lg-2">
+                  <div class="product-trigger text-center p-3" data-product="hrms" style="background-color: var(--card); border-radius: var(--radius);">
+                      <i class="bi bi-person-badge d-block mb-2" style="color: var(--primary); font-size: 1.5rem;"></i>
+                      <span style="color: var(--heading); font-size: 0.9rem;">Jolaha HRMS</span>
+                  </div>
+              </div>
+              <div class="col-6 col-md-3 col-lg-2">
+                  <div class="product-trigger text-center p-3" data-product="accountrix" style="background-color: var(--card); border-radius: var(--radius);">
+                      <i class="bi bi-cash-coin d-block mb-2" style="color: var(--primary); font-size: 1.5rem;"></i>
+                      <span style="color: var(--heading); font-size: 0.9rem;">Jolaha Accountrix</span>
+                  </div>
+              </div>
+              <div class="col-6 col-md-3 col-lg-2">
+                  <div class="product-trigger text-center p-3" data-product="pms" style="background-color: var(--card); border-radius: var(--radius);">
+                      <i class="bi bi-building d-block mb-2" style="color: var(--primary); font-size: 1.5rem;"></i>
+                      <span style="color: var(--heading); font-size: 0.9rem;">Jolaha PMS</span>
+                  </div>
+              </div>
+              <div class="col-6 col-md-3 col-lg-2">
+                  <div class="product-trigger text-center p-3" data-product="helpdesk" style="background-color: var(--card); border-radius: var(--radius);">
+                      <i class="bi bi-headset d-block mb-2" style="color: var(--primary); font-size: 1.5rem;"></i>
+                      <span style="color: var(--heading); font-size: 0.9rem;">Jolaha Help Desk</span>
+                  </div>
+              </div>
+              <div class="col-6 col-md-3 col-lg-2">
+                  <div class="product-trigger text-center p-3" data-product="aml" style="background-color: var(--card); border-radius: var(--radius);">
+                      <i class="bi bi-shield-check d-block mb-2" style="color: var(--primary); font-size: 1.5rem;"></i>
+                      <span style="color: var(--heading); font-size: 0.9rem;">Jolaha AML</span>
+                  </div>
+              </div>
+              <div class="col-6 col-md-3 col-lg-2">
+                  <div class="product-trigger text-center p-3" data-product="lms" style="background-color: var(--card); border-radius: var(--radius);">
+                      <i class="bi bi-book d-block mb-2" style="color: var(--primary); font-size: 1.5rem;"></i>
+                      <span style="color: var(--heading); font-size: 0.9rem;">Jolaha LMS</span>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Product Content Area -->
+  <section class="py-5" style="background-color: var(--bg); min-height: 600px;">
+      <div class="container">
+          
+        <!-- Jolaha CRMS Content -->
+        <div class="product-content active" id="crm-content">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary);">Jolaha CRMS</h2>
+                    <p class="lead mb-4" style="color: var(--text);">
+                        Comprehensive Customer Relationship Management System designed to streamline your sales, marketing, and customer service operations.
+                    </p>
+                    
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <h4 style="color: var(--primary);">Key Features</h4>
+                            <ul style="color: var(--text);">
+                                <li>Lead & Opportunity Management</li>
+                                <li>Sales Pipeline Tracking</li>
+                                <li>Customer Communication Hub</li>
+                                <li>Marketing Automation</li>
+                                <li>Analytics & Reporting</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 style="color: var(--primary);">Benefits</h4>
+                            <ul style="color: var(--text);">
+                                <li>Increase sales conversion by 35%</li>
+                                <li>Improve customer retention</li>
+                                <li>Automate marketing campaigns</li>
+                                <li>Gain actionable insights</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Featured Sub-Product -->
+                    <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
+                        <h4 style="color: var(--secondary);" class="mb-3">Featured: Enterprise CRM Suite</h4>
+                        <p style="color: var(--text);" class="mb-3">
+                            Our premium package includes advanced AI-powered analytics, custom workflow automation, and dedicated support for large enterprises.
+                        </p>
+                        <a href="jolaha-crms.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                            View Details & Pricing
+                            <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <!-- Get Free Trial Form -->
+                    <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
+                        <h4 style="color: var(--secondary);" class="mb-3">Get Free Trial</h4>
+                        <form>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Full Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Email Address" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Company Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                            </div>
+                            <div class="mb-3">
+                                <select class="form-select" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                                    <option>Company Size</option>
+                                    <option>1-10 employees</option>
+                                    <option>11-50 employees</option>
+                                    <option>51-200 employees</option>
+                                    <option>200+ employees</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius);">
+                                Start 14-Day Free Trial
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="product-trigger text-center p-3" data-product="hrms" style="background-color: var(--card); border-radius: var(--radius);">
-                    <i class="bi bi-person-badge d-block mb-2" style="color: var(--primary); font-size: 1.5rem;"></i>
-                    <span style="color: var(--heading); font-size: 0.9rem;">Jolaha HRMS</span>
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="product-trigger text-center p-3" data-product="accountrix" style="background-color: var(--card); border-radius: var(--radius);">
-                    <i class="bi bi-cash-coin d-block mb-2" style="color: var(--primary); font-size: 1.5rem;"></i>
-                    <span style="color: var(--heading); font-size: 0.9rem;">Jolaha Accountrix</span>
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="product-trigger text-center p-3" data-product="pms" style="background-color: var(--card); border-radius: var(--radius);">
-                    <i class="bi bi-building d-block mb-2" style="color: var(--primary); font-size: 1.5rem;"></i>
-                    <span style="color: var(--heading); font-size: 0.9rem;">Jolaha PMS</span>
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="product-trigger text-center p-3" data-product="helpdesk" style="background-color: var(--card); border-radius: var(--radius);">
-                    <i class="bi bi-headset d-block mb-2" style="color: var(--primary); font-size: 1.5rem;"></i>
-                    <span style="color: var(--heading); font-size: 0.9rem;">Jolaha Help Desk</span>
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="product-trigger text-center p-3" data-product="aml" style="background-color: var(--card); border-radius: var(--radius);">
-                    <i class="bi bi-shield-check d-block mb-2" style="color: var(--primary); font-size: 1.5rem;"></i>
-                    <span style="color: var(--heading); font-size: 0.9rem;">Jolaha AML</span>
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="product-trigger text-center p-3" data-product="lms" style="background-color: var(--card); border-radius: var(--radius);">
-                    <i class="bi bi-book d-block mb-2" style="color: var(--primary); font-size: 1.5rem;"></i>
-                    <span style="color: var(--heading); font-size: 0.9rem;">Jolaha LMS</span>
+
+            <!-- Featured Clients Carousel -->
+            <div class="mt-5">
+                <h4 style="color: var(--secondary);" class="mb-4">Trusted by Industry Leaders</h4>
+                <div class="client-carousel d-flex justify-content-between align-items-center flex-wrap gap-4">
+                    <img src="resources/img/photo.jpg" alt="Client 1" class="img-fluid">
+                    <img src="resources/img/photo.jpg" alt="Client 2" class="img-fluid">
+                    <img src="resources/img/photo.jpg" alt="Client 3" class="img-fluid">
+                    <img src="resources/img/photo.jpg" alt="Client 4" class="img-fluid">
+                    <img src="resources/img/photo.jpg" alt="Client 5" class="img-fluid">
                 </div>
             </div>
         </div>
-    </div>
-</section>
 
-<!-- Product Content Area -->
-<section class="py-5" style="background-color: var(--bg); min-height: 600px;">
-    <div class="container">
-        
-      <!-- Jolaha CRMS Content -->
-      <div class="product-content active" id="crm-content">
+        <!-- Jolaha HRMS Content -->
+        <div class="product-content" id="hrms-content">
           <div class="row">
-              <div class="col-lg-8">
-                  <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary);">Jolaha CRMS</h2>
-                  <p class="lead mb-4" style="color: var(--text);">
-                      Comprehensive Customer Relationship Management System designed to streamline your sales, marketing, and customer service operations.
-                  </p>
-                  
-                  <div class="row mb-5">
-                      <div class="col-md-6">
-                          <h4 style="color: var(--primary);">Key Features</h4>
-                          <ul style="color: var(--text);">
-                              <li>Lead & Opportunity Management</li>
-                              <li>Sales Pipeline Tracking</li>
-                              <li>Customer Communication Hub</li>
-                              <li>Marketing Automation</li>
-                              <li>Analytics & Reporting</li>
-                          </ul>
-                      </div>
-                      <div class="col-md-6">
-                          <h4 style="color: var(--primary);">Benefits</h4>
-                          <ul style="color: var(--text);">
-                              <li>Increase sales conversion by 35%</li>
-                              <li>Improve customer retention</li>
-                              <li>Automate marketing campaigns</li>
-                              <li>Gain actionable insights</li>
-                          </ul>
-                      </div>
-                  </div>
+            <div class="col-lg-8">
+              <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary);">Jolaha HRMS</h2>
+              <p class="lead mb-4" style="color: var(--text);">
+                A powerful Human Resource Management System designed to simplify HR processes, improve workforce engagement, and drive organizational efficiency.
+              </p>
 
-                  <!-- Featured Sub-Product -->
-                  <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
-                      <h4 style="color: var(--secondary);" class="mb-3">Featured: Enterprise CRM Suite</h4>
-                      <p style="color: var(--text);" class="mb-3">
-                          Our premium package includes advanced AI-powered analytics, custom workflow automation, and dedicated support for large enterprises.
-                      </p>
-                      <a href="jolaha-crms.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
-                          View Details & Pricing
-                          <i class="bi bi-arrow-right ms-2"></i>
-                      </a>
-                  </div>
+              <div class="row mb-5">
+                <div class="col-md-6">
+                  <h4 style="color: var(--primary);">Key Features</h4>
+                  <ul style="color: var(--text);">
+                    <li>Employee Records Management</li>
+                    <li>Payroll & Tax Automation</li>
+                    <li>Attendance & Leave Tracking</li>
+                    <li>Performance & Appraisals</li>
+                    <li>Recruitment & Onboarding</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h4 style="color: var(--primary);">Benefits</h4>
+                  <ul style="color: var(--text);">
+                    <li>Reduce manual HR tasks by 60%</li>
+                    <li>Ensure payroll accuracy & compliance</li>
+                    <li>Boost employee satisfaction</li>
+                    <li>Gain real-time workforce insights</li>
+                  </ul>
+                </div>
               </div>
-              
-              <div class="col-lg-4">
-                  <!-- Get Free Trial Form -->
-                  <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
-                      <h4 style="color: var(--secondary);" class="mb-3">Get Free Trial</h4>
-                      <form>
-                          <div class="mb-3">
-                              <input type="text" class="form-control" placeholder="Full Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                          </div>
-                          <div class="mb-3">
-                              <input type="email" class="form-control" placeholder="Email Address" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                          </div>
-                          <div class="mb-3">
-                              <input type="text" class="form-control" placeholder="Company Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                          </div>
-                          <div class="mb-3">
-                              <select class="form-select" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                                  <option>Company Size</option>
-                                  <option>1-10 employees</option>
-                                  <option>11-50 employees</option>
-                                  <option>51-200 employees</option>
-                                  <option>200+ employees</option>
-                              </select>
-                          </div>
-                          <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius);">
-                              Start 14-Day Free Trial
-                          </button>
-                      </form>
-                  </div>
+
+              <!-- Featured Sub-Product -->
+              <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
+                <h4 style="color: var(--secondary);" class="mb-3">Featured: Enterprise HR Suite</h4>
+                <p style="color: var(--text);" class="mb-3">
+                  Includes advanced talent management, recruitment automation, learning & development modules, and AI-powered workforce analytics for growing enterprises.
+                </p>
+                <a href="jolaha-hrms.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                  View Details & Pricing
+                  <i class="bi bi-arrow-right ms-2"></i>
+                </a>
               </div>
+            </div>
+
+            <div class="col-lg-4">
+              <!-- Get Free Trial Form -->
+              <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
+                <h4 style="color: var(--secondary);" class="mb-3">Get Free Trial</h4>
+                <form>
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Full Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <input type="email" class="form-control" placeholder="Email Address" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Company Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <select class="form-select" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                      <option>Company Size</option>
+                      <option>1-10 employees</option>
+                      <option>11-50 employees</option>
+                      <option>51-200 employees</option>
+                      <option>200+ employees</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius);">
+                    Start 14-Day Free Trial
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
 
           <!-- Featured Clients Carousel -->
           <div class="mt-5">
-              <h4 style="color: var(--secondary);" class="mb-4">Trusted by Industry Leaders</h4>
-              <div class="client-carousel d-flex justify-content-between align-items-center flex-wrap gap-4">
-                  <img src="resources/img/photo.jpg" alt="Client 1" class="img-fluid">
-                  <img src="resources/img/photo.jpg" alt="Client 2" class="img-fluid">
-                  <img src="resources/img/photo.jpg" alt="Client 3" class="img-fluid">
-                  <img src="resources/img/photo.jpg" alt="Client 4" class="img-fluid">
-                  <img src="resources/img/photo.jpg" alt="Client 5" class="img-fluid">
-              </div>
-          </div>
-      </div>
-
-      <!-- Jolaha HRMS Content -->
-      <div class="product-content" id="hrms-content">
-        <div class="row">
-          <div class="col-lg-8">
-            <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary);">Jolaha HRMS</h2>
-            <p class="lead mb-4" style="color: var(--text);">
-              A powerful Human Resource Management System designed to simplify HR processes, improve workforce engagement, and drive organizational efficiency.
-            </p>
-
-            <div class="row mb-5">
-              <div class="col-md-6">
-                <h4 style="color: var(--primary);">Key Features</h4>
-                <ul style="color: var(--text);">
-                  <li>Employee Records Management</li>
-                  <li>Payroll & Tax Automation</li>
-                  <li>Attendance & Leave Tracking</li>
-                  <li>Performance & Appraisals</li>
-                  <li>Recruitment & Onboarding</li>
-                </ul>
-              </div>
-              <div class="col-md-6">
-                <h4 style="color: var(--primary);">Benefits</h4>
-                <ul style="color: var(--text);">
-                  <li>Reduce manual HR tasks by 60%</li>
-                  <li>Ensure payroll accuracy & compliance</li>
-                  <li>Boost employee satisfaction</li>
-                  <li>Gain real-time workforce insights</li>
-                </ul>
-              </div>
+            <h4 style="color: var(--secondary);" class="mb-4">Trusted by Growing Teams</h4>
+            <div class="client-carousel d-flex justify-content-between align-items-center flex-wrap gap-4">
+              <img src="resources/img/photo.jpg" alt="Client 1" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 2" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 3" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 4" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 5" class="img-fluid">
             </div>
+          </div>
+        </div>
 
-            <!-- Featured Sub-Product -->
-            <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
-              <h4 style="color: var(--secondary);" class="mb-3">Featured: Enterprise HR Suite</h4>
-              <p style="color: var(--text);" class="mb-3">
-                Includes advanced talent management, recruitment automation, learning & development modules, and AI-powered workforce analytics for growing enterprises.
+        <!-- Jolaha Accountrix Content -->
+        <div class="product-content" id="accountrix-content">
+          <div class="row">
+            <div class="col-lg-8">
+              <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary);">Jolaha Accountrix</h2>
+              <p class="lead mb-4" style="color: var(--text);">
+                A complete Accounting & Financial Management System built to simplify bookkeeping, ensure compliance, and give you real-time visibility into business performance.
               </p>
-              <a href="jolaha-hrms.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
-                View Details & Pricing
-                <i class="bi bi-arrow-right ms-2"></i>
-              </a>
+
+              <div class="row mb-5">
+                <div class="col-md-6">
+                  <h4 style="color: var(--primary);">Key Features</h4>
+                  <ul style="color: var(--text);">
+                    <li>General Ledger & Chart of Accounts</li>
+                    <li>Accounts Payable & Receivable</li>
+                    <li>Expense Tracking</li>
+                    <li>Tax Compliance & VAT</li>
+                    <li>Financial Reporting & Dashboards</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h4 style="color: var(--primary);">Benefits</h4>
+                  <ul style="color: var(--text);">
+                    <li>Maintain accurate books with ease</li>
+                    <li>Reduce manual accounting errors</li>
+                    <li>Stay compliant with tax regulations</li>
+                    <li>Gain real-time financial insights</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Featured Sub-Product -->
+              <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
+                <h4 style="color: var(--secondary);" class="mb-3">Featured: Enterprise Accounting Suite</h4>
+                <p style="color: var(--text);" class="mb-3">
+                  Includes advanced financial consolidation, tax compliance automation, audit-ready reports, and integrations with banking & ERP systems for large organizations.
+                </p>
+                <a href="jolaha-accountrix.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                  View Details & Pricing
+                  <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <!-- Get Free Trial Form -->
+              <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
+                <h4 style="color: var(--secondary);" class="mb-3">Get Free Trial</h4>
+                <form>
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Full Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <input type="email" class="form-control" placeholder="Email Address" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Company Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <select class="form-select" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                      <option>Company Size</option>
+                      <option>1-10 employees</option>
+                      <option>11-50 employees</option>
+                      <option>51-200 employees</option>
+                      <option>200+ employees</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius);">
+                    Start 14-Day Free Trial
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
 
-          <div class="col-lg-4">
-            <!-- Get Free Trial Form -->
-            <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
-              <h4 style="color: var(--secondary);" class="mb-3">Get Free Trial</h4>
-              <form>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Full Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                </div>
-                <div class="mb-3">
-                  <input type="email" class="form-control" placeholder="Email Address" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                </div>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Company Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                </div>
-                <div class="mb-3">
-                  <select class="form-select" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                    <option>Company Size</option>
-                    <option>1-10 employees</option>
-                    <option>11-50 employees</option>
-                    <option>51-200 employees</option>
-                    <option>200+ employees</option>
-                  </select>
-                </div>
-                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius);">
-                  Start 14-Day Free Trial
-                </button>
-              </form>
+          <!-- Featured Clients Carousel -->
+          <div class="mt-5">
+            <h4 style="color: var(--secondary);" class="mb-4">Trusted by Finance Teams</h4>
+            <div class="client-carousel d-flex justify-content-between align-items-center flex-wrap gap-4">
+              <img src="resources/img/photo.jpg" alt="Client 1" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 2" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 3" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 4" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 5" class="img-fluid">
             </div>
           </div>
         </div>
 
-        <!-- Featured Clients Carousel -->
-        <div class="mt-5">
-          <h4 style="color: var(--secondary);" class="mb-4">Trusted by Growing Teams</h4>
-          <div class="client-carousel d-flex justify-content-between align-items-center flex-wrap gap-4">
-            <img src="resources/img/photo.jpg" alt="Client 1" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 2" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 3" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 4" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 5" class="img-fluid">
-          </div>
-        </div>
-      </div>
-
-      <!-- Jolaha Accountrix Content -->
-      <div class="product-content" id="accountrix-content">
-        <div class="row">
-          <div class="col-lg-8">
-            <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary);">Jolaha Accountrix</h2>
-            <p class="lead mb-4" style="color: var(--text);">
-              A complete Accounting & Financial Management System built to simplify bookkeeping, ensure compliance, and give you real-time visibility into business performance.
-            </p>
-
-            <div class="row mb-5">
-              <div class="col-md-6">
-                <h4 style="color: var(--primary);">Key Features</h4>
-                <ul style="color: var(--text);">
-                  <li>General Ledger & Chart of Accounts</li>
-                  <li>Accounts Payable & Receivable</li>
-                  <li>Expense Tracking</li>
-                  <li>Tax Compliance & VAT</li>
-                  <li>Financial Reporting & Dashboards</li>
-                </ul>
-              </div>
-              <div class="col-md-6">
-                <h4 style="color: var(--primary);">Benefits</h4>
-                <ul style="color: var(--text);">
-                  <li>Maintain accurate books with ease</li>
-                  <li>Reduce manual accounting errors</li>
-                  <li>Stay compliant with tax regulations</li>
-                  <li>Gain real-time financial insights</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Featured Sub-Product -->
-            <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
-              <h4 style="color: var(--secondary);" class="mb-3">Featured: Enterprise Accounting Suite</h4>
-              <p style="color: var(--text);" class="mb-3">
-                Includes advanced financial consolidation, tax compliance automation, audit-ready reports, and integrations with banking & ERP systems for large organizations.
+        <!-- Jolaha PMS Content -->
+        <div class="product-content" id="pms-content">
+          <div class="row">
+            <div class="col-lg-8">
+              <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary);">Jolaha PMS</h2>
+              <p class="lead mb-4" style="color: var(--text);">
+                A robust Project Management System designed to plan, track, and deliver projects efficiently while keeping teams aligned and deadlines on track.
               </p>
-              <a href="jolaha-accountrix.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
-                View Details & Pricing
-                <i class="bi bi-arrow-right ms-2"></i>
-              </a>
+
+              <div class="row mb-5">
+                <div class="col-md-6">
+                  <h4 style="color: var(--primary);">Key Features</h4>
+                  <ul style="color: var(--text);">
+                    <li>Task & Milestone Management</li>
+                    <li>Team Collaboration Tools</li>
+                    <li>Gantt Charts & Kanban Boards</li>
+                    <li>Time Tracking & Reporting</li>
+                    <li>Resource Allocation & Planning</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h4 style="color: var(--primary);">Benefits</h4>
+                  <ul style="color: var(--text);">
+                    <li>Boost team productivity</li>
+                    <li>Enhance project visibility</li>
+                    <li>Deliver projects on time & budget</li>
+                    <li>Improve collaboration & accountability</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Featured Sub-Product -->
+              <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
+                <h4 style="color: var(--secondary);" class="mb-3">Featured: Enterprise Project Suite</h4>
+                <p style="color: var(--text);" class="mb-3">
+                  Our premium package includes advanced workflow automation, real-time dashboards, risk management tools, and dedicated support for large-scale projects.
+                </p>
+                <a href="jolaha-pms.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                  View Details & Pricing
+                  <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <!-- Get Free Trial Form -->
+              <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
+                <h4 style="color: var(--secondary);" class="mb-3">Get Free Trial</h4>
+                <form>
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Full Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <input type="email" class="form-control" placeholder="Email Address" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Company Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <select class="form-select" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                      <option>Company Size</option>
+                      <option>1-10 employees</option>
+                      <option>11-50 employees</option>
+                      <option>51-200 employees</option>
+                      <option>200+ employees</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius);">
+                    Start 14-Day Free Trial
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
 
-          <div class="col-lg-4">
-            <!-- Get Free Trial Form -->
-            <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
-              <h4 style="color: var(--secondary);" class="mb-3">Get Free Trial</h4>
-              <form>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Full Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                </div>
-                <div class="mb-3">
-                  <input type="email" class="form-control" placeholder="Email Address" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                </div>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Company Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                </div>
-                <div class="mb-3">
-                  <select class="form-select" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                    <option>Company Size</option>
-                    <option>1-10 employees</option>
-                    <option>11-50 employees</option>
-                    <option>51-200 employees</option>
-                    <option>200+ employees</option>
-                  </select>
-                </div>
-                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius);">
-                  Start 14-Day Free Trial
-                </button>
-              </form>
+          <!-- Featured Clients Carousel -->
+          <div class="mt-5">
+            <h4 style="color: var(--secondary);" class="mb-4">Trusted by Project Teams</h4>
+            <div class="client-carousel d-flex justify-content-between align-items-center flex-wrap gap-4">
+              <img src="resources/img/photo.jpg" alt="Client 1" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 2" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 3" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 4" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 5" class="img-fluid">
             </div>
           </div>
         </div>
 
-        <!-- Featured Clients Carousel -->
-        <div class="mt-5">
-          <h4 style="color: var(--secondary);" class="mb-4">Trusted by Finance Teams</h4>
-          <div class="client-carousel d-flex justify-content-between align-items-center flex-wrap gap-4">
-            <img src="resources/img/photo.jpg" alt="Client 1" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 2" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 3" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 4" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 5" class="img-fluid">
-          </div>
-        </div>
-      </div>
-
-      <!-- Jolaha PMS Content -->
-      <div class="product-content" id="pms-content">
-        <div class="row">
-          <div class="col-lg-8">
-            <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary);">Jolaha PMS</h2>
-            <p class="lead mb-4" style="color: var(--text);">
-              A robust Project Management System designed to plan, track, and deliver projects efficiently while keeping teams aligned and deadlines on track.
-            </p>
-
-            <div class="row mb-5">
-              <div class="col-md-6">
-                <h4 style="color: var(--primary);">Key Features</h4>
-                <ul style="color: var(--text);">
-                  <li>Task & Milestone Management</li>
-                  <li>Team Collaboration Tools</li>
-                  <li>Gantt Charts & Kanban Boards</li>
-                  <li>Time Tracking & Reporting</li>
-                  <li>Resource Allocation & Planning</li>
-                </ul>
-              </div>
-              <div class="col-md-6">
-                <h4 style="color: var(--primary);">Benefits</h4>
-                <ul style="color: var(--text);">
-                  <li>Boost team productivity</li>
-                  <li>Enhance project visibility</li>
-                  <li>Deliver projects on time & budget</li>
-                  <li>Improve collaboration & accountability</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Featured Sub-Product -->
-            <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
-              <h4 style="color: var(--secondary);" class="mb-3">Featured: Enterprise Project Suite</h4>
-              <p style="color: var(--text);" class="mb-3">
-                Our premium package includes advanced workflow automation, real-time dashboards, risk management tools, and dedicated support for large-scale projects.
+        <!-- Jolaha Help Desk Content -->
+        <div class="product-content" id="helpdesk-content">
+          <div class="row">
+            <div class="col-lg-8">
+              <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary);">Jolaha Help Desk</h2>
+              <p class="lead mb-4" style="color: var(--text);">
+                A comprehensive Help Desk and IT Support system designed to manage tickets, streamline issue resolution, and improve overall service efficiency.
               </p>
-              <a href="jolaha-pms.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
-                View Details & Pricing
-                <i class="bi bi-arrow-right ms-2"></i>
-              </a>
+
+              <div class="row mb-5">
+                <div class="col-md-6">
+                  <h4 style="color: var(--primary);">Key Features</h4>
+                  <ul style="color: var(--text);">
+                    <li>Omni-channel Ticket Management</li>
+                    <li>AI-powered Knowledge Base</li>
+                    <li>SLA Tracking & Automation</li>
+                    <li>Live Chat & Chatbot Integration</li>
+                    <li>Analytics & Performance Reporting</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h4 style="color: var(--primary);">Benefits</h4>
+                  <ul style="color: var(--text);">
+                    <li>Reduce response time by up to 40%</li>
+                    <li>Boost customer satisfaction</li>
+                    <li>Empower agents with better tools</li>
+                    <li>Improve service efficiency</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Featured Sub-Product -->
+              <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
+                <h4 style="color: var(--secondary);" class="mb-3">Featured: Enterprise Help Desk Suite</h4>
+                <p style="color: var(--text);" class="mb-3">
+                  Our enterprise package includes advanced ticket routing, automation workflows, priority escalation, and integration with existing IT systems.
+                </p>
+                <a href="jolaha-help-desk.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                  View Details & Pricing
+                  <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <!-- Get Free Trial Form -->
+              <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
+                <h4 style="color: var(--secondary);" class="mb-3">Get Free Trial</h4>
+                <form>
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Full Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <input type="email" class="form-control" placeholder="Email Address" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Company Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <select class="form-select" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                      <option>Company Size</option>
+                      <option>1-10 employees</option>
+                      <option>11-50 employees</option>
+                      <option>51-200 employees</option>
+                      <option>200+ employees</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius);">
+                    Start 14-Day Free Trial
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
 
-          <div class="col-lg-4">
-            <!-- Get Free Trial Form -->
-            <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
-              <h4 style="color: var(--secondary);" class="mb-3">Get Free Trial</h4>
-              <form>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Full Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                </div>
-                <div class="mb-3">
-                  <input type="email" class="form-control" placeholder="Email Address" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                </div>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Company Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                </div>
-                <div class="mb-3">
-                  <select class="form-select" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                    <option>Company Size</option>
-                    <option>1-10 employees</option>
-                    <option>11-50 employees</option>
-                    <option>51-200 employees</option>
-                    <option>200+ employees</option>
-                  </select>
-                </div>
-                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius);">
-                  Start 14-Day Free Trial
-                </button>
-              </form>
+          <!-- Featured Clients Carousel -->
+          <div class="mt-5">
+            <h4 style="color: var(--secondary);" class="mb-4">Trusted by Support Teams</h4>
+            <div class="client-carousel d-flex justify-content-between align-items-center flex-wrap gap-4">
+              <img src="resources/img/photo.jpg" alt="Client 1" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 2" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 3" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 4" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 5" class="img-fluid">
             </div>
           </div>
         </div>
 
-        <!-- Featured Clients Carousel -->
-        <div class="mt-5">
-          <h4 style="color: var(--secondary);" class="mb-4">Trusted by Project Teams</h4>
-          <div class="client-carousel d-flex justify-content-between align-items-center flex-wrap gap-4">
-            <img src="resources/img/photo.jpg" alt="Client 1" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 2" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 3" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 4" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 5" class="img-fluid">
-          </div>
-        </div>
-      </div>
-
-      <!-- Jolaha Help Desk Content -->
-      <div class="product-content" id="helpdesk-content">
-        <div class="row">
-          <div class="col-lg-8">
-            <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary);">Jolaha Help Desk</h2>
-            <p class="lead mb-4" style="color: var(--text);">
-              A comprehensive Help Desk and IT Support system designed to manage tickets, streamline issue resolution, and improve overall service efficiency.
-            </p>
-
-            <div class="row mb-5">
-              <div class="col-md-6">
-                <h4 style="color: var(--primary);">Key Features</h4>
-                <ul style="color: var(--text);">
-                  <li>Omni-channel Ticket Management</li>
-                  <li>AI-powered Knowledge Base</li>
-                  <li>SLA Tracking & Automation</li>
-                  <li>Live Chat & Chatbot Integration</li>
-                  <li>Analytics & Performance Reporting</li>
-                </ul>
-              </div>
-              <div class="col-md-6">
-                <h4 style="color: var(--primary);">Benefits</h4>
-                <ul style="color: var(--text);">
-                  <li>Reduce response time by up to 40%</li>
-                  <li>Boost customer satisfaction</li>
-                  <li>Empower agents with better tools</li>
-                  <li>Improve service efficiency</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Featured Sub-Product -->
-            <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
-              <h4 style="color: var(--secondary);" class="mb-3">Featured: Enterprise Help Desk Suite</h4>
-              <p style="color: var(--text);" class="mb-3">
-                Our enterprise package includes advanced ticket routing, automation workflows, priority escalation, and integration with existing IT systems.
+        <!-- Jolaha AML Content -->
+        <div class="product-content" id="aml-content">
+          <div class="row">
+            <div class="col-lg-8">
+              <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary);">Jolaha AML</h2>
+              <p class="lead mb-4" style="color: var(--text);">
+                Comprehensive Anti-Money Laundering software to help organizations comply with regulations, detect suspicious activities, and safeguard against financial crimes.
               </p>
-              <a href="jolaha-help-desk.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
-                View Details & Pricing
-                <i class="bi bi-arrow-right ms-2"></i>
-              </a>
+
+              <div class="row mb-5">
+                <div class="col-md-6">
+                  <h4 style="color: var(--primary);">Key Features</h4>
+                  <ul style="color: var(--text);">
+                    <li>Real-Time Transaction Monitoring</li>
+                    <li>Customer Risk Scoring & Profiling</li>
+                    <li>Automated KYC & Identity Verification</li>
+                    <li>Suspicious Activity Detection</li>
+                    <li>Compliance Reporting & Audit Trails</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h4 style="color: var(--primary);">Benefits</h4>
+                  <ul style="color: var(--text);">
+                    <li>Stay compliant with global AML regulations</li>
+                    <li>Reduce fraud and financial crime risks</li>
+                    <li>Streamline compliance operations</li>
+                    <li>Protect brand reputation and trust</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Featured Sub-Product -->
+              <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
+                <h4 style="color: var(--secondary);" class="mb-3">Featured: Enterprise AML Suite</h4>
+                <p style="color: var(--text);" class="mb-3">
+                  The enterprise package includes advanced analytics, AI-based suspicious activity detection, automated regulatory reporting, and dedicated support for large institutions.
+                </p>
+                <a href="jolaha-aml.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                  View Details & Pricing
+                  <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <!-- Get Free Trial Form -->
+              <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
+                <h4 style="color: var(--secondary);" class="mb-3">Get Free Trial</h4>
+                <form>
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Full Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <input type="email" class="form-control" placeholder="Email Address" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Company Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <select class="form-select" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                      <option>Company Size</option>
+                      <option>1-10 employees</option>
+                      <option>11-50 employees</option>
+                      <option>51-200 employees</option>
+                      <option>200+ employees</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius);">
+                    Start 14-Day Free Trial
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
 
-          <div class="col-lg-4">
-            <!-- Get Free Trial Form -->
-            <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
-              <h4 style="color: var(--secondary);" class="mb-3">Get Free Trial</h4>
-              <form>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Full Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                </div>
-                <div class="mb-3">
-                  <input type="email" class="form-control" placeholder="Email Address" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                </div>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Company Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                </div>
-                <div class="mb-3">
-                  <select class="form-select" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                    <option>Company Size</option>
-                    <option>1-10 employees</option>
-                    <option>11-50 employees</option>
-                    <option>51-200 employees</option>
-                    <option>200+ employees</option>
-                  </select>
-                </div>
-                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius);">
-                  Start 14-Day Free Trial
-                </button>
-              </form>
+          <!-- Featured Clients Carousel -->
+          <div class="mt-5">
+            <h4 style="color: var(--secondary);" class="mb-4">Trusted by Financial Institutions</h4>
+            <div class="client-carousel d-flex justify-content-between align-items-center flex-wrap gap-4">
+              <img src="resources/img/photo.jpg" alt="Client 1" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 2" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 3" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 4" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 5" class="img-fluid">
             </div>
           </div>
         </div>
 
-        <!-- Featured Clients Carousel -->
-        <div class="mt-5">
-          <h4 style="color: var(--secondary);" class="mb-4">Trusted by Support Teams</h4>
-          <div class="client-carousel d-flex justify-content-between align-items-center flex-wrap gap-4">
-            <img src="resources/img/photo.jpg" alt="Client 1" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 2" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 3" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 4" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 5" class="img-fluid">
-          </div>
-        </div>
-      </div>
-
-      <!-- Jolaha AML Content -->
-      <div class="product-content" id="aml-content">
-        <div class="row">
-          <div class="col-lg-8">
-            <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary);">Jolaha AML</h2>
-            <p class="lead mb-4" style="color: var(--text);">
-              Comprehensive Anti-Money Laundering software to help organizations comply with regulations, detect suspicious activities, and safeguard against financial crimes.
-            </p>
-
-            <div class="row mb-5">
-              <div class="col-md-6">
-                <h4 style="color: var(--primary);">Key Features</h4>
-                <ul style="color: var(--text);">
-                  <li>Real-Time Transaction Monitoring</li>
-                  <li>Customer Risk Scoring & Profiling</li>
-                  <li>Automated KYC & Identity Verification</li>
-                  <li>Suspicious Activity Detection</li>
-                  <li>Compliance Reporting & Audit Trails</li>
-                </ul>
-              </div>
-              <div class="col-md-6">
-                <h4 style="color: var(--primary);">Benefits</h4>
-                <ul style="color: var(--text);">
-                  <li>Stay compliant with global AML regulations</li>
-                  <li>Reduce fraud and financial crime risks</li>
-                  <li>Streamline compliance operations</li>
-                  <li>Protect brand reputation and trust</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Featured Sub-Product -->
-            <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
-              <h4 style="color: var(--secondary);" class="mb-3">Featured: Enterprise AML Suite</h4>
-              <p style="color: var(--text);" class="mb-3">
-                The enterprise package includes advanced analytics, AI-based suspicious activity detection, automated regulatory reporting, and dedicated support for large institutions.
+        <!-- Jolaha LMS Content -->
+        <div class="product-content" id="lms-content">
+          <div class="row">
+            <div class="col-lg-8">
+              <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary);">Jolaha LMS</h2>
+              <p class="lead mb-4" style="color: var(--text);">
+                A comprehensive Learning Management System designed to deliver, track, and manage training programs efficiently for employees and clients.
               </p>
-              <a href="jolaha-aml.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
-                View Details & Pricing
-                <i class="bi bi-arrow-right ms-2"></i>
-              </a>
-            </div>
-          </div>
 
-          <div class="col-lg-4">
-            <!-- Get Free Trial Form -->
-            <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
-              <h4 style="color: var(--secondary);" class="mb-3">Get Free Trial</h4>
-              <form>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Full Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+              <div class="row mb-5">
+                <div class="col-md-6">
+                  <h4 style="color: var(--primary);">Key Features</h4>
+                  <ul style="color: var(--text);">
+                    <li>Course Creation & Management</li>
+                    <li>Progress Tracking & Assessments</li>
+                    <li>Interactive Learning Modules</li>
+                    <li>Certification & Badging</li>
+                    <li>Reporting & Analytics</li>
+                  </ul>
                 </div>
-                <div class="mb-3">
-                  <input type="email" class="form-control" placeholder="Email Address" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                <div class="col-md-6">
+                  <h4 style="color: var(--primary);">Benefits</h4>
+                  <ul style="color: var(--text);">
+                    <li>Enhance employee skills and knowledge</li>
+                    <li>Streamline training administration</li>
+                    <li>Ensure compliance and certifications</li>
+                    <li>Gain insights into learning performance</li>
+                  </ul>
                 </div>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Company Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                </div>
-                <div class="mb-3">
-                  <select class="form-select" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                    <option>Company Size</option>
-                    <option>1-10 employees</option>
-                    <option>11-50 employees</option>
-                    <option>51-200 employees</option>
-                    <option>200+ employees</option>
-                  </select>
-                </div>
-                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius);">
-                  Start 14-Day Free Trial
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <!-- Featured Clients Carousel -->
-        <div class="mt-5">
-          <h4 style="color: var(--secondary);" class="mb-4">Trusted by Financial Institutions</h4>
-          <div class="client-carousel d-flex justify-content-between align-items-center flex-wrap gap-4">
-            <img src="resources/img/photo.jpg" alt="Client 1" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 2" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 3" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 4" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 5" class="img-fluid">
-          </div>
-        </div>
-      </div>
-
-      <!-- Jolaha LMS Content -->
-      <div class="product-content" id="lms-content">
-        <div class="row">
-          <div class="col-lg-8">
-            <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary);">Jolaha LMS</h2>
-            <p class="lead mb-4" style="color: var(--text);">
-              A comprehensive Learning Management System designed to deliver, track, and manage training programs efficiently for employees and clients.
-            </p>
-
-            <div class="row mb-5">
-              <div class="col-md-6">
-                <h4 style="color: var(--primary);">Key Features</h4>
-                <ul style="color: var(--text);">
-                  <li>Course Creation & Management</li>
-                  <li>Progress Tracking & Assessments</li>
-                  <li>Interactive Learning Modules</li>
-                  <li>Certification & Badging</li>
-                  <li>Reporting & Analytics</li>
-                </ul>
               </div>
-              <div class="col-md-6">
-                <h4 style="color: var(--primary);">Benefits</h4>
-                <ul style="color: var(--text);">
-                  <li>Enhance employee skills and knowledge</li>
-                  <li>Streamline training administration</li>
-                  <li>Ensure compliance and certifications</li>
-                  <li>Gain insights into learning performance</li>
-                </ul>
+
+              <!-- Featured Sub-Product -->
+              <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
+                <h4 style="color: var(--secondary);" class="mb-3">Featured: Enterprise Learning Suite</h4>
+                <p style="color: var(--text);" class="mb-3">
+                  Our premium package includes advanced course authoring, AI-driven learning paths, gamification, and analytics for large-scale learning programs.
+                </p>
+                <a href="jolaha-lms.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                  View Details & Pricing
+                  <i class="bi bi-arrow-right ms-2"></i>
+                </a>
               </div>
             </div>
 
-            <!-- Featured Sub-Product -->
-            <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
-              <h4 style="color: var(--secondary);" class="mb-3">Featured: Enterprise Learning Suite</h4>
-              <p style="color: var(--text);" class="mb-3">
-                Our premium package includes advanced course authoring, AI-driven learning paths, gamification, and analytics for large-scale learning programs.
-              </p>
-              <a href="jolaha-lms.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
-                View Details & Pricing
-                <i class="bi bi-arrow-right ms-2"></i>
-              </a>
+            <div class="col-lg-4">
+              <!-- Get Free Trial Form -->
+              <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
+                <h4 style="color: var(--secondary);" class="mb-3">Get Free Trial</h4>
+                <form>
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Full Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <input type="email" class="form-control" placeholder="Email Address" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Company Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                  </div>
+                  <div class="mb-3">
+                    <select class="form-select" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                      <option>Company Size</option>
+                      <option>1-10 employees</option>
+                      <option>11-50 employees</option>
+                      <option>51-200 employees</option>
+                      <option>200+ employees</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius);">
+                    Start 14-Day Free Trial
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
 
-          <div class="col-lg-4">
-            <!-- Get Free Trial Form -->
-            <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
-              <h4 style="color: var(--secondary);" class="mb-3">Get Free Trial</h4>
-              <form>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Full Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                </div>
-                <div class="mb-3">
-                  <input type="email" class="form-control" placeholder="Email Address" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                </div>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Company Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                </div>
-                <div class="mb-3">
-                  <select class="form-select" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
-                    <option>Company Size</option>
-                    <option>1-10 employees</option>
-                    <option>11-50 employees</option>
-                    <option>51-200 employees</option>
-                    <option>200+ employees</option>
-                  </select>
-                </div>
-                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius);">
-                  Start 14-Day Free Trial
-                </button>
-              </form>
+          <!-- Featured Clients Carousel -->
+          <div class="mt-5">
+            <h4 style="color: var(--secondary);" class="mb-4">Trusted by Learning Teams</h4>
+            <div class="client-carousel d-flex justify-content-between align-items-center flex-wrap gap-4">
+              <img src="resources/img/photo.jpg" alt="Client 1" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 2" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 3" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 4" class="img-fluid">
+              <img src="resources/img/photo.jpg" alt="Client 5" class="img-fluid">
             </div>
           </div>
         </div>
 
-        <!-- Featured Clients Carousel -->
-        <div class="mt-5">
-          <h4 style="color: var(--secondary);" class="mb-4">Trusted by Learning Teams</h4>
-          <div class="client-carousel d-flex justify-content-between align-items-center flex-wrap gap-4">
-            <img src="resources/img/photo.jpg" alt="Client 1" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 2" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 3" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 4" class="img-fluid">
-            <img src="resources/img/photo.jpg" alt="Client 5" class="img-fluid">
-          </div>
-        </div>
       </div>
+  </section>
 
-    </div>
-</section>
-
-<!-- Footer -->
-<footer id="contact">
-  <div class="container footer-grid">
-    <!-- About -->
-    <div>
-      <a class="brand" href="#">Jolaha Technologies</a>
-      <p>Trusted IT Solutions and consultations services for over 5 years.</p>
-
-      <!-- Social Media -->
-      <div class="social-links mt-3">
-        <a href="https://facebook.com" target="_blank" aria-label="Facebook">
-          <i class="bi bi-facebook"></i>
-        </a>
-        <a href="https://twitter.com" target="_blank" aria-label="Twitter">
-          <i class="bi bi-twitter"></i>
-        </a>
-        <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
-          <i class="bi bi-linkedin"></i>
-        </a>
-        <a href="https://instagram.com" target="_blank" aria-label="Instagram">
-          <i class="bi bi-instagram"></i>
-        </a>
-      </div>
-    </div>
-
-    <!-- Quick Links -->
-    <div>
-      <h4>Quick Links</h4>
-      <a href="about.html">About Jolaha Tech</a><br>
-      <a href="our-products.html">Our Products</a><br>
-      <a href="our-services.html">Our Services</a><br>
-      <a href="our-solutions.html">Our Solutions</a>
-    </div>
-
-    <!-- Contact -->
-    <div>
-      <h4>Contact</h4>
-      <p><i class="bi bi-envelope me-2"></i> info@jolaha.com</p>
-      <p><i class="bi bi-telephone me-2"></i> +971 12 345 6789</p>
-      <p><i class="bi bi-geo-alt me-2"></i> BB2 Tower, Mazaya Business Avenue, JLT Dubai UAE.</p>
-    </div>
-
-    <!-- Map -->
-    <div>
-      <h4>Find Us</h4>
-      <div style="width: 100%; height: 200px; border-radius: var(--radius); overflow: hidden;">
-        <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.9130389097717!2d55.15352!3d25.074282!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f6c999999999%3A0xabcdef123456789!2sMazaya%20Business%20Avenue%2C%20JLT%20Dubai!5e0!3m2!1sen!2sae!4v1697891234567" 
-          width="100%" 
-          height="60%" 
-          style="border:0;" 
-          allowfullscreen="" 
-          loading="lazy" 
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-      </div>
-    </div>
-  </div>
-
-  <p style="text-align:center; margin-top:2rem; color:var(--muted); font-size:.85rem;">
-    © 2025 Jolaha Technologies. All rights reserved.
-  </p>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="resources/js/main.js" defer></script>
-
-  <script>
-      // Simple JavaScript to handle product switching
-      document.addEventListener('DOMContentLoaded', function() {
-          const triggers = document.querySelectorAll('.product-trigger');
-          const contents = document.querySelectorAll('.product-content');
-          
-          triggers.forEach(trigger => {
-              trigger.addEventListener('click', function() {
-                  const productId = this.getAttribute('data-product');
-                  
-                  // Remove active class from all triggers and contents
-                  triggers.forEach(t => t.classList.remove('active'));
-                  contents.forEach(c => c.classList.remove('active'));
-                  
-                  // Add active class to clicked trigger and corresponding content
-                  this.classList.add('active');
-                  document.getElementById(`${productId}-content`).classList.add('active');
-              });
-          });
-      });
-  </script>
 </body>
 </html>
+
+<!-- Footer -->
+<?php
+include 'includes/footer.php';
+?>
+
+<script>
+    // Simple JavaScript to handle product switching
+    document.addEventListener('DOMContentLoaded', function() {
+        const triggers = document.querySelectorAll('.product-trigger');
+        const contents = document.querySelectorAll('.product-content');
+        
+        triggers.forEach(trigger => {
+            trigger.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product');
+                
+                // Remove active class from all triggers and contents
+                triggers.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked trigger and corresponding content
+                this.classList.add('active');
+                document.getElementById(`${productId}-content`).classList.add('active');
+            });
+        });
+    });
+</script>

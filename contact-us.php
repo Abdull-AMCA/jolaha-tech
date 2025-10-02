@@ -164,6 +164,10 @@ include 'includes/functions.php';
 </section>
 
 <!-- Contact Form & Map -->
+ <?php
+ include handle_contact_submission()
+ ?>
+ 
 <section class="py-5" style="background-color: var(--surface);">
   <div class="container">
     <div class="row g-5">
