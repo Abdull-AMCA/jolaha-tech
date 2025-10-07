@@ -469,14 +469,14 @@ include 'includes/head.php';
         </form>
       </div>
     </div>
-  </section>
-  <?php
-    $inquiry_result = null;
+    <?php
+      $inquiry_result = null;
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_inquiry_submit'])) {
-        $inquiry_result = handle_service_inquiry();
-    }
-  ?>
+      if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_inquiry_submit'])) {
+          $inquiry_result = handle_service_inquiry();
+      }
+    ?>
+  </section>
 
   <!-- NEWSLETTER SUB -->
   <section class="section">

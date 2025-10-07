@@ -31,44 +31,44 @@
       <div class="row">
         <!-- Content -->
         <div class="col-lg-8">
-          <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary);">Your Monthly Tech Digest</h2>
-          <p class="lead mb-4" style="color: var(--text);">
-            Our newsletter brings you curated updates from the IT world, product announcements, industry insights, and best practices to help your business grow.
-          </p>
+        <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary);">Your Monthly Tech Digest</h2>
+        <p class="lead mb-4" style="color: var(--text);">
+          Our newsletter brings you curated updates from the IT world, product announcements, industry insights, and best practices to help your business grow.
+        </p>
 
-          <!-- Latest Highlights -->
-          <div class="row mb-5">
-            <div class="col-md-6">
-              <h4 style="color: var(--primary);">What’s Inside</h4>
-              <ul style="color: var(--text);">
-                <li>Industry news & analysis</li>
-                <li>New product features</li>
-                <li>Expert IT tips & guides</li>
-                <li>Upcoming events & webinars</li>
-                <li>Exclusive offers</li>
-              </ul>
-            </div>
-            <div class="col-md-6">
-              <h4 style="color: var(--primary);">Why Subscribe?</h4>
-              <ul style="color: var(--text);">
-                <li>Stay ahead of IT trends</li>
-                <li>Get early access to new services</li>
-                <li>Boost productivity with practical tips</li>
-                <li>Learn from industry experts</li>
-              </ul>
-            </div>
+        <!-- Latest Highlights -->
+        <div class="row mb-5">
+          <div class="col-md-6">
+            <h4 style="color: var(--primary);">What’s Inside</h4>
+            <ul style="color: var(--text);">
+              <li>Industry news & analysis</li>
+              <li>New product features</li>
+              <li>Expert IT tips & guides</li>
+              <li>Upcoming events & webinars</li>
+              <li>Exclusive offers</li>
+            </ul>
           </div>
+          <div class="col-md-6">
+            <h4 style="color: var(--primary);">Why Subscribe?</h4>
+            <ul style="color: var(--text);">
+              <li>Stay ahead of IT trends</li>
+              <li>Get early access to new services</li>
+              <li>Boost productivity with practical tips</li>
+              <li>Learn from industry experts</li>
+            </ul>
+          </div>
+        </div>
 
-          <!-- Featured Issue -->
-          <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
-            <h4 style="color: var(--secondary);" class="mb-3">Featured: September 2025 Issue</h4>
-            <p style="color: var(--text);" class="mb-3">
-              Explore insights on cloud adoption, the future of AI-driven solutions, and highlights from our latest Jolaha LMS release.
-            </p>
-            <a href="resources.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
-              View All Resources
-              <i class="bi bi-arrow-right ms-2"></i>
-            </a>
+        <!-- Featured Issue -->
+        <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
+          <h4 style="color: var(--secondary);" class="mb-3">Featured: September 2025 Issue</h4>
+          <p style="color: var(--text);" class="mb-3">
+            Explore insights on cloud adoption, the future of AI-driven solutions, and highlights from our latest Jolaha LMS release.
+          </p>
+          <a href="resources.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+            View All Resources
+            <i class="bi bi-arrow-right ms-2"></i>
+          </a>
           </div>
         </div>
 
@@ -76,20 +76,27 @@
         <div class="col-lg-4">
           <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
             <h4 style="color: var(--secondary);" class="mb-3">Subscribe Today</h4>
-            <form>
+            <form form method="POST">
               <div class="mb-3">
-                <input type="text" class="form-control" placeholder="Full Name" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                <input type="text" class="form-control" name="name" placeholder="Full Name" required style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
               </div>
               <div class="mb-3">
-                <input type="email" class="form-control" placeholder="Email Address" style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
+                <input type="email" class="form-control" name="email" placeholder="Email Address" required style="background-color: var(--surface); border-color: var(--muted); color: var(--text);">
               </div>
-              <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius);">
+              <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" name="newsletter_submit" style="background-color: var(--primary); color: white; border-radius: var(--radius);">
                 Subscribe Now
               </button>
             </form>
           </div>
+          </div>
+            <?php
+              $subscription_result = null;
+
+              if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newsletter_submit'])) {
+                  $subscription_result = handle_newsletter_subscription();
+              }
+            ?>
         </div>
-      </div>
 
       <!-- Previous Issues -->
       <section class="py-5">
@@ -123,6 +130,46 @@
       </section>
     </div>
   </section>
+
+  <!-- Newsletter Success Modal -->
+  <div class="modal fade" id="newslettersuccessModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background-color: var(--bg-light); color: var(--primary); border-radius: var(--radius);">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold" id="successModalLabel" style="color: var(--secondary);">
+            Subscription Successful 🎉
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Thank you for subscribing to <strong>Jolaha Tech</strong>! You’ll now receive updates, insights, and offers directly in your inbox.</p>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Newsletter Error Modal -->
+  <div class="modal fade" id="newslettererrorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background-color: var(--bg-light); color: var(--primary); border-radius: var(--radius);">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold" id="errorModalLabel" style="color: #dc3545;">
+            Subscription Failed ⚠️
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="newslettererrorModalMessage">An unexpected error occurred. Please try again later.</p>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
