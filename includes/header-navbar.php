@@ -7,9 +7,9 @@
   <header>
     <div class="container nav">
     <a class="brand d-flex align-items-center" href="index.php">
-        <img src="resources/img/logo.svg" alt="Jolaha Tech Logo" class="logo-img me-2" />
-        <span></span>
-      </a>
+      <img src="resources/img/logo.svg" alt="Jolaha Tech Logo" class="logo-img me-2" />
+      <span></span>
+    </a>
 
     <nav class="menu navbar navbar-expand-lg" id="menu" style="height: 40px;">
       <div class="container-fluid">
@@ -86,6 +86,20 @@
               <li><a class="dropdown-item" href="blog.php">Blog</a></li>
             </ul>
           </li>
+
+          <!-- Services (with submenu) 
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-bs-toggle="dropdown">Services</a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-submenu">
+                <a class="dropdown-toggle" href="#">Web</a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Web Design</a></li>
+                  <li><a href="#">Web Hosting</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li-->
 
           <!-- Careers -->
           <li class="nav-item">

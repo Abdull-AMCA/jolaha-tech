@@ -10,10 +10,10 @@
 </head>
 <body>
 
-  <!-- Header / Navigation -->
-  <?php
-  include 'includes/header-navbar.php';
-  ?>
+<!-- Header / Navigation -->
+<?php
+include 'includes/header-navbar.php';
+?>
 
   <!-- Hero -->
   <section class="about-hero d-flex align-items-center text-center py-5 px-3 px-md-5 text-white">

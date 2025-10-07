@@ -732,20 +732,4 @@ include 'includes/footer.php';
 ?>
 
 </body>
-
-<!-- Newsletter Modal JS -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const modals = document.querySelectorAll('.modal');
-    modals.forEach(modal => {
-      modal.addEventListener('hidden.bs.modal', () => {
-        document.body.classList.remove('modal-open');
-        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-      });
-    });
-  });
-</script>
-
-
-
 </html>
