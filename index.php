@@ -41,7 +41,7 @@ include 'includes/head.php';
                   <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookCallModal">
                     Book a Call
                   </a>
-                  <a class="btn btn-ghost" href="our-services.html">Explore services</a>
+                  <a class="btn btn-ghost" href="our-services.php">Explore services</a>
                 </div>
               </div>
               <!--div class="col-lg-5">
@@ -148,14 +148,14 @@ include 'includes/head.php';
         <!-- Web Design & Development -->
         <div class="col-lg-4 col-md-6">
           <article class="service card h-100 text-center">
-            <a href="web-design-dev.html" class="chip text-decoration-none d-inline-block">
+            <a href="web-design-dev.php" class="chip text-decoration-none d-inline-block">
               Web Design & Development
             </a>
             <div class="service-icon">
               <i class="bi bi-laptop"></i>
             </div>
             <h3>
-              <a href="web-design-dev.html" class="text-decoration-none" style="color: inherit;">
+              <a href="web-design-dev.php" class="text-decoration-none" style="color: inherit;">
                 Custom Website Design
               </a>
             </h3>
@@ -166,14 +166,14 @@ include 'includes/head.php';
         <!-- Mobile Application -->
         <div class="col-lg-4 col-md-6">
           <article class="service card h-100 text-center">
-            <a href="mobile-app.html" class="chip text-decoration-none d-inline-block">
+            <a href="mobile-app.php" class="chip text-decoration-none d-inline-block">
               Mobile Application
             </a>
             <div class="service-icon">
               <i class="bi bi-phone"></i>
             </div>
             <h3>
-              <a href="mobile-app.html" class="text-decoration-none" style="color: inherit;">
+              <a href="mobile-app.php" class="text-decoration-none" style="color: inherit;">
                 Cross-Platform Apps
               </a>
             </h3>
@@ -184,14 +184,14 @@ include 'includes/head.php';
         <!-- Online Marketing -->
         <div class="col-lg-4 col-md-6">
           <article class="service card h-100 text-center">
-            <a href="online-marketing.html" class="chip text-decoration-none d-inline-block">
+            <a href="online-marketing.php" class="chip text-decoration-none d-inline-block">
               Online Marketing
             </a>
             <div class="service-icon">
               <i class="bi bi-graph-up"></i>
             </div>
             <h3>
-              <a href="online-marketing.html" class="text-decoration-none" style="color: inherit;">
+              <a href="online-marketing.php" class="text-decoration-none" style="color: inherit;">
                 Digital Marketing
               </a>
             </h3>
@@ -202,14 +202,14 @@ include 'includes/head.php';
         <!-- Design -->
         <div class="col-lg-4 col-md-6">
           <article class="service card h-100 text-center">
-            <a href="creative-design.html" class="chip text-decoration-none d-inline-block">
+            <a href="creative-design.php" class="chip text-decoration-none d-inline-block">
               Creative Designs
             </a>
             <div class="service-icon">
               <i class="bi bi-palette"></i>
             </div>
             <h3>
-              <a href="creative-design.html" class="text-decoration-none" style="color: inherit;">
+              <a href="creative-design.php" class="text-decoration-none" style="color: inherit;">
                 UI & UX Design & More
               </a>
             </h3>
@@ -220,14 +220,14 @@ include 'includes/head.php';
         <!-- Testing -->
         <div class="col-lg-4 col-md-6">
           <article class="service card h-100 text-center">
-            <a href="software-testing.html" class="chip text-decoration-none d-inline-block">
+            <a href="software-testing.php" class="chip text-decoration-none d-inline-block">
               Software Testing
             </a>
             <div class="service-icon">
               <i class="bi bi-bug"></i>
             </div>
             <h3>
-              <a href="software-testing.html" class="text-decoration-none" style="color: inherit;">
+              <a href="software-testing.php" class="text-decoration-none" style="color: inherit;">
                 Software Testing
               </a>
             </h3>
@@ -407,58 +407,76 @@ include 'includes/head.php';
     </div>
   </section>
 
-  <section class="section checked py-5" >
+  <!-- Service Inquiry Form -->
+  <section class="section checked py-5">
     <div class="container">
       <div class="form-wrapper mx-auto p-4 p-md-5">
         <h2 class="fw-bold text-white mb-4 text-center">Get Started With Jolaha Tech</h2>
-        <form>
+        <form method="POST" action="">
           <div class="row g-3">
-            <!-- First Name -->
+            <!-- Full Name -->
             <div class="col-md-6">
-              <label class="form-label text-white">First Name</label>
-              <input type="text" class="form-control" placeholder="Enter first name" required>
+              <label class="form-label text-white">Full Name</label>
+              <input type="text" name="full_name" class="form-control" placeholder="Enter your full name" required>
             </div>
-            <!-- Last Name -->
+            <!-- Company Name -->
             <div class="col-md-6">
-              <label class="form-label text-white">Last Name</label>
-              <input type="text" class="form-control" placeholder="Enter last name" required>
+              <label class="form-label text-white">Company Name</label>
+              <input type="text" name="company_name" class="form-control" placeholder="Enter company name">
             </div>
             <!-- Email -->
             <div class="col-md-6">
               <label class="form-label text-white">Email ID</label>
-              <input type="email" class="form-control" placeholder="example@email.com" required>
-            </div>
-            <!-- Contact Number -->
-            <div class="col-md-6">
-              <label class="form-label text-white">Contact Number</label>
-              <input type="tel" class="form-control" placeholder="+971 50 123 4567" required>
-            </div>
-            <!-- Business Activity -->
-            <div class="col-12">
-              <label class="form-label text-white">What is your industry?</label>
-              <input type="text" class="form-control" placeholder="e.g., Trading, Consulting, IT Services" required>
+              <input type="email" name="email" class="form-control" placeholder="example@email.com" required>
             </div>
             <!-- Service Required -->
-            <div class="col-12">
+            <div class="col-md-6">
               <label class="form-label text-white">Which service do you require?</label>
-              <select class="form-select" required>
+              <select name="service_type" class="form-select" required>
                 <option value="">Select...</option>
-                <option value="web design and development">Web Design & Development</option>
-                <option value="mobile application">Mobile Application</option>
-                <option value="online marketing">Online Marketing</option>
-                <option value="design">Design</option>
-                <option value="testing">Testting</option>
+                <option value="Web Design & Development">Web Design & Development</option>
+                <option value="Mobile Application">Mobile Application</option>
+                <option value="Online Marketing">Online Marketing</option>
+                <option value="Design">Creative Design</option>
+                <option value="Testing">Software Testing</option>
               </select>
+            </div>
+            <!-- Project Type -->
+            <div class="col-md-6">
+              <label class="form-label text-white">Project Type</label>
+              <input type="text" name="project_type" class="form-control" placeholder="e.g., Website Revamp, New App Development">
+            </div>
+            <!-- Budget Range -->
+            <div class="col-md-6">
+              <label class="form-label text-white">Estimated Budget Range (AED)</label>
+              <input type="text" name="budget_range" class="form-control" placeholder="e.g., 10,000 - 25,000">
+            </div>
+            <!-- Timeline -->
+            <div class="col-md-6">
+              <label class="form-label text-white">Preferred Timeline</label>
+              <input type="text" name="timeline" class="form-control" placeholder="e.g., 1 Month, 3 Weeks">
+            </div>
+            <!-- Description -->
+            <div class="col-12">
+              <label class="form-label text-white">Project Description</label>
+              <textarea name="description" rows="4" class="form-control" placeholder="Tell us a bit more about your project"></textarea>
             </div>
             <!-- Submit -->
             <div class="col-12 text-center mt-4">
-              <button type="submit" class="btn btn-primary px-4">Submit Details</button>
+              <button type="submit" name="service_inquiry_submit" class="btn btn-primary px-4">Submit Details</button>
             </div>
           </div>
         </form>
       </div>
     </div>
   </section>
+  <?php
+    $inquiry_result = null;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_inquiry_submit'])) {
+        $inquiry_result = handle_service_inquiry();
+    }
+  ?>
 
   <!-- NEWSLETTER SUB -->
   <section class="section">
@@ -466,15 +484,106 @@ include 'includes/head.php';
       <div class="cta card p-4 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
         <div>
           <h2>Subscribe to Our Newsletter</h2>
-          <p class="text-dark">Get the latest insights on web development, mobile apps, digital marketing, and IT trends delivered straight to your inbox.</p>
+          <p class="text-dark">
+            Get the latest insights on web development, mobile apps, digital marketing, and IT trends delivered straight to your inbox.
+          </p>
         </div>
-        <div class="d-flex flex-column flex-sm-row gap-2 w-100 w-md-auto">
-          <input type="email" class="form-control" placeholder="Enter your email" aria-label="Email">
-          <button class="btn btn-secondary">Subscribe</button>
+
+        <form method="POST" class="d-flex flex-column flex-sm-row gap-2 w-100 w-md-auto">
+          <input type="text" name="name" class="form-control" placeholder="Your Name" aria-label="Name" required>
+          <input type="email" name="email" class="form-control" placeholder="Enter your email" aria-label="Email" required>
+          <button type="submit" name="newsletter_submit" class="btn btn-secondary">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <?php
+      $subscription_result = null;
+
+      if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newsletter_submit'])) {
+          $subscription_result = handle_newsletter_subscription();
+      }
+    ?>
+  </section>
+
+  <!-- Service Inquiry Success Modal -->
+  <div class="modal fade" id="serviceenqsuccessModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background-color: var(--bg-light); color: var(--primary); border-radius: var(--radius);">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold" id="successModalLabel" style="color: var(--secondary);">
+            Inquiry Submitted Successfully 🎉
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Thank you for reaching out to <strong>Jolaha Tech</strong>! Our team will contact you within 24 hours with your customized proposal.</p>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+
+  <!-- Service Inquiry Error Modal -->
+  <div class="modal fade" id="serviceenqerrorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background-color: var(--bg-light); color: var(--primary); border-radius: var(--radius);">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold" id="errorModalLabel" style="color: #dc3545;">
+            Submission Failed ⚠️
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="serviceenqerrorModalMessage">Something went wrong. Please try again later.</p>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Newsletter Success Modal -->
+  <div class="modal fade" id="newslettersuccessModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background-color: var(--bg-light); color: var(--primary); border-radius: var(--radius);">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold" id="successModalLabel" style="color: var(--secondary);">
+            Subscription Successful 🎉
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Thank you for subscribing to <strong>Jolaha Tech</strong>! You’ll now receive updates, insights, and offers directly in your inbox.</p>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Newsletter Error Modal -->
+  <div class="modal fade" id="newslettererrorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background-color: var(--bg-light); color: var(--primary); border-radius: var(--radius);">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold" id="errorModalLabel" style="color: #dc3545;">
+            Subscription Failed ⚠️
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="newslettererrorModalMessage">An unexpected error occurred. Please try again later.</p>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Proposal Modal -->
   <div class="modal fade" id="proposalModal" tabindex="-1" aria-labelledby="proposalModalLabel" aria-hidden="true">
@@ -623,4 +732,20 @@ include 'includes/footer.php';
 ?>
 
 </body>
+
+<!-- Newsletter Modal JS -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+      modal.addEventListener('hidden.bs.modal', () => {
+        document.body.classList.remove('modal-open');
+        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+      });
+    });
+  });
+</script>
+
+
+
 </html>

@@ -9,122 +9,12 @@
   <link rel="stylesheet" href="resources/css/style.css">
 </head>
 
+<body>
+<!-- Header / Navigation -->
 <?php
-// Include the functions file at the top
-include 'includes/database.php';
+include 'includes/header-navbar.php';
 include 'includes/functions.php';
 ?>
-
-<body>
-  <!-- Header / Navigation -->
-  <header>
-    <div class="container nav">
-    <a class="brand d-flex align-items-center" href="index.html">
-      <img src="resources/img/logo.svg" alt="Jolaha Tech Logo" class="logo-img me-2" />
-      <span></span>
-    </a>
-
-    <nav class="menu navbar navbar-expand-lg" id="menu" style="height: 40px;">
-      <div class="container-fluid">
-        <ul class="navbar-nav mx-auto">
-
-          <!-- About -->
-          <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
-          </li>
-
-          <!-- Industry Dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="industryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Industries
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="industryDropdown">
-              <li><a class="dropdown-item" href="audit-accounting.html">Audit & Accounting</a></li>
-              <li><a class="dropdown-item" href="real-estate.html">Real Estate</a></li>
-              <li><a class="dropdown-item" href="info-tech.html">IT</a></li>
-            </ul>
-          </li>
-
-          <!-- Product Dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="our-products.html" id="productDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Our Products
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="productDropdown">
-              <li><a class="dropdown-item" href="jolaha-hrms.html">Jolaha HRMS</a></li>
-              <li><a class="dropdown-item" href="jolaha-accountrix.html">Jolaha Accountrix</a></li>
-              <li><a class="dropdown-item" href="jolaha-crms.html">Jolaha CRMS</a></li>
-              <li><a class="dropdown-item" href="jolaha-pms.html">Jolaha PMS</a></li>
-              <li><a class="dropdown-item" href="jolaha-help-desk.html">Jolaha Help Desk</a></li>
-              <li><a class="dropdown-item" href="jolaha-aml.html">Jolaha AML</a></li>
-              <li><a class="dropdown-item" href="jolaha-lms.html">Jolaha LMS</a></li>
-            </ul>
-          </li>
-
-          <!-- Services Dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="our-services.html" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Our Services
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-              <li><a class="dropdown-item" href="web-design-dev.html">Web Design & Development</a></li>
-              <li><a class="dropdown-item" href="mobile-app.html">Mobile Application</a></li>
-              <li><a class="dropdown-item" href="online-marketing.html">Online Marketing</a></li>
-              <li><a class="dropdown-item" href="creative-design.html">Creative Design</a></li>
-              <li><a class="dropdown-item" href="software-testing.html">Software Testing</a></li>
-            </ul>
-          </li>
-
-          <!-- Solutions Dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="solutionsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Solutions
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="solutionsDropdown">
-              <li><a class="dropdown-item" href="server-management.html">Server Management</a></li>
-              <li><a class="dropdown-item" href="it-support.html">IT Support</a></li>
-              <li><a class="dropdown-item" href="cloud-solution.html">Cloud Solutions</a></li>
-              <li><a class="dropdown-item" href="hosting-solutions.html">Hosting Solutions</a></li>
-            </ul>
-          </li>
-
-          <!-- Resources Dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Resources
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="resourcesDropdown">
-              <li><a class="dropdown-item" href="knowledge-base.html">Knowledge Base</a></li>
-              <li><a class="dropdown-item" href="newsletter.html">Newsletter</a></li>
-              <li><a class="dropdown-item" href="blog.html">Blog</a></li>
-            </ul>
-          </li>
-
-          <!-- Careers -->
-          <li class="nav-item">
-            <a class="nav-link" href="careers.html">Careers</a>
-          </li>
-
-          <!-- Contact -->
-          <li class="nav-item">
-            <a class="nav-link" href="contact-us.html">Contact</a>
-          </li>
-
-          <!-- CTA / Request Proposal -->
-          <li class="nav-item">
-            <a href="contact-us.html" class="btn btn-ghost">Request Proposal</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <button id="menu-toggle" class="menu-toggle" aria-label="Toggle menu">
-    <span></span>
-    <span></span>
-    <span></span>
-    </button>
-    </div>
-  </header>
 
 <!-- Hero Section -->
 <section class="about-hero d-flex align-items-center text-center py-5 px-3 px-md-5 text-white">
@@ -164,9 +54,9 @@ include 'includes/functions.php';
 </section>
 
 <!-- Contact Form & Map -->
- <?php
- include handle_contact_submission()
- ?>
+<?php
+include handle_contact_submission()
+?>
  
 <section class="py-5" style="background-color: var(--surface);">
   <div class="container">

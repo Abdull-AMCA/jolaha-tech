@@ -1,9 +1,74 @@
 <?php
 require_once 'database.php';
 
+
+// config/functions.php
+require_once 'database.php';
+
+// Import PHPMailer classes
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// Email configuration
+define('SMTP_HOST', 'smtp.gmail.com'); // or your SMTP server
+define('SMTP_PORT', 587);
+define('SMTP_USERNAME', 'your-email@gmail.com');
+define('SMTP_PASSWORD', 'your-app-password');
+define('SMTP_FROM_EMAIL', 'noreply@jolaha.com');
+define('SMTP_FROM_NAME', 'Jolaha Tech');
+
+// Enhanced send_email function using PHPMailer
+function send_email($to, $subject, $message, $attachments = []) {
+    try {
+        $mail = new PHPMailer(true);
+        
+        // Server settings
+        $mail->isSMTP();
+        $mail->Host = SMTP_HOST;
+        $mail->Port = SMTP_PORT;
+        $mail->SMTPAuth = true;
+        $mail->Username = SMTP_USERNAME;
+        $mail->Password = SMTP_PASSWORD;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        
+        // Recipients
+        $mail->setFrom(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
+        $mail->addAddress($to);
+        $mail->addReplyTo(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
+        
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body = $message;
+        $mail->AltBody = strip_tags($message);
+        
+        // Attachments
+        foreach ($attachments as $attachment) {
+            $mail->addAttachment($attachment);
+        }
+        
+        return $mail->send();
+        
+    } catch (Exception $e) {
+        error_log("Email sending failed: " . $mail->ErrorInfo);
+        return false;
+    }
+}
+
+// Alternative: Simple PHP mail() function (less reliable)
+function send_email_simple($to, $subject, $message) {
+    $headers = "From: " . SMTP_FROM_NAME . " <" . SMTP_FROM_EMAIL . ">\r\n";
+    $headers .= "Reply-To: " . SMTP_FROM_EMAIL . "\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    
+    return mail($to, $subject, $message, $headers);
+}
+
+
 // Initialize session if not already started
 if (session_status() == PHP_SESSION_NONE) {
-    session_start();
+// Invoking session_start() in header-navbar.php
 }
 
 // Sanitize input data
@@ -13,16 +78,6 @@ function sanitize_input($data) {
     $data = stripslashes($data);
     $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
     return $data;
-}
-
-// Send email function
-function send_email($to, $subject, $message, $headers = '') {
-    if (empty($headers)) {
-        $headers = "From: no-reply@jolaha.com\r\n";
-        $headers .= "Reply-To: no-reply@jolaha.com\r\n";
-        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-    }
-    return mail($to, $subject, $message, $headers);
 }
 
 // Generate random token
@@ -202,33 +257,47 @@ function handle_service_inquiry() {
     global $connection;
 
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        return ['success' => false, 'message' => 'Invalid request method'];
+        return;
     }
 
-    // Get and sanitize form data
-    $service_type = sanitize_input($_POST['service_type'] ?? '');
-    $full_name = sanitize_input($_POST['full_name'] ?? '');
-    $email = sanitize_input($_POST['email'] ?? '');
-    $company_name = sanitize_input($_POST['company_name'] ?? '');
-    $project_type = sanitize_input($_POST['project_type'] ?? '');
-    $budget_range = sanitize_input($_POST['budget_range'] ?? '');
-    $timeline = sanitize_input($_POST['timeline'] ?? '');
-    $description = sanitize_input($_POST['description'] ?? '');
+    // Sanitize form data
+    $full_name = sanitize_input(trim($_POST['full_name'] ?? ''));
+    $email = sanitize_input(trim($_POST['email'] ?? ''));
+    $company_name = sanitize_input(trim($_POST['company_name'] ?? ''));
+    $service_type = sanitize_input(trim($_POST['service_type'] ?? ''));
+    $project_type = sanitize_input(trim($_POST['project_type'] ?? ''));
+    $budget_range = sanitize_input(trim($_POST['budget_range'] ?? ''));
+    $timeline = sanitize_input(trim($_POST['timeline'] ?? ''));
+    $description = sanitize_input(trim($_POST['description'] ?? ''));
 
-    // Validate required fields
-    if (empty($service_type) || empty($full_name) || empty($email)) {
-        return ['success' => false, 'message' => 'Please fill in all required fields'];
+    // Validate
+    if (empty($full_name) || empty($email) || empty($service_type)) {
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const modal = new bootstrap.Modal(document.getElementById('serviceenqerrorModal'));
+                document.getElementById('errorModalMessage').innerText = 'Please fill in all required fields.';
+                modal.show();
+            });
+        </script>";
+        return;
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        return ['success' => false, 'message' => 'Please provide a valid email address'];
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const modal = new bootstrap.Modal(document.getElementById('serviceenqerrorModal'));
+                document.getElementById('errorModalMessage').innerText = 'Please enter a valid email address.';
+                modal.show();
+            });
+        </script>";
+        return;
     }
 
     try {
-        // Insert into database
-        $query = "INSERT INTO service_inquiries (service_type, full_name, email, company_name, project_type, budget_range, timeline, description) 
+        // Insert data into database
+        $query = "INSERT INTO service_inquiries 
+                  (service_type, full_name, email, company_name, project_type, budget_range, timeline, description)
                   VALUES (:service_type, :full_name, :email, :company_name, :project_type, :budget_range, :timeline, :description)";
-        
         $stmt = $connection->prepare($query);
         $stmt->bindParam(':service_type', $service_type);
         $stmt->bindParam(':full_name', $full_name);
@@ -238,98 +307,100 @@ function handle_service_inquiry() {
         $stmt->bindParam(':budget_range', $budget_range);
         $stmt->bindParam(':timeline', $timeline);
         $stmt->bindParam(':description', $description);
-        
+
         if ($stmt->execute()) {
-            // Send confirmation email to user
-            $user_subject = "Jolaha Tech - Service Inquiry Received";
-            $user_message = "
-            <h2>Thank you for your service inquiry!</h2>
-            <p>Dear $full_name,</p>
-            <p>We have received your inquiry for <strong>$service_type</strong> services. Our team will review your requirements and get back to you within 24 hours with a detailed proposal.</p>
-            <p><strong>Inquiry Details:</strong></p>
-            <ul>
-                <li><strong>Service:</strong> $service_type</li>
-                <li><strong>Project Type:</strong> $project_type</li>
-                <li><strong>Budget Range:</strong> $budget_range</li>
-                <li><strong>Timeline:</strong> $timeline</li>
-            </ul>
-            <p>If you have any immediate questions, please contact us at info@jolaha.com.</p>
-            <p>Best regards,<br>Jolaha Tech Team</p>
-            ";
-            
-            send_email($email, $user_subject, $user_message);
-            
-            return ['success' => true, 'message' => 'Thank you for your inquiry! We will review your requirements and contact you soon.'];
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const modal = new bootstrap.Modal(document.getElementById('serviceenqsuccessModal'));
+                    modal.show();
+                });
+            </script>";
         } else {
-            return ['success' => false, 'message' => 'Sorry, there was an error processing your inquiry. Please try again.'];
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const modal = new bootstrap.Modal(document.getElementById('serviceenqerrorModal'));
+                    document.getElementById('errorModalMessage').innerText = 'Sorry, there was an error submitting your inquiry. Please try again.';
+                    modal.show();
+                });
+            </script>";
         }
-        
+
     } catch (PDOException $e) {
-        error_log("Database error in handle_service_inquiry: " . $e->getMessage());
-        return ['success' => false, 'message' => 'Database error occurred. Please try again later.'];
+        error_log('Service Inquiry Error: ' . $e->getMessage());
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const modal = new bootstrap.Modal(document.getElementById('serviceenqerrorModal'));
+                document.getElementById('errorModalMessage').innerText = 'A server error occurred. Please try again later.';
+                modal.show();
+            });
+        </script>";
     }
 }
+
 
 // Handle newsletter subscription
 function handle_newsletter_subscription() {
     global $connection;
 
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        return ['success' => false, 'message' => 'Invalid request method'];
-    }
-
     $email = sanitize_input($_POST['email'] ?? '');
     $name = sanitize_input($_POST['name'] ?? '');
 
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        return ['success' => false, 'message' => 'Please provide a valid email address'];
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const modal = new bootstrap.Modal(document.getElementById('newslettererrorModal'));
+                document.getElementById('errorModalMessage').innerText = 'Please enter a valid email address.';
+                modal.show();
+            });
+        </script>";
+        return;
     }
 
     try {
-        // Check if email already exists
-        $check_query = "SELECT id FROM newsletter_subscriptions WHERE email = :email AND is_active = 1";
-        $check_stmt = $connection->prepare($check_query);
-        $check_stmt->bindParam(':email', $email);
-        $check_stmt->execute();
-        
-        if ($check_stmt->rowCount() > 0) {
-            return ['success' => false, 'message' => 'This email is already subscribed to our newsletter.'];
-        }
-        
-        // Insert new subscription
-        $query = "INSERT INTO newsletter_subscriptions (email, name) VALUES (:email, :name)";
-        $stmt = $connection->prepare($query);
+        // Check for existing active subscriber
+        $check_query = 'SELECT id FROM newsletter_subscriptions WHERE email = :email AND is_active = 1';
+        $stmt = $connection->prepare($check_query);
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':name', $name);
-        
-        if ($stmt->execute()) {
-            // Send welcome email
-            $subject = "Welcome to Jolaha Tech Newsletter!";
-            $message = "
-            <h2>Welcome to Our Newsletter!</h2>
-            <p>Thank you for subscribing to Jolaha Tech's newsletter. You'll now receive:</p>
-            <ul>
-                <li>Latest product updates and features</li>
-                <li>Industry insights and best practices</li>
-                <li>Exclusive offers and promotions</li>
-                <li>Tips and tutorials for getting the most from our products</li>
-            </ul>
-            <p>If you ever wish to unsubscribe, you can do so at any time by clicking the unsubscribe link in our emails.</p>
-            <p>Best regards,<br>Jolaha Tech Team</p>
-            ";
-            
-            send_email($email, $subject, $message);
-            
-            return ['success' => true, 'message' => 'Thank you for subscribing to our newsletter!'];
-        } else {
-            return ['success' => false, 'message' => 'Sorry, there was an error subscribing. Please try again.'];
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const modal = new bootstrap.Modal(document.getElementById('newslettererrorModal'));
+                    document.getElementById('serviceenqerrorModalMessage').innerText = 'This email is already subscribed.';
+                    modal.show();
+                });
+            </script>";
+            return;
         }
-        
+
+        // Insert new subscriber
+        $insert = 'INSERT INTO newsletter_subscriptions (name, email, is_active) VALUES (:name, :email, 1)';
+        $stmt = $connection->prepare($insert);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        // ✅ Show success modal
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const modal = new bootstrap.Modal(document.getElementById('newslettersuccessModal'));
+                modal.show();
+            });
+        </script>";
+
     } catch (PDOException $e) {
-        error_log("Database error in handle_newsletter_subscription: " . $e->getMessage());
-        return ['success' => false, 'message' => 'Database error occurred. Please try again later.'];
+        error_log('Newsletter subscription error: ' . $e->getMessage());
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const modal = new bootstrap.Modal(document.getElementById('newslettererrorModal'));
+                document.getElementById('newslettererrorModalMessage').innerText = 'An error occurred. Please try again later.';
+                modal.show();
+            });
+        </script>";
     }
 }
+
 
 // Get contact submissions (for admin)
 function get_contact_submissions($limit = 50) {
