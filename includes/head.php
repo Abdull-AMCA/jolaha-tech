@@ -4,6 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Jolaha Tech - Accounting & Auditing Services</title>
+<!-- Browser Favicon -->
+<link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%237125eb'/><text x='50%' y='50%' font-size='60' text-anchor='middle' dy='.3em' fill='white'>J</text></svg>">
 <meta name="description" content="" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,5 +18,4 @@
 
 <!-- Your custom CSS -->
 <link rel="stylesheet" href="resources/css/style.css" />
-<script src="resources/js/main.js" defer></script>
 </head>
