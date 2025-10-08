@@ -1,6 +1,7 @@
 <?php
 include 'includes/head.php';
 ?>
+
 <body>
   <section class="hero position-relative">
     <!-- Background Video >

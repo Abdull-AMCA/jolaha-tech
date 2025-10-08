@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Solutions | Jolaha Tech</title>
+  <!-- Browser Favicon -->
+  <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%237125eb'/><text x='50%' y='50%' font-size='60' text-anchor='middle' dy='.3em' fill='white'>J</text></svg>">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,10 +13,10 @@
 </head>
 <body>
 
-  <!-- Header / Navigation -->
-  <?php
-  include 'includes/header-navbar.php';
-  ?>
+<!-- Header / Navigation -->
+<?php
+include 'includes/header-navbar.php';
+?>
 
   <!-- Hero -->
   <section class="about-hero d-flex align-items-center text-center py-5 px-3 px-md-5 text-white">
@@ -47,14 +49,14 @@
         <div class="col-6 col-md-3 col-lg-2">
           <div class="product-trigger text-center p-3" data-product="cloud" style="background-color: var(--card); border-radius: var(--radius);">
             <i class="bi bi-cloud d-block mb-2" style="color: var(--primary); font-size: 1.5rem;"></i>
-            <span style="color: var(--heading); font-size: 0.9rem;">Cloud</span>
+            <span style="color: var(--heading); font-size: 0.9rem;">Cloud Solutions</span>
           </div>
         </div>
 
         <div class="col-6 col-md-3 col-lg-2">
           <div class="product-trigger text-center p-3" data-product="hosting" style="background-color: var(--card); border-radius: var(--radius);">
             <i class="bi bi-server d-block mb-2" style="color: var(--primary); font-size: 1.5rem;"></i>
-            <span style="color: var(--heading); font-size: 0.9rem;">Hosting</span>
+            <span style="color: var(--heading); font-size: 0.9rem;">Hosting Solutions</span>
           </div>
         </div>
       </div>
@@ -315,19 +317,3 @@ include 'includes/footer.php';
 
 </body>
 </html>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const triggers = document.querySelectorAll('.product-trigger');
-    const contents = document.querySelectorAll('.product-content');
-    triggers.forEach(trigger => {
-      trigger.addEventListener('click', function() {
-        const productId = this.getAttribute('data-product');
-        triggers.forEach(t => t.classList.remove('active'));
-        contents.forEach(c => c.classList.remove('active'));
-        this.classList.add('active');
-        document.getElementById(`${productId}-content`).classList.add('active');
-      });
-    });
-  });
-</script>

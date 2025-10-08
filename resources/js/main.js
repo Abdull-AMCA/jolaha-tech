@@ -299,3 +299,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+
+// ================================
+// Simple JavaScript to handle product switching
+// ================================
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const triggers = document.querySelectorAll('.product-trigger');
+        const contents = document.querySelectorAll('.product-content');
+        
+        triggers.forEach(trigger => {
+            trigger.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product');
+                
+                // Remove active class from all triggers and contents
+                triggers.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked trigger and corresponding content
+                this.classList.add('active');
+                document.getElementById(`${productId}-content`).classList.add('active');
+            });
+        });
+    });

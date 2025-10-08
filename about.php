@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="resources/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <!-- Browser Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%237125eb'/><text x='50%' y='50%' font-size='60' text-anchor='middle' dy='.3em' fill='white'>J</text></svg>">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="resources/css/style.css">
 </head>
 <body>
 
@@ -16,61 +18,61 @@
 include 'includes/header-navbar.php';
 ?>
 
-  <!-- Hero Section -->
-  <section class="about-hero d-flex align-items-center text-center py-5 px-3 px-md-5 text-white">
+    <!-- Hero Section -->
+    <section class="about-hero d-flex align-items-center text-center py-5 px-3 px-md-5 text-white">
     <div class="container py-5 px-md-5">
-      <h1 class="display-4 fw-bold">About <span style="color: var(--secondary);">Us</span></h1>
-      <p class="lead px-2 px-md-5">We engineer high-performance, secure, and scalable web solutions that achieve your strategic goals and deliver a superior ROI.</p>
+        <h1 class="display-4 fw-bold">About <span style="color: var(--secondary);">Us</span></h1>
+        <p class="lead px-2 px-md-5">We engineer high-performance, secure, and scalable web solutions that achieve your strategic goals and deliver a superior ROI.</p>
     </div>
-  </section>
+    </section>
 
-  <!-- Who We Are Section -->
-  <section id="who-we-are" style="background-color: var(--surface);">
-      <div class="container py-5">
-          <div class="row align-items-center">
-              <!-- Text Content Column -->
-              <div class="col-lg-7 pe-lg-5">
-                  <h2 class="display-5 fw-bold mb-4" style="color: var(--heading);">Engineering Your <span style="color: var(--primary);">Digital Success</span></h2>
-                  <p class="lead mb-4" style="color: var(--text);">
-                      Jolaha Tech is a premier IT service provider specializing in crafting high-performance, scalable web solutions for forward-thinking corporations. We bridge the gap between complex business needs and elegant technological execution.
-                  </p>
+    <!-- Who We Are Section -->
+    <section id="who-we-are" style="background-color: var(--surface);">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <!-- Text Content Column -->
+                <div class="col-lg-7 pe-lg-5">
+                    <h2 class="display-5 fw-bold mb-4" style="color: var(--heading);">Engineering Your <span style="color: var(--primary);">Digital Success</span></h2>
+                    <p class="lead mb-4" style="color: var(--text);">
+                        Jolaha Tech is a premier IT service provider specializing in crafting high-performance, scalable web solutions for forward-thinking corporations. We bridge the gap between complex business needs and elegant technological execution.
+                    </p>
 
-                  <div class="d-flex flex-column gap-3 mb-4 mb-lg-0">
-                      <div class="d-flex align-items-start">
-                          <div class="me-3 mt-1" style="color: var(--accent);">
-                              <!-- Bootstrap Icons (make sure to include the icon library) -->
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
-                          </div>
-                          <p class="mb-0" style="color: var(--text);"><strong>Strategic Focus:</strong> We architect technology that drives growth and achieves business objectives.</p>
-                      </div>
-                      <div class="d-flex align-items-start">
-                          <div class="me-3 mt-1" style="color: var(--accent);">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
-                          </div>
-                          <p class="mb-0" style="color: var(--text);"><strong>Enterprise-Grade Development:</strong> Building robust, secure, and scalable web applications.</p>
-                      </div>
-                      <div class="d-flex align-items-start">
-                          <div class="me-3 mt-1" style="color: var(--accent);">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
-                          </div>
-                          <p class="mb-0" style="color: var(--text);"><strong>Dedicated Partnership:</strong> Transparent communication and a single point of contact for seamless delivery.</p>
-                      </div>
-                  </div>
-              </div>
+                    <div class="d-flex flex-column gap-3 mb-4 mb-lg-0">
+                        <div class="d-flex align-items-start">
+                            <div class="me-3 mt-1" style="color: var(--accent);">
+                                <!-- Bootstrap Icons (make sure to include the icon library) -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
+                            </div>
+                            <p class="mb-0" style="color: var(--text);"><strong>Strategic Focus:</strong> We architect technology that drives growth and achieves business objectives.</p>
+                        </div>
+                        <div class="d-flex align-items-start">
+                            <div class="me-3 mt-1" style="color: var(--accent);">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
+                            </div>
+                            <p class="mb-0" style="color: var(--text);"><strong>Enterprise-Grade Development:</strong> Building robust, secure, and scalable web applications.</p>
+                        </div>
+                        <div class="d-flex align-items-start">
+                            <div class="me-3 mt-1" style="color: var(--accent);">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
+                            </div>
+                            <p class="mb-0" style="color: var(--text);"><strong>Dedicated Partnership:</strong> Transparent communication and a single point of contact for seamless delivery.</p>
+                        </div>
+                    </div>
+                </div>
 
-              <!-- Image/Graphic Column -->
-              <div class="col-lg-5 mt-5 mt-lg-0">
-                  <div class="card border-0 shadow" style="background-color: var(--card); border-radius: var(--radius-lg); overflow: hidden;">
-                      <!-- Replace with your image path or graphic -->
-                      <img src="/path/to/your/team-or-graphic.jpg" class="img-fluid" alt="[Your Company Name] Team" style="opacity: 0.9;">
-                  </div>
-              </div>
-          </div>
-      </div>
-  </section>
+                <!-- Image/Graphic Column -->
+                <div class="col-lg-5 mt-5 mt-lg-0">
+                    <div class="card border-0 shadow" style="background-color: var(--card); border-radius: var(--radius-lg); overflow: hidden;">
+                        <!-- Replace with your image path or graphic -->
+                        <img src="/path/to/your/team-or-graphic.jpg" class="img-fluid" alt="[Your Company Name] Team" style="opacity: 0.9;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Our Structure Section -->
-  <section id="our-structure" style="background-color: var(--bg);">
+    <!-- Our Structure Section -->
+    <section id="our-structure" style="background-color: var(--bg);">
     <div class="container py-5">
         <div class="row text-center mb-5">
             <div class="col-12">
@@ -147,7 +149,7 @@ include 'includes/header-navbar.php';
             </a>
         </div>
     </div>
-  </section>
+    </section>
 
 </body>
 </html>

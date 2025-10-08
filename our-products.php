@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Products | Jolaha Tech</title>
+  <!-- Browser Favicon -->
+  <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%237125eb'/><text x='50%' y='50%' font-size='60' text-anchor='middle' dy='.3em' fill='white'>J</text></svg>">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -705,25 +707,3 @@
 <?php
 include 'includes/footer.php';
 ?>
-
-<script>
-    // Simple JavaScript to handle product switching
-    document.addEventListener('DOMContentLoaded', function() {
-        const triggers = document.querySelectorAll('.product-trigger');
-        const contents = document.querySelectorAll('.product-content');
-        
-        triggers.forEach(trigger => {
-            trigger.addEventListener('click', function() {
-                const productId = this.getAttribute('data-product');
-                
-                // Remove active class from all triggers and contents
-                triggers.forEach(t => t.classList.remove('active'));
-                contents.forEach(c => c.classList.remove('active'));
-                
-                // Add active class to clicked trigger and corresponding content
-                this.classList.add('active');
-                document.getElementById(`${productId}-content`).classList.add('active');
-            });
-        });
-    });
-</script>

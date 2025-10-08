@@ -4,6 +4,7 @@
     include 'includes/functions.php';
     session_start();
   ?>
+  
   <header>
     <div class="container nav">
     <a class="brand d-flex align-items-center" href="index.php">
