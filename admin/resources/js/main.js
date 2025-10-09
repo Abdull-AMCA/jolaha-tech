@@ -126,3 +126,319 @@ document.addEventListener('DOMContentLoaded', function() {
     handleResize();
     window.addEventListener('resize', handleResize);
 });
+
+
+
+
+////////////////////////////////////////
+
+// Handle service form submission
+// main.js - Consolidated Service Management Functions
+
+class ServiceManager {
+    constructor() {
+        this.serviceToDelete = null;
+        this.init();
+    }
+
+    init() {
+        document.addEventListener('DOMContentLoaded', () => {
+            this.initializeTooltips();
+            this.initializeServiceForm();
+            this.initializeDeleteHandlers();
+            this.initializeSuccessModals();
+        });
+    }
+
+    // Initialize Bootstrap tooltips
+    initializeTooltips() {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+    }
+
+    // Initialize service form functionality
+    initializeServiceForm() {
+        const serviceNameInput = document.getElementById('service_name');
+        const subServicesSection = document.getElementById('subServicesSection');
+        const subServicesContainer = document.getElementById('subServicesContainer');
+        const addSubServiceBtn = document.getElementById('addSubService');
+        
+        if (!serviceNameInput || !subServicesSection) return;
+
+        // Enable sub-services section when main service is filled (for add page only)
+        if (subServicesSection.style.display === 'none') {
+            serviceNameInput.addEventListener('input', () => {
+                if (serviceNameInput.value.trim().length > 0) {
+                    subServicesSection.style.display = 'block';
+                    if (subServicesContainer.children.length === 0) {
+                        this.addSubService();
+                    }
+                } else {
+                    subServicesSection.style.display = 'none';
+                    subServicesContainer.innerHTML = '';
+                }
+            });
+        }
+
+        // Add sub-service functionality
+        if (addSubServiceBtn) {
+            addSubServiceBtn.addEventListener('click', () => this.addSubService());
+        }
+
+        // Remove sub-service functionality
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.remove-sub-service')) {
+                this.handleSubServiceRemoval(e);
+            }
+        });
+    }
+
+    // Handle sub-service removal (for both edit and add pages)
+    handleSubServiceRemoval(e) {
+        const removeBtn = e.target.closest('.remove-sub-service');
+        if (!removeBtn || removeBtn.disabled) return;
+
+        const subId = removeBtn.getAttribute('data-sub-id');
+        const subServiceName = removeBtn.closest('.sub-service-row').querySelector('input[name*="[name]"]')?.value || 'this sub-service';
+
+        if (subId && subId !== 'null') {
+            // AJAX delete for existing sub-service
+            if (confirm(`Are you sure you want to delete "${subServiceName}"?`)) {
+                this.deleteSubService(subId, removeBtn);
+            }
+        } else {
+            // Just remove from DOM for new (unsaved) sub-service
+            removeBtn.closest('.sub-service-row').remove();
+            this.reindexSubServices();
+        }
+    }
+
+    // Delete sub-service via AJAX
+    deleteSubService(subId, removeBtn) {
+        fetch('includes/delete_sub_service.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `sub_service_id=${subId}`
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                removeBtn.closest('.sub-service-row').remove();
+                this.reindexSubServices();
+                this.showSuccessMessage('Sub-service deleted successfully');
+            } else {
+                this.showErrorModal(data.message || 'Failed to delete sub-service.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            this.showErrorModal('An error occurred while deleting the sub-service.');
+        });
+    }
+
+    // Add new sub-service row
+    addSubService() {
+        const container = document.getElementById('subServicesContainer');
+        const template = document.getElementById('subServiceTemplate');
+        
+        if (!template) {
+            console.error('Sub-service template not found');
+            return;
+        }
+
+        const index = container.children.length;
+        const newRowHtml = template.innerHTML.replace(/__INDEX__/g, index);
+        container.insertAdjacentHTML('beforeend', newRowHtml);
+        this.reindexSubServices();
+    }
+
+    // Reindex sub-services after addition/removal
+    reindexSubServices() {
+        const rows = document.querySelectorAll('.sub-service-row');
+        rows.forEach((row, index) => {
+            row.setAttribute('data-index', index);
+            const inputs = row.querySelectorAll('input, textarea, select');
+            
+            inputs.forEach(input => {
+                const name = input.getAttribute('name').replace(/\[\d+\]/, `[${index}]`);
+                input.setAttribute('name', name);
+            });
+            
+            // Enable/disable remove button for first row
+            const removeBtn = row.querySelector('.remove-sub-service');
+            if (removeBtn) {
+                removeBtn.disabled = index === 0;
+            }
+        });
+    }
+
+    // Initialize service deletion handlers
+    initializeDeleteHandlers() {
+        const deleteModal = document.getElementById('deleteModal') ? new bootstrap.Modal(document.getElementById('deleteModal')) : null;
+        const deleteServiceName = document.getElementById('deleteServiceName');
+        const confirmDeleteBtn = document.getElementById('confirmDelete');
+
+        if (!deleteModal || !deleteServiceName || !confirmDeleteBtn) return;
+
+        // Service deletion buttons
+        document.querySelectorAll('.delete-service-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.serviceToDelete = btn.getAttribute('data-service-id');
+                const serviceName = btn.getAttribute('data-service-name');
+                deleteServiceName.textContent = serviceName;
+                deleteModal.show();
+            });
+        });
+
+        // Confirm deletion
+        confirmDeleteBtn.addEventListener('click', () => {
+            if (this.serviceToDelete) {
+                this.deleteService(this.serviceToDelete);
+                deleteModal.hide();
+            }
+        });
+    }
+
+    // Delete service via AJAX
+    deleteService(serviceId) {
+        fetch('delete_service.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `service_id=${serviceId}`
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                this.showSuccessModal(data.message);
+                setTimeout(() => window.location.reload(), 2000);
+            } else {
+                this.showErrorModal(data.message || 'Failed to delete service.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            this.showErrorModal('An error occurred while deleting the service.');
+        });
+    }
+
+    // Initialize success modals from PHP results
+    initializeSuccessModals() {
+        // Check for PHP success messages
+        if (typeof services_result !== 'undefined' && services_result && services_result.success) {
+            this.showSuccessModal(services_result.message);
+        }
+    }
+
+    // Show success modal
+    showSuccessModal(message) {
+        const successMessage = document.getElementById('successMessage');
+        const successModal = document.getElementById('successModal') ? new bootstrap.Modal(document.getElementById('successModal')) : null;
+        
+        if (successMessage && successModal) {
+            successMessage.textContent = message;
+            successModal.show();
+        }
+    }
+
+    // Show error modal
+    showErrorModal(message) {
+        let errorModal = document.getElementById('errorModal');
+        
+        // Create error modal if it doesn't exist
+        if (!errorModal) {
+            errorModal = document.createElement('div');
+            errorModal.className = 'modal fade';
+            errorModal.id = 'errorModal';
+            errorModal.innerHTML = `
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger text-white">
+                            <h5 class="modal-title">Error</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body text-center py-4">
+                            <i class="bi bi-x-circle-fill text-danger display-4 mb-3"></i>
+                            <p id="errorMessage"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(errorModal);
+        }
+
+        const errorMessage = document.getElementById('errorMessage');
+        const modalInstance = new bootstrap.Modal(errorModal);
+        
+        if (errorMessage) {
+            errorMessage.textContent = message;
+        }
+        modalInstance.show();
+    }
+
+    // Show temporary success message
+    showSuccessMessage(message) {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-success alert-dismissible fade show';
+        alertDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        const container = document.querySelector('.container-fluid');
+        if (container) {
+            container.insertBefore(alertDiv, container.firstChild);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 3000);
+        }
+    }
+}
+
+// Initialize Service Manager
+const serviceManager = new ServiceManager();
+
+// Utility function for simple service form initialization (for basic pages)
+function initializeBasicServiceForm() {
+    const serviceNameInput = document.getElementById('service_name');
+    const subServicesSection = document.getElementById('subServicesSection');
+    const subServicesContainer = document.getElementById('subServicesContainer');
+    const addSubServiceBtn = document.getElementById('addSubService');
+
+    if (!serviceNameInput || !subServicesSection) return;
+
+    // Enable sub-services section when main service is filled
+    serviceNameInput.addEventListener('input', function() {
+        if (this.value.trim().length > 0) {
+            subServicesSection.style.display = 'block';
+            if (subServicesContainer.children.length === 0) {
+                serviceManager.addSubService();
+            }
+        } else {
+            subServicesSection.style.display = 'none';
+            subServicesContainer.innerHTML = '';
+        }
+    });
+
+    // Add sub-service button
+    if (addSubServiceBtn) {
+        addSubServiceBtn.addEventListener('click', () => serviceManager.addSubService());
+    }
+}
+
+// Export for use in other modules
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { ServiceManager, initializeBasicServiceForm };
+}

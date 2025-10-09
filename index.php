@@ -717,7 +717,7 @@ include 'includes/head.php';
   <!-- Floating Action Buttons -->
   <div class="floating-buttons">
       <!-- WhatsApp Button -->
-      <a href="https://wa.me/+971509860136" class="floating-btn whatsapp-btn" target="_blank" rel="noopener">
+      <a href="https://wa.me/+971123456789" class="floating-btn whatsapp-btn" target="_blank" rel="noopener">
           <i class="bi bi-whatsapp"></i>
       </a>
     

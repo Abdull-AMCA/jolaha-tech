@@ -55,13 +55,13 @@
             </a>
             <ul class="sub-menu" id="services-menu">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="services.php?source=add_service">
                         <i class="bi bi-plus-circle nav-icon"></i>
                         <span class="nav-text">Add Service</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="./services.php">
                         <i class="bi bi-card-checklist nav-icon"></i>
                         <span class="nav-text">View All</span>
                     </a>

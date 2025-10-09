@@ -403,3 +403,17 @@ body {
     background-color: var(--card);
     color: var(--primary);
 }
+
+/********** Tooltip Styling **********/
+
+.tooltip-inner {
+    background-color: var(--primary);
+    color: white;
+}
+    .tooltip.bs-tooltip-top .tooltip-arrow::before {
+    border-top-color: var(--primary);
+}
+    .sub-service-row {
+    background-color: #f8f9fa;
+    border-left: 4px solid var(--primary);
+}

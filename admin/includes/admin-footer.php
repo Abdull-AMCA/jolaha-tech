@@ -10,5 +10,9 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./resources/js/main.js" defer></script>
+    <script>
+    var services_result = <?php echo json_encode($services_result ?? null); ?>;
+</script>
+
 </body>
 </html>

@@ -535,4 +535,6 @@ function create_user($username, $email, $password, $full_name, $role = 'staff') 
         return false;
     }
 }
+
+
 ?>
