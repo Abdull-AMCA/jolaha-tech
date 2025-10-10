@@ -23,27 +23,12 @@
             </a>
         </li>
         
-        <!-- Products Menu -->
+        <!-- Products Single Link -->
         <li class="nav-item">
-            <a class="nav-link menu-toggle-btn" href="#" data-menu="products">
+            <a class="nav-link" href="products.php">
                 <i class="bi bi-box-seam nav-icon"></i>
                 <span class="nav-text">Products</span>
-                <i class="bi bi-chevron-right menu-toggle"></i>
             </a>
-            <ul class="sub-menu" id="products-menu">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="bi bi-plus-circle nav-icon"></i>
-                        <span class="nav-text">Add Product</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="bi bi-card-checklist nav-icon"></i>
-                        <span class="nav-text">View All</span>
-                    </a>
-                </li>
-            </ul>
         </li>
         
         <!-- Services Menu -->

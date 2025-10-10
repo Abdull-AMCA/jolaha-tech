@@ -284,5 +284,172 @@ function handle_service_deletion($service_id) {
     }
 }
 
+// PRODUCTS MODULE FUNCTIONS
+// Function to count total products
+function countProducts() {
+    global $connection;
+    
+    try {
+        $stmt = $connection->query("SELECT COUNT(*) as total FROM products");
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    } catch (PDOException $e) {
+        error_log("Count products error: " . $e->getMessage());
+        return 0;
+    }
+}
 
+// Function to insert/update products
+function insert_products() {
+    global $connection;
+
+    if (isset($_POST['submit'])) {
+        // Sanitize input safely using trim and htmlspecialchars
+        $product_name = trim($_POST['product_name'] ?? '');
+        $product_id = isset($_POST['product_id']) ? intval($_POST['product_id']) : 0;
+
+        if ($product_name === '') {
+            echo "<script>showAlert('Product name should not be empty', 'error');</script>";
+            return;
+        }
+
+        try {
+            if ($product_id > 0) {
+                // Update existing product
+                $stmt = $connection->prepare("
+                    UPDATE products 
+                    SET product_name = :product_name 
+                    WHERE product_id = :product_id
+                ");
+                $stmt->execute([
+                    ':product_name' => $product_name,
+                    ':product_id' => $product_id
+                ]);
+
+                $redirect_param = "updated=true";
+                $success_message = "Product updated successfully!";
+            } else {
+                // Insert new product
+                $stmt = $connection->prepare("
+                    INSERT INTO products (product_name) 
+                    VALUES (:product_name)
+                ");
+                $stmt->execute([':product_name' => $product_name]);
+
+                $redirect_param = "added=true";
+                $success_message = "Product added successfully!";
+            }
+
+            // If query succeeds
+            echo "<script>
+                showAlert('{$success_message}', 'success');
+                window.location.href = 'products.php?{$redirect_param}';
+            </script>";
+
+        } catch (PDOException $e) {
+            echo "<script>
+                showAlert('Database error: " . addslashes($e->getMessage()) . "', 'error');
+            </script>";
+        }
+    }
+}
+
+// Function to find all products
+function findAllProducts() {
+    global $connection;
+
+    try {
+        $stmt = $connection->query("SELECT * FROM products ORDER BY product_id DESC");
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (empty($products)) {
+            echo '<tr><td colspan="3" class="text-center text-muted py-4">No products found. Add your first product above.</td></tr>';
+            return;
+        }
+
+        foreach ($products as $row) {
+            $product_id = htmlspecialchars($row['product_id']);
+            $product_name = htmlspecialchars($row['product_name']);
+
+            echo "<tr>";
+            echo "<td><strong>#{$product_id}</strong></td>";
+            echo "<td>{$product_name}</td>";
+            echo "<td>";
+            echo "<div class='btn-group btn-group-sm'>";
+            echo "<a href='products.php?edit={$product_id}' class='btn btn-outline-primary' data-bs-toggle='tooltip' title='Edit Product'>";
+            echo "<i class='bi bi-pencil'></i>";
+            echo "</a>";
+            echo "<button type='button' class='btn btn-outline-danger delete-product-btn' data-product-id='{$product_id}' data-product-name='{$product_name}' data-bs-toggle='tooltip' title='Delete Product'>";
+            echo "<i class='bi bi-trash'></i>";
+            echo "</button>";
+            echo "</div>";
+            echo "</td>";
+            echo "</tr>";
+        }
+
+    } catch (PDOException $e) {
+        echo "<tr><td colspan='3' class='text-center text-danger py-4'>Error fetching products: " . htmlspecialchars($e->getMessage()) . "</td></tr>";
+    }
+}
+
+// Function to delete a product
+function deleteProduct() {
+    global $connection;
+
+    if (isset($_GET['delete_product'])) {
+        $product_id = intval($_GET['delete_product']);
+
+        try {
+            $stmt = $connection->prepare("DELETE FROM products WHERE product_id = :product_id");
+            $stmt->execute([':product_id' => $product_id]);
+
+            if ($stmt->rowCount() > 0) {
+                // Return JSON response for AJAX
+                if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+                    echo json_encode(['success' => true, 'message' => 'Product deleted successfully!']);
+                } else {
+                    echo "<script>
+                        window.location.href = 'products.php?deleted=true';
+                    </script>";
+                }
+            } else {
+                if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+                    echo json_encode(['success' => false, 'message' => 'No product found to delete.']);
+                } else {
+                    echo "<script>
+                        window.location.href = 'products.php?error=true';
+                    </script>";
+                }
+            }
+            exit;
+
+        } catch (PDOException $e) {
+            if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+                echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+            } else {
+                echo "<script>
+                    window.location.href = 'products.php?error=true';
+                </script>";
+            }
+            exit;
+        }
+    }
+}
+
+// Function to get product by ID for editing
+function getProductById($product_id) {
+    global $connection;
+
+    try {
+        $stmt = $connection->prepare("SELECT * FROM products WHERE product_id = :product_id");
+        $stmt->execute([':product_id' => intval($product_id)]);
+        $product = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $product ?: null;
+
+    } catch (PDOException $e) {
+        error_log("Error fetching product by ID: " . $e->getMessage());
+        return null;
+    }
+}
 ?>
