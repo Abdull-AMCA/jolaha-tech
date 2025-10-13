@@ -18,33 +18,40 @@ include 'includes/admin-functions.php';
         <!-- Alert Messages -->
         <div id="alertBox"></div>
         
-        <!-- Success Messages from URL parameters -->
-        <?php if(isset($_GET['added']) && $_GET['added'] == 'true'): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="bi bi-check-circle-fill"></i> Product added successfully!
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif; ?>
-        
-        <?php if(isset($_GET['updated']) && $_GET['updated'] == 'true'): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="bi bi-check-circle-fill"></i> Product updated successfully!
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif; ?>
-        
-        <?php if(isset($_GET['deleted']) && $_GET['deleted'] == 'true'): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="bi bi-check-circle-fill"></i> Product deleted successfully!
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif; ?>
-        
-        <?php if(isset($_GET['error']) && $_GET['error'] == 'true'): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="bi bi-exclamation-triangle-fill"></i> Error occurred while processing your request!
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <?php
+            // Success / Error alerts driven by URL params (use filter_input for safety)
+            $added   = filter_input(INPUT_GET, 'added', FILTER_SANITIZE_STRING);
+            $updated = filter_input(INPUT_GET, 'updated', FILTER_SANITIZE_STRING);
+            $deleted = filter_input(INPUT_GET, 'deleted', FILTER_SANITIZE_STRING);
+            $error   = filter_input(INPUT_GET, 'error', FILTER_SANITIZE_STRING);
+            ?>
+
+            <?php if ($added === 'true'): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle-fill"></i> Product added successfully!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($updated === 'true'): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle-fill"></i> Product updated successfully!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($deleted === 'true'): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle-fill"></i> Product deleted successfully!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($error === 'true'): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i> Error occurred while processing your request!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
         <?php endif; ?>
         
         <div class="row">

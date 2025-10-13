@@ -301,37 +301,38 @@ function countProducts() {
 
 // Function to insert/update products
 function insert_products() {
-    global $connection;
+    global $connection; // PDO instance
 
     if (isset($_POST['submit'])) {
-        // Sanitize input safely using trim and htmlspecialchars
+        // Trim and basic sanitize
         $product_name = trim($_POST['product_name'] ?? '');
         $product_id = isset($_POST['product_id']) ? intval($_POST['product_id']) : 0;
 
         if ($product_name === '') {
+            // showAlert is assumed to be a JS function defined in your UI to show toastr/alerts
             echo "<script>showAlert('Product name should not be empty', 'error');</script>";
             return;
         }
 
         try {
             if ($product_id > 0) {
-                // Update existing product
+                // Update
                 $stmt = $connection->prepare("
-                    UPDATE products 
-                    SET product_name = :product_name 
+                    UPDATE products
+                    SET product_name = :product_name
                     WHERE product_id = :product_id
                 ");
                 $stmt->execute([
                     ':product_name' => $product_name,
-                    ':product_id' => $product_id
+                    ':product_id'   => $product_id
                 ]);
 
                 $redirect_param = "updated=true";
                 $success_message = "Product updated successfully!";
             } else {
-                // Insert new product
+                // Insert
                 $stmt = $connection->prepare("
-                    INSERT INTO products (product_name) 
+                    INSERT INTO products (product_name)
                     VALUES (:product_name)
                 ");
                 $stmt->execute([':product_name' => $product_name]);
@@ -340,16 +341,23 @@ function insert_products() {
                 $success_message = "Product added successfully!";
             }
 
-            // If query succeeds
+            // Notify and redirect (escape JS string)
+            $jsMessage = addslashes($success_message);
+
             echo "<script>
-                showAlert('{$success_message}', 'success');
-                window.location.href = 'products.php?{$redirect_param}';
-            </script>";
+                    if (typeof showAlert === 'function') {
+                        showAlert('{$jsMessage}', 'success');
+                        setTimeout(function(){ window.location.href = 'products.php?{$redirect_param}'; }, 900);
+                    } else {
+                        // fallback
+                        window.location.href = 'products.php?{$redirect_param}';
+                    }
+                  </script>";
+            exit;
 
         } catch (PDOException $e) {
-            echo "<script>
-                showAlert('Database error: " . addslashes($e->getMessage()) . "', 'error');
-            </script>";
+            $err = addslashes($e->getMessage());
+            echo "<script>showAlert('Database error: {$err}', 'error');</script>";
         }
     }
 }
@@ -408,9 +416,8 @@ function deleteProduct() {
                 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
                     echo json_encode(['success' => true, 'message' => 'Product deleted successfully!']);
                 } else {
-                    echo "<script>
-                        window.location.href = 'products.php?deleted=true';
-                    </script>";
+                        header("Location: products.php?deleted=true");
+                        exit;
                 }
             } else {
                 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
