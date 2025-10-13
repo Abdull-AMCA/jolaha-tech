@@ -35,7 +35,15 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <span class="nav-text">Products</span>
             </a>
         </li>
-        
+
+        <!-- Solutions Single Link -->
+        <li class="nav-item">
+            <a class="nav-link <?php echo ($current_page === 'solutions.php') ? 'active' : ''; ?>" href="solutions.php">
+                <i class="bi bi-lightbulb-fill nav-icon"></i>
+                <span class="nav-text">Solutions</span>
+            </a>
+        </li>
+
         <!-- Services Menu -->
         <li class="nav-item">
             <?php 

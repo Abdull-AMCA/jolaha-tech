@@ -10,8 +10,8 @@ include 'includes/admin-functions.php';
     <div class="container-fluid">
         <div class="row mb-4">
             <div class="col-12">
-                <h2 class="h4">Products Management</h2>
-                <p class="text-muted">Manage all Jolaha Products</p>
+                <h2 class="h4">Solutions Management</h2>
+                <p class="text-muted">Manage all Jolaha Solutions</p>
             </div>
         </div>
     
@@ -28,21 +28,21 @@ include 'includes/admin-functions.php';
 
             <?php if ($added === 'true'): ?>
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="bi bi-check-circle-fill"></i> Product added successfully!
+                    <i class="bi bi-check-circle-fill"></i> Solution added successfully!
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <?php endif; ?>
 
             <?php if ($updated === 'true'): ?>
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="bi bi-check-circle-fill"></i> Product updated successfully!
+                    <i class="bi bi-check-circle-fill"></i> Solution updated successfully!
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <?php endif; ?>
 
             <?php if ($deleted === 'true'): ?>
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="bi bi-check-circle-fill"></i> Product deleted successfully!
+                    <i class="bi bi-check-circle-fill"></i> Solution deleted successfully!
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <?php endif; ?>
@@ -61,33 +61,33 @@ include 'includes/admin-functions.php';
                     <div class="card-header">
                         <h5 class="card-title mb-0">
                             <i class="bi bi-plus-circle me-2"></i>
-                            <?php echo isset($_GET['edit']) ? 'Edit Product' : 'Add New Product'; ?>
+                            <?php echo isset($_GET['edit']) ? 'Edit Solution' : 'Add New Solution'; ?>
                         </h5>
                     </div>
                     <div class="card-body">
-                        <form action="" method="post" id="productForm">
+                        <form action="" method="post" id="solutionForm">
                             <?php if(isset($_GET['edit'])): 
-                                $product = getProductById($_GET['edit']);
-                                if($product):
+                                $solution = getSolutionById($_GET['edit']);
+                                if($solution):
                             ?>
-                                <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+                                <input type="hidden" name="solution_id" value="<?php echo $solution['solution_id']; ?>">
                             <?php endif; endif; ?>
                             
                             <div class="mb-3">
-                                <label for="product_name" class="form-label">Product Name *</label>
-                                <input type="text" id="product_name" name="product_name" class="form-control" 
-                                    value="<?php echo isset($product) ? htmlspecialchars($product['product_name']) : ''; ?>" 
-                                    required placeholder="Enter product name">
+                                <label for="solution_name" class="form-label">Solution Name *</label>
+                                <input type="text" id="solution_name" name="solution_name" class="form-control" 
+                                    value="<?php echo isset($solution) ? htmlspecialchars($solution['solution_name']) : ''; ?>" 
+                                    required placeholder="Enter solution name">
                             </div>
                             
                             <div class="d-flex gap-2">
                                 <button type="submit" name="submit" class="btn btn-primary">
                                     <i class="bi bi-check-lg me-1"></i>
-                                    <?php echo isset($_GET['edit']) ? 'Update Product' : 'Add Product'; ?>
+                                    <?php echo isset($_GET['edit']) ? 'Update Solution' : 'Add Solution'; ?>
                                 </button>
                                 
                                 <?php if(isset($_GET['edit'])): ?>
-                                    <a href="products.php" class="btn btn-outline-secondary">
+                                    <a href="solutions.php" class="btn btn-outline-secondary">
                                         <i class="bi bi-x-circle me-1"></i> Cancel
                                     </a>
                                 <?php endif; ?>
@@ -95,7 +95,7 @@ include 'includes/admin-functions.php';
                         </form>
                         <?php
                         // Call the insert/update function
-                        insert_products();
+                        insert_solutions();
                         ?>
                     </div>
                 </div>
@@ -106,9 +106,9 @@ include 'includes/admin-functions.php';
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="card-title mb-0">
-                            <i class="bi bi-list-ul me-2"></i> Existing Products
+                            <i class="bi bi-list-ul me-2"></i> Existing Solutions
                         </h5>
-                        <span class="badge bg-primary"><?php echo countProducts(); ?> products</span>
+                        <span class="badge bg-primary"><?php echo countSolutions(); ?> solutions</span>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -116,14 +116,14 @@ include 'includes/admin-functions.php';
                                 <thead>
                                     <tr>
                                         <th width="80">ID</th>
-                                        <th>Product Name</th>
+                                        <th>Solution Name</th>
                                         <th width="150">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php  
-                                    // Call the function to display all products
-                                    findAllProducts();
+                                    // Call the function to display all solutions
+                                    findAllSolutions();
                                     ?>
                                 </tbody>
                             </table>
@@ -136,7 +136,7 @@ include 'includes/admin-functions.php';
 </div>
 
 <!-- Delete Confirmation Modal -->
-<div class="modal fade" id="deleteProductModal" tabindex="-1">
+<div class="modal fade" id="deleteSolutionModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-danger text-white">
@@ -144,12 +144,12 @@ include 'includes/admin-functions.php';
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete the product "<strong id="productName"></strong>"?</p>
+                <p>Are you sure you want to delete the solution "<strong id="solutionName"></strong>"?</p>
                 <p class="text-danger"><small>This action cannot be undone.</small></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete Product</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete Solution</button>
             </div>
         </div>
     </div>
@@ -176,11 +176,11 @@ include 'includes/admin-functions.php';
 
 <?php
 // Call the delete function
-deleteProduct();
+deleteSolution();
 ?>
 
 <script>
-// Products Management JavaScript
+// Solutions Management JavaScript
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize tooltips
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
@@ -188,49 +188,49 @@ document.addEventListener('DOMContentLoaded', function() {
         return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 
-    // Delete product functionality
-    const deleteModal = new bootstrap.Modal(document.getElementById('deleteProductModal'));
-    const productNameElement = document.getElementById('productName');
+    // Delete solution functionality
+    const deleteModal = new bootstrap.Modal(document.getElementById('deleteSolutionModal'));
+    const solutionNameElement = document.getElementById('solutionName');
     const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-    let productToDelete = null;
+    let solutionToDelete = null;
 
     // Add event listeners to all delete buttons using event delegation
     document.addEventListener('click', function(e) {
-        if (e.target.closest('.delete-product-btn')) {
+        if (e.target.closest('.delete-solution-btn')) {
             e.preventDefault();
-            const btn = e.target.closest('.delete-product-btn');
-            productToDelete = btn.getAttribute('data-product-id');
-            const productName = btn.getAttribute('data-product-name');
-            productNameElement.textContent = productName;
+            const btn = e.target.closest('.delete-solution-btn');
+            solutionToDelete = btn.getAttribute('data-solution-id');
+            const solutionName = btn.getAttribute('data-solution-name');
+            solutionNameElement.textContent = solutionName;
             deleteModal.show();
         }
     });
 
     // Confirm delete action
     confirmDeleteBtn.addEventListener('click', function() {
-        if (productToDelete) {
+        if (solutionToDelete) {
             // Show loading state
             confirmDeleteBtn.disabled = true;
             confirmDeleteBtn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i> Deleting...';
             
             // Send delete request
-            fetch(`products.php?delete_product=${productToDelete}`)
+            fetch(`solutions.php?delete_solution=${solutionToDelete}`)
                 .then(response => response.text())
                 .then(data => {
                     // Close modal
                     deleteModal.hide();
                     
                     // Show success message and reload
-                    showSuccessModal('Product deleted successfully!');
+                    showSuccessModal('Solution deleted successfully!');
                     setTimeout(() => {
                         window.location.reload();
                     }, 1500);
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    showAlert('An error occurred while deleting the product.', 'error');
+                    showAlert('An error occurred while deleting the solution.', 'error');
                     confirmDeleteBtn.disabled = false;
-                    confirmDeleteBtn.innerHTML = 'Delete Product';
+                    confirmDeleteBtn.innerHTML = 'Delete Solution';
                 });
         }
     });
@@ -290,11 +290,11 @@ function showSuccessModal(message) {
 }
 
 // Function to set delete ID (for compatibility)
-function setDeleteId(productId, productName) {
-    const deleteModal = new bootstrap.Modal(document.getElementById('deleteProductModal'));
-    document.getElementById('productName').textContent = productName;
+function setDeleteId(solutionId, solutionName) {
+    const deleteModal = new bootstrap.Modal(document.getElementById('deleteSolutionModal'));
+    document.getElementById('solutionName').textContent = solutionName;
     document.getElementById('confirmDeleteBtn').onclick = function() {
-        window.location.href = `products.php?delete_product=${productId}`;
+        window.location.href = `solutions.php?delete_solution=${solutionId}`;
     };
     deleteModal.show();
 }

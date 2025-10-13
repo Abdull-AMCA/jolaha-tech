@@ -1,8 +1,6 @@
 <?php
 
-///////////// Add these functions to your existing functions.php file /////////////
-
-// Handle service addition
+//////////////////////// SERVICE MODULE FUNCTIONS ////////////////////////
 // Sanitize input helper
 function sanitize_input($data) {
     if (is_array($data)) {
@@ -299,7 +297,8 @@ function countProducts() {
     }
 }
 
-// Function to insert/update products
+
+//////////////////////// Function to insert/update products ////////////////////////
 function insert_products() {
     global $connection; // PDO instance
 
@@ -456,6 +455,183 @@ function getProductById($product_id) {
 
     } catch (PDOException $e) {
         error_log("Error fetching product by ID: " . $e->getMessage());
+        return null;
+    }
+}
+
+
+//////////////////////////// SOLUTIONS MODULE FUNCTIONS ////////////////////////
+// Function to count total solutions
+function countSolutions() {
+    global $connection;
+    
+    try {
+        $stmt = $connection->query("SELECT COUNT(*) as total FROM solutions");
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    } catch (PDOException $e) {
+        error_log("Count solutions error: " . $e->getMessage());
+        return 0;
+    }
+}
+
+// Function to insert/update solutions
+function insert_solutions() {
+    global $connection; // PDO instance
+
+    if (isset($_POST['submit'])) {
+        // Trim and basic sanitize
+        $solution_name = trim($_POST['solution_name'] ?? '');
+        $solution_id = isset($_POST['solution_id']) ? intval($_POST['solution_id']) : 0;
+
+        if ($solution_name === '') {
+            // showAlert is assumed to be a JS function defined in your UI to show toastr/alerts
+            echo "<script>showAlert('Solution name should not be empty', 'error');</script>";
+            return;
+        }
+
+        try {
+            if ($solution_id > 0) {
+                // Update
+                $stmt = $connection->prepare("
+                    UPDATE solutions
+                    SET solution_name = :solution_name
+                    WHERE solution_id = :solution_id
+                ");
+                $stmt->execute([
+                    ':solution_name' => $solution_name,
+                    ':solution_id'   => $solution_id
+                ]);
+
+                $redirect_param = "updated=true";
+                $success_message = "Solution updated successfully!";
+            } else {
+                // Insert
+                $stmt = $connection->prepare("
+                    INSERT INTO solutions (solution_name)
+                    VALUES (:solution_name)
+                ");
+                $stmt->execute([':solution_name' => $solution_name]);
+
+                $redirect_param = "added=true";
+                $success_message = "Solution added successfully!";
+            }
+
+            // Notify and redirect (escape JS string)
+            $jsMessage = addslashes($success_message);
+
+            echo "<script>
+                    if (typeof showAlert === 'function') {
+                        showAlert('{$jsMessage}', 'success');
+                        setTimeout(function(){ window.location.href = 'solutions.php?{$redirect_param}'; }, 900);
+                    } else {
+                        // fallback
+                        window.location.href = 'solutions.php?{$redirect_param}';
+                    }
+                  </script>";
+            exit;
+
+        } catch (PDOException $e) {
+            $err = addslashes($e->getMessage());
+            echo "<script>showAlert('Database error: {$err}', 'error');</script>";
+        }
+    }
+}
+
+// Function to find all solutions
+function findAllSolutions() {
+    global $connection;
+
+    try {
+        $stmt = $connection->query("SELECT * FROM solutions ORDER BY solution_id DESC");
+        $solutions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (empty($solutions)) {
+            echo '<tr><td colspan="3" class="text-center text-muted py-4">No solutions found. Add your first solution above.</td></tr>';
+            return;
+        }
+
+        foreach ($solutions as $row) {
+            $solution_id = htmlspecialchars($row['solution_id']);
+            $solution_name = htmlspecialchars($row['solution_name']);
+
+            echo "<tr>";
+            echo "<td><strong>#{$solution_id}</strong></td>";
+            echo "<td>{$solution_name}</td>";
+            echo "<td>";
+            echo "<div class='btn-group btn-group-sm'>";
+            echo "<a href='solutions.php?edit={$solution_id}' class='btn btn-outline-primary' data-bs-toggle='tooltip' title='Edit Solution'>";
+            echo "<i class='bi bi-pencil'></i>";
+            echo "</a>";
+            echo "<button type='button' class='btn btn-outline-danger delete-solution-btn' data-solution-id='{$solution_id}' data-solution-name='{$solution_name}' data-bs-toggle='tooltip' title='Delete Solution'>";
+            echo "<i class='bi bi-trash'></i>";
+            echo "</button>";
+            echo "</div>";
+            echo "</td>";
+            echo "</tr>";
+        }
+
+    } catch (PDOException $e) {
+        echo "<tr><td colspan='3' class='text-center text-danger py-4'>Error fetching solutions: " . htmlspecialchars($e->getMessage()) . "</td></tr>";
+    }
+}
+
+// Function to delete a solution
+function deleteSolution() {
+    global $connection;
+
+    if (isset($_GET['delete_solution'])) {
+        $solution_id = intval($_GET['delete_solution']);
+
+        try {
+            $stmt = $connection->prepare("DELETE FROM solutions WHERE solution_id = :solution_id");
+            $stmt->execute([':solution_id' => $solution_id]);
+
+            if ($stmt->rowCount() > 0) {
+                // Return JSON response for AJAX
+                if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+                    echo json_encode(['success' => true, 'message' => 'Solution deleted successfully!']);
+                } else {
+                        header("Location: solutions.php?deleted=true");
+                        exit;
+                }
+            } else {
+                if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+                    echo json_encode(['success' => false, 'message' => 'No solution found to delete.']);
+                } else {
+                    echo "<script>
+                        window.location.href = 'solutions.php?error=true';
+                    </script>";
+                }
+            }
+            exit;
+
+        } catch (PDOException $e) {
+            if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+                echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+            } else {
+                echo "<script>
+                    window.location.href = 'solutions.php?error=true';
+                </script>";
+            }
+            exit;
+        }
+    }
+}
+
+// Function to get solution by ID for editing
+function getSolutionById($solution_id) {
+    global $connection;
+
+    try {
+        $stmt = $connection->prepare("SELECT * FROM solutions WHERE solution_id = :solution_id");
+        $stmt->execute([':solution_id' => intval($solution_id)]);
+        $solution = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $solution ?: null;
+
+    } catch (PDOException $e) {
+        error_log("Error fetching solution by ID: " . $e->getMessage());
         return null;
     }
 }
