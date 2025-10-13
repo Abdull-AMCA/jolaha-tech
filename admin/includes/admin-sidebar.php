@@ -70,6 +70,31 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 </li>
             </ul>
         </li>
+            <!-- Posts Menu -->
+            <li class="nav-item">
+                <?php 
+                    $is_posts_active = in_array($current_page, ['posts.php', 'add_post.php', 'edit_post.php']);
+                ?>
+                <a class="nav-link menu-toggle-btn <?php echo $is_posts_active ? 'active' : ''; ?>" href="#" data-menu="posts">
+                    <i class="bi bi-journal-text nav-icon"></i>
+                    <span class="nav-text">Posts</span>
+                    <i class="bi bi-chevron-right menu-toggle"></i>
+                </a>
+                <ul class="sub-menu" id="posts-menu" style="<?php echo $is_posts_active ? 'display:block;' : ''; ?>">
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo ($current_page === 'add_post.php') ? 'active' : ''; ?>" href="posts.php?source=add_post">
+                            <i class="bi bi-plus-circle nav-icon"></i>
+                            <span class="nav-text">Add Post</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo ($current_page === 'posts.php' && !isset($_GET['source'])) ? 'active' : ''; ?>" href="posts.php">
+                            <i class="bi bi-card-checklist nav-icon"></i>
+                            <span class="nav-text">View All</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         
         <!-- Users Menu -->
         <li class="nav-item">

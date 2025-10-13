@@ -1,3 +1,8 @@
+/* Make all Bootstrap Icons use the secondary color
+.bi {
+    color: var(--secondary) !important;
+} */
+/* Admin Dashboard Custom Styles */
 :root {
     --bg: #0F0421;
     --surface: #1c0c29;
@@ -334,8 +339,8 @@ body {
 }
 
 .btn-primary:hover {
-    background-color: var(--primary-700);
-    border-color: var(--primary-700);
+    background-color: var(--secondary);
+    border-color: var(--primary);
 }
 
 .btn-success {
