@@ -25,10 +25,10 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <thead>
                             <tr class="table-dark">
                                 <th>#</th>
-                                <th>ID</th>
                                 <th>Image</th>
                                 <th>Title</th>
                                 <th>Author</th>
+                                <th>Category</th>
                                 <th>Status</th>
                                 <th>Created</th>
                                 <th>Actions</th>
@@ -39,14 +39,14 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php $serial = 1; foreach ($posts as $post): ?>
                                     <tr>
                                         <td class="fw-bold"><?php echo $serial++; ?></td>
-                                        <td class="text-muted"><?php echo $post['post_id']; ?></td>
                                         <td>
                                             <?php
-                                            $image_url = (!empty($post['post_image']) && file_exists("../uploads/posts/" . $post['post_image']))
-                                                ? "../uploads/posts/" . $post['post_image']
+                                            $image_url = (!empty($post['post_image']) && file_exists("../resources/img/uploads/posts/" . $post['post_image']))
+                                                ? "../resources/img/uploads/posts/" . $post['post_image']
                                                 : "https://via.placeholder.com/60x40/f1bf70/0f172a?text=Post";
                                             ?>
-                                            <img src="<?php echo $image_url; ?>" class="rounded" width="60" height="40" alt="<?php echo htmlspecialchars($post['post_title']); ?>">
+                                            <img src="<?php echo $image_url; ?>" class="rounded" width="60" height="40" alt="<?php echo htmlspecialchars($post['post_title']); ?>"
+                                                 onerror="this.src='https://via.placeholder.com/60x40/f1bf70/0f172a?text=Post'">
                                         </td>
                                         <td>
                                             <strong><?php echo htmlspecialchars($post['post_title']); ?></strong>
@@ -57,30 +57,74 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <?php endif; ?>
                                         </td>
                                         <td>
-                                            <?php 
-                                            // Display author ID since users table doesn't exist yet
-                                            echo "Author #" . ($post['post_author'] ?? 1);
+                                            <div class="d-flex flex-column">
+                                                <strong class="text-primary"><?php echo htmlspecialchars($post['post_author_name'] ?? 'Unknown Author'); ?></strong>
+                                                <small class="text-muted">ID: <?php echo $post['post_author'] ?? 1; ?></small>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            $category = $post['post_category'] ?? 'uncategorized';
+                                            $category_badge = [
+                                                'solution' => ['bg-warning text-dark', 'Solution'],
+                                                'product' => ['bg-primary', 'Product'],
+                                                'service' => ['bg-success', 'Service'],
+                                                'uncategorized' => ['bg-secondary', 'Uncategorized']
+                                            ];
+                                            $badge_class = $category_badge[$category][0] ?? 'bg-secondary';
+                                            $badge_text = $category_badge[$category][1] ?? ucfirst($category);
                                             ?>
+                                            <span class="badge <?php echo $badge_class; ?>">
+                                                <i class="bi 
+                                                    <?php 
+                                                    if ($category === 'solution') echo 'bi-lightbulb';
+                                                    elseif ($category === 'product') echo 'bi-box';
+                                                    elseif ($category === 'service') echo 'bi-tools';
+                                                    else echo 'bi-file-earmark';
+                                                    ?> 
+                                                    me-1">
+                                                </i>
+                                                <?php echo $badge_text; ?>
+                                            </span>
+                                            
+                                            <?php if (!empty($post['selected_solution']) || !empty($post['selected_product']) || !empty($post['selected_service'])): ?>
+                                                <br>
+                                                <small class="text-muted">
+                                                    <?php
+                                                    if (!empty($post['selected_solution'])) echo "Solution ID: " . $post['selected_solution'];
+                                                    elseif (!empty($post['selected_product'])) echo "Product ID: " . $post['selected_product'];
+                                                    elseif (!empty($post['selected_service'])) echo "Service ID: " . $post['selected_service'];
+                                                    ?>
+                                                </small>
+                                            <?php endif; ?>
                                         </td>
                                         <td>
                                             <span class="badge bg-<?php echo ($post['post_status'] == 'published') ? 'success' : 'secondary'; ?>">
+                                                <i class="bi <?php echo ($post['post_status'] == 'published') ? 'bi-check-circle' : 'bi-clock'; ?> me-1"></i>
                                                 <?php echo ucfirst($post['post_status']); ?>
                                             </span>
                                         </td>
-                                        <td><?php echo date('M j, Y', strtotime($post['created_at'])); ?></td>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-semibold"><?php echo date('M j, Y', strtotime($post['created_at'])); ?></span>
+                                                <small class="text-muted"><?php echo date('g:i A', strtotime($post['created_at'])); ?></small>
+                                            </div>
+                                        </td>
                                         <td>
                                             <div class="d-flex gap-1">
                                                 <a href="./post_detail.php?slug=<?php echo urlencode($post['post_slug']); ?>" 
-                                                   class="btn btn-sm btn-info flex-fill" target="_blank" title="View">
+                                                   class="btn btn-sm btn-info" target="_blank" title="View Post">
                                                     <i class="bi bi-eye"></i>
                                                 </a>
                                                 <a href="posts.php?source=edit_post&id=<?php echo $post['post_id']; ?>" 
-                                                   class="btn btn-sm btn-warning flex-fill" title="Edit">
+                                                   class="btn btn-sm btn-warning" title="Edit Post">
                                                     <i class="bi bi-pencil"></i>
                                                 </a>
-                                                <a href="posts.php?source=delete_post&id=<?php echo $post['post_id']; ?>" 
-                                                   class="btn btn-sm btn-danger flex-fill" title="Delete">
-                                                    <i class="bi bi-trash"></i>
+                                                <a href="posts.php?delete_post=<?php echo $post['post_id']; ?>" 
+                                                   class="btn btn-sm btn-danger"
+                                                   onclick="return confirm('Are you sure you want to delete this post? This action cannot be undone.');"
+                                                   title="Delete Post">
+                                                   <i class="bi bi-trash"></i>
                                                 </a>
                                             </div>
                                         </td>
@@ -108,6 +152,32 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
+<?php
+// Handle Post Deletion
+if (isset($_GET['delete_post'])) {
+    $post_id = intval($_GET['delete_post']);
+    $result = delete_post($post_id);
+
+    if ($result['success']) {
+        echo "
+        <script>
+            alert('{$result['message']}');
+            window.location.href = 'posts.php';
+        </script>
+        ";
+        exit;
+    } else {
+        echo "
+        <script>
+            alert('{$result['message']}');
+            window.location.href = 'posts.php';
+        </script>
+        ";
+        exit;
+    }
+}
+?>
+
 <style>
 .table th {
     font-weight: 600;
@@ -122,5 +192,22 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     background-color: rgba(241, 191, 112, 0.1);
 }
 .d-flex.gap-1 { gap: 0.25rem !important; }
-.flex-fill { flex: 1 1 auto; }
+.badge { font-size: 0.75em; }
+.table td { vertical-align: middle; }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add hover effects and tooltips
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(btn => {
+        btn.setAttribute('data-bs-toggle', 'tooltip');
+    });
+    
+    // Initialize Bootstrap tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+});
+</script>

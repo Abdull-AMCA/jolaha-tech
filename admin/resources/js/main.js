@@ -442,3 +442,173 @@ function initializeBasicServiceForm() {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { ServiceManager, initializeBasicServiceForm };
 }
+
+
+/////////////////////////////////////////////
+// =====================================================
+// Main Admin JS — handles global UI behavior
+// =====================================================
+document.addEventListener("DOMContentLoaded", function () {
+
+    // =====================================================
+    // 1️⃣ SEO FIELD CHARACTER COUNTERS
+    // =====================================================
+    const metaTitle = document.getElementById('meta_title');
+    const metaDescription = document.getElementById('meta_description');
+
+    function updateCharacterCount(field, countId) {
+        let countElement = document.getElementById(countId);
+        if (!countElement) {
+            countElement = document.createElement('div');
+            countElement.id = countId;
+            countElement.className = 'form-text text-end mt-1';
+            field.parentNode.appendChild(countElement);
+        }
+
+        const len = field.value.trim().length;
+        countElement.textContent = len + ' characters';
+
+        if (field.id === 'meta_title') {
+            if (len >= 50 && len <= 60) {
+                countElement.className = 'form-text text-end text-success mt-1';
+            } else {
+                countElement.className = 'form-text text-end text-warning mt-1';
+            }
+        } else if (field.id === 'meta_description') {
+            if (len >= 150 && len <= 160) {
+                countElement.className = 'form-text text-end text-success mt-1';
+            } else {
+                countElement.className = 'form-text text-end text-warning mt-1';
+            }
+        }
+    }
+
+    if (metaTitle) {
+        metaTitle.addEventListener('input', function () {
+            updateCharacterCount(this, 'metaTitleCount');
+        });
+        updateCharacterCount(metaTitle, 'metaTitleCount');
+    }
+
+    if (metaDescription) {
+        metaDescription.addEventListener('input', function () {
+            updateCharacterCount(this, 'metaDescCount');
+        });
+        updateCharacterCount(metaDescription, 'metaDescCount');
+    }
+
+    // =====================================================
+    // 2️⃣ POST CATEGORY SELECTION (Solution / Product / Service)
+    // =====================================================
+    const categoryRadios = document.querySelectorAll('input[name="post_category_type"]');
+    const categoryDropdownContainer = document.getElementById('categoryDropdownContainer');
+    const categoryDropdown = document.getElementById('categoryDropdown');
+    const serviceCardsContainer = document.getElementById('serviceCardsContainer');
+
+    // Data from PHP (loaded in DOM)
+    const solutions = window.solutionsData || [];
+    const products = window.productsData || [];
+
+    // Reset form category UI
+    function resetCategoryUI() {
+        if (categoryDropdown) {
+            categoryDropdown.innerHTML = '<option value="">Select an option</option>';
+        }
+        if (categoryDropdownContainer) categoryDropdownContainer.style.display = 'none';
+        if (serviceCardsContainer) {
+            serviceCardsContainer.style.display = 'none';
+            document.querySelectorAll('.service-card').forEach(card => card.classList.remove('selected'));
+            document.querySelectorAll('.subservice-btn').forEach(btn => btn.classList.remove('active'));
+        }
+        // Remove hidden inputs
+        document.querySelectorAll('#selectedServiceInput, #selectedSubServiceInput').forEach(el => el.remove());
+    }
+
+    // Populate dropdown (solutions or products)
+    function populateDropdown(data, labelKey) {
+        categoryDropdown.innerHTML = '<option value="">Select an option</option>';
+        data.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.id;
+            option.textContent = item[labelKey];
+            categoryDropdown.appendChild(option);
+        });
+    }
+
+    // When user changes category type
+    categoryRadios.forEach(radio => {
+        radio.addEventListener('change', function () {
+            resetCategoryUI();
+            if (this.value === 'solution') {
+                populateDropdown(solutions, 'solution_name');
+                categoryDropdownContainer.style.display = 'block';
+            } else if (this.value === 'product') {
+                populateDropdown(products, 'product_name');
+                categoryDropdownContainer.style.display = 'block';
+            } else if (this.value === 'service') {
+                serviceCardsContainer.style.display = 'flex';
+            }
+        });
+    });
+
+    // =====================================================
+    // 3️⃣ SERVICE / SUBSERVICE INTERACTION
+    // =====================================================
+    if (serviceCardsContainer) {
+        serviceCardsContainer.addEventListener('click', function (e) {
+            const subBtn = e.target.closest('.subservice-btn');
+            if (!subBtn) return;
+
+            const serviceId = subBtn.getAttribute('data-service-id');
+            const subId = subBtn.getAttribute('data-sub-id');
+
+            // Clear all previous selections
+            document.querySelectorAll('.service-card').forEach(card => card.classList.remove('selected'));
+            document.querySelectorAll('.subservice-btn').forEach(btn => btn.classList.remove('active'));
+
+            // Highlight selected
+            subBtn.classList.add('active');
+            subBtn.closest('.service-card').classList.add('selected');
+
+            // Remove any existing hidden inputs
+            document.querySelectorAll('#selectedServiceInput, #selectedSubServiceInput').forEach(el => el.remove());
+
+            // Add hidden inputs for selected service/subservice
+            const form = document.getElementById('postForm');
+            if (form) {
+                const serviceInput = document.createElement('input');
+                serviceInput.type = 'hidden';
+                serviceInput.name = 'selected_service_id';
+                serviceInput.id = 'selectedServiceInput';
+                serviceInput.value = serviceId;
+
+                const subInput = document.createElement('input');
+                subInput.type = 'hidden';
+                subInput.name = 'selected_subservice_id';
+                subInput.id = 'selectedSubServiceInput';
+                subInput.value = subId;
+
+                form.appendChild(serviceInput);
+                form.appendChild(subInput);
+            }
+        });
+    }
+
+    // =====================================================
+    // 4️⃣ VISUAL ENHANCEMENTS
+    // =====================================================
+    // Service card highlight styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .service-card.selected {
+            border: 2px solid #0d6efd !important;
+            box-shadow: 0 0 0.5rem rgba(13,110,253,0.4);
+        }
+        .subservice-btn.active {
+            background-color: #0d6efd !important;
+            color: white !important;
+        }
+    `;
+    document.head.appendChild(style);
+
+});

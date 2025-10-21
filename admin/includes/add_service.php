@@ -1,25 +1,33 @@
 <?php
-// add-service.php
-require_once 'service-form-component.php';
 
 $services_result = null;
 $all_services = get_all_services_with_subservices();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_service'])) {
-    $services_result = handle_service_addition();
-    // Refresh services list after addition
-    if ($services_result['success']) {
-        $all_services = get_all_services_with_subservices();
-    }
-}
+// Debug: Check if services are being fetched
+error_log("Fetched services count: " . count($all_services));
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_service'])) {
-    $services_result = handle_service_deletion($_POST['service_id']);
-    if ($services_result['success']) {
-        $all_services = get_all_services_with_subservices();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['add_service'])) {
+        $services_result = handle_service_addition();
+        // Refresh services list after addition
+        if ($services_result['success']) {
+            $all_services = get_all_services_with_subservices();
+        }
     }
-    echo json_encode($services_result);
-    exit;
+
+    if (isset($_POST['delete_service'])) {
+        $service_id = intval($_POST['service_id']);
+        $services_result = handle_service_deletion($service_id);
+        if ($services_result['success']) {
+            $all_services = get_all_services_with_subservices();
+        }
+        
+        // For AJAX requests, return JSON and exit
+        if (isset($_POST['ajax'])) {
+            echo json_encode($services_result);
+            exit;
+        }
+    }
 }
 ?>
 
@@ -32,6 +40,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_service'])) {
                 <p class="text-muted">Manage all Jolaha Services and sub-services</p>
             </div>
         </div>
+
+        <!-- Display Messages -->
+        <?php if (isset($services_result) && !empty($services_result['message'])): ?>
+            <div class="alert alert-<?php echo $services_result['success'] ? 'success' : 'danger'; ?> alert-dismissible fade show" role="alert">
+                <?php echo $services_result['message']; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php endif; ?>
 
         <!-- Services List -->
         <div class="row mb-4">
@@ -52,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_service'])) {
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
+                                            <th>ID</th>
                                             <th>Service Name</th>
                                             <th>Description</th>
                                             <th>Sub-Services</th>
@@ -62,28 +79,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_service'])) {
                                     <tbody>
                                         <?php foreach ($all_services as $service): ?>
                                             <tr>
+                                                <td class="text-muted">#<?php echo $service['id']; ?></td>
                                                 <td>
                                                     <div class="d-flex align-items-center">
-                                                        <?php if ($service['service_icon']): ?>
+                                                        <?php if (!empty($service['service_icon'])): ?>
                                                             <i class="<?php echo $service['service_icon']; ?> me-2 text-primary"></i>
+                                                        <?php else: ?>
+                                                            <i class="bi bi-tools me-2 text-muted"></i>
                                                         <?php endif; ?>
                                                         <strong><?php echo htmlspecialchars($service['service_name']); ?></strong>
                                                     </div>
                                                 </td>
-                                                <td><?php echo htmlspecialchars($service['service_description'] ?? 'No description'); ?></td>
+                                                <td>
+                                                    <?php echo !empty($service['service_description']) ? htmlspecialchars($service['service_description']) : '<span class="text-muted">No description</span>'; ?>
+                                                </td>
                                                 <td>
                                                     <?php if (!empty($service['sub_services'])): ?>
                                                         <div class="badge bg-primary rounded-pill">
                                                             <?php echo count($service['sub_services']); ?> sub-services
                                                         </div>
+                                                        <div class="mt-1">
+                                                            <?php foreach ($service['sub_services'] as $sub_service): ?>
+                                                                <small class="d-block text-muted">
+                                                                    • <?php echo htmlspecialchars($sub_service['sub_service_name']); ?>
+                                                                    <?php if (!empty($sub_service['price'])): ?>
+                                                                        - $<?php echo $sub_service['price']; ?>
+                                                                    <?php endif; ?>
+                                                                </small>
+                                                            <?php endforeach; ?>
+                                                        </div>
                                                     <?php else: ?>
                                                         <span class="text-muted">No sub-services</span>
                                                     <?php endif; ?>
                                                 </td>
-                                                <td><?php echo date('M j, Y', strtotime($service['created_at'])); ?></td>
+                                                <td>
+                                                    <?php echo !empty($service['created_at']) ? date('M j, Y', strtotime($service['created_at'])) : 'N/A'; ?>
+                                                </td>
                                                 <td>
                                                     <div class="btn-group btn-group-sm">
-                                                        
                                                         <a href="services.php?source=edit_service&id=<?php echo $service['id']; ?>"
                                                            class="btn btn-outline-primary" 
                                                            data-bs-toggle="tooltip" 
@@ -119,53 +152,134 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_service'])) {
                         <h5 class="card-title mb-0">Add New Service</h5>
                     </div>
                     <div class="card-body">
-                        <?php render_service_form(); ?>
+                        <?php 
+                        // Include the service form component
+                        if (file_exists('service-form-component.php')) {
+                            require_once 'service-form-component.php';
+                            render_service_form();
+                        } else {
+                            echo '<div class="alert alert-warning">Service form component not found.</div>';
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Success Modal -->
-    <div class="modal fade" id="successModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title">Success!</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body text-center py-4">
-                    <i class="bi bi-check-circle-fill text-success display-4 mb-3"></i>
-                    <p id="successMessage"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Continue</button>
-                </div>
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Success!</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center py-4">
+                <i class="bi bi-check-circle-fill text-success display-4 mb-3"></i>
+                <p id="successMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Continue</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Delete Confirmation Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">Confirm Deletion</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete the service: <strong id="deleteServiceName"></strong>?</p>
-                    <p class="text-danger"><small>This action cannot be undone. All associated sub-services will also be deleted.</small></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirmDelete">Delete Service</button>
-                </div>
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Confirm Deletion</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete the service: <strong id="deleteServiceName"></strong>?</p>
+                <p class="text-danger"><small>This action cannot be undone. All associated sub-services will also be deleted.</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete">Delete Service</button>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="js/service-form.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+    // Delete service functionality
+    const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+    const deleteServiceName = document.getElementById('deleteServiceName');
+    const confirmDeleteBtn = document.getElementById('confirmDelete');
+    let serviceToDelete = null;
+
+    document.querySelectorAll('.delete-service-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            serviceToDelete = this.getAttribute('data-service-id');
+            const serviceName = this.getAttribute('data-service-name');
+            deleteServiceName.textContent = serviceName;
+            deleteModal.show();
+        });
+    });
+
+    confirmDeleteBtn.addEventListener('click', function() {
+        if (serviceToDelete) {
+            // Send delete request using FormData
+            const formData = new FormData();
+            formData.append('delete_service', '1');
+            formData.append('service_id', serviceToDelete);
+            formData.append('ajax', '1');
+
+            fetch('', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showSuccessModal(data.message);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while deleting the service.');
+            });
+            
+            deleteModal.hide();
+        }
+    });
+
+    // Show success modal if there's a success result from PHP
+    <?php if (isset($services_result) && $services_result && $services_result['success']): ?>
+        showSuccessModal('<?php echo $services_result['message']; ?>');
+    <?php endif; ?>
+
+    function showSuccessModal(message) {
+        const successMessage = document.getElementById('successMessage');
+        const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+        
+        if (successMessage) {
+            successMessage.textContent = message;
+            successModal.show();
+        }
+    }
+});
+</script>
+
+  
     <script>
         // js/service-form.js
 document.addEventListener('DOMContentLoaded', function() {

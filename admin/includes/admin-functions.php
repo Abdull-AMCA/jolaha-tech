@@ -73,52 +73,30 @@ function handle_service_addition() {
 }
 
 // Get all services with their sub-services
+// Get all services with their sub-services
 function get_all_services_with_subservices() {
     global $connection;
 
     try {
-        $query = "SELECT s.*, 
-                         ss.id as sub_service_id, 
-                         ss.sub_service_name, 
-                         ss.sub_service_description, 
-                         ss.price, 
-                         ss.duration,
-                         ss.is_active as sub_service_active
-                  FROM services s
-                  LEFT JOIN sub_services ss ON s.id = ss.service_id AND ss.is_active = 1
-                  WHERE s.is_active = 1
-                  ORDER BY s.service_name, ss.sub_service_name";
+        // First, get all active services
+        $service_query = "SELECT * FROM services WHERE is_active = 1 ORDER BY service_name";
+        $service_stmt = $connection->prepare($service_query);
+        $service_stmt->execute();
+        $services = $service_stmt->fetchAll(PDO::FETCH_ASSOC);
         
-        $stmt = $connection->prepare($query);
-        $stmt->execute();
-        
-        $services = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $service_id = $row['id'];
+        // Then, for each service, get its sub-services
+        $result = [];
+        foreach ($services as $service) {
+            $sub_service_query = "SELECT * FROM sub_services WHERE service_id = :service_id AND is_active = 1 ORDER BY sub_service_name";
+            $sub_service_stmt = $connection->prepare($sub_service_query);
+            $sub_service_stmt->execute([':service_id' => $service['id']]);
+            $sub_services = $sub_service_stmt->fetchAll(PDO::FETCH_ASSOC);
             
-            if (!isset($services[$service_id])) {
-                $services[$service_id] = [
-                    'id' => $row['id'],
-                    'service_name' => $row['service_name'],
-                    'service_description' => $row['service_description'],
-                    'service_icon' => $row['service_icon'],
-                    'created_at' => $row['created_at'],
-                    'sub_services' => []
-                ];
-            }
-            
-            if ($row['sub_service_id']) {
-                $services[$service_id]['sub_services'][] = [
-                    'id' => $row['sub_service_id'],
-                    'name' => $row['sub_service_name'],
-                    'description' => $row['sub_service_description'],
-                    'price' => $row['price'],
-                    'duration' => $row['duration']
-                ];
-            }
+            $service['sub_services'] = $sub_services;
+            $result[] = $service;
         }
         
-        return array_values($services);
+        return $result;
         
     } catch (PDOException $e) {
         error_log("Get services error: " . $e->getMessage());
@@ -635,4 +613,170 @@ function getSolutionById($solution_id) {
         return null;
     }
 }
+
+
+///////////////////////// POSTS MODULE FUNCTIONS ////////////////////////
+// ✅ Create a new post
+function insert_post($data) {
+    global $connection;
+
+    try {
+        $query = "INSERT INTO posts (
+            post_title, post_content, post_excerpt, post_category,
+            selected_solution, selected_product, selected_service,
+            post_author_name, post_status, post_image,
+            meta_title, meta_description, meta_keywords,
+            created_at, updated_at
+        ) VALUES (
+            :post_title, :post_content, :post_excerpt, :post_category,
+            :selected_solution, :selected_product, :selected_service,
+            :post_author_name, :post_status, :post_image,
+            :meta_title, :meta_description, :meta_keywords,
+            NOW(), NOW()
+        )";
+
+        $stmt = $connection->prepare($query);
+        $stmt->execute([
+            ':post_title' => $data['post_title'],
+            ':post_content' => $data['post_content'],
+            ':post_excerpt' => $data['post_excerpt'],
+            ':post_category' => $data['post_category'],
+            ':selected_solution' => $data['selected_solution'] ?? null,
+            ':selected_product' => $data['selected_product'] ?? null,
+            ':selected_service' => $data['selected_service'] ?? null,
+            ':post_author_name' => $data['post_author_name'],
+            ':post_status' => $data['post_status'],
+            ':post_image' => $data['post_image'] ?? null,
+            ':meta_title' => $data['meta_title'],
+            ':meta_description' => $data['meta_description'],
+            ':meta_keywords' => $data['meta_keywords']
+        ]);
+
+        return [
+            'success' => true,
+            'message' => 'Post created successfully.'
+        ];
+    } catch (PDOException $e) {
+        error_log("Insert Post Error: " . $e->getMessage());
+        return [
+            'success' => false,
+            'message' => 'Database error while creating post.'
+        ];
+    }
+}
+
+// ✅ Read all posts (with optional filters)
+function get_all_posts($status = null) {
+    global $connection;
+
+    try {
+        $query = "SELECT * FROM posts";
+        if ($status) {
+            $query .= " WHERE post_status = :status";
+        }
+        $query .= " ORDER BY created_at DESC";
+
+        $stmt = $connection->prepare($query);
+        if ($status) {
+            $stmt->bindParam(':status', $status);
+        }
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Get All Posts Error: " . $e->getMessage());
+        return [];
+    }
+}
+
+// ✅ Read a single post by ID
+function get_post_by_id($id) {
+    global $connection;
+
+    try {
+        $stmt = $connection->prepare("SELECT * FROM posts WHERE id = :id LIMIT 1");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Get Post Error: " . $e->getMessage());
+        return null;
+    }
+}
+
+// ✅ Update an existing post
+function update_post($id, $data) {
+    global $connection;
+
+    try {
+        $query = "UPDATE posts SET 
+            post_title = :post_title,
+            post_content = :post_content,
+            post_excerpt = :post_excerpt,
+            post_category = :post_category,
+            selected_solution = :selected_solution,
+            selected_product = :selected_product,
+            selected_service = :selected_service,
+            post_author_name = :post_author_name,
+            post_status = :post_status,
+            post_image = :post_image,
+            meta_title = :meta_title,
+            meta_description = :meta_description,
+            meta_keywords = :meta_keywords,
+            updated_at = NOW()
+        WHERE id = :id";
+
+        $stmt = $connection->prepare($query);
+        $stmt->execute([
+            ':post_title' => $data['post_title'],
+            ':post_content' => $data['post_content'],
+            ':post_excerpt' => $data['post_excerpt'],
+            ':post_category' => $data['post_category'],
+            ':selected_solution' => $data['selected_solution'] ?? null,
+            ':selected_product' => $data['selected_product'] ?? null,
+            ':selected_service' => $data['selected_service'] ?? null,
+            ':post_author_name' => $data['post_author_name'],
+            ':post_status' => $data['post_status'],
+            ':post_image' => $data['post_image'],
+            ':meta_title' => $data['meta_title'],
+            ':meta_description' => $data['meta_description'],
+            ':meta_keywords' => $data['meta_keywords'],
+            ':id' => $id
+        ]);
+
+        return [
+            'success' => true,
+            'message' => 'Post updated successfully.'
+        ];
+    } catch (PDOException $e) {
+        error_log("Update Post Error: " . $e->getMessage());
+        return [
+            'success' => false,
+            'message' => 'Database error while updating post.'
+        ];
+    }
+}
+
+// ✅ Delete a post
+function delete_post($id) {
+    global $connection;
+
+    try {
+        $stmt = $connection->prepare("DELETE FROM posts WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return [
+            'success' => true,
+            'message' => 'Post deleted successfully.'
+        ];
+    } catch (PDOException $e) {
+        error_log("Delete Post Error: " . $e->getMessage());
+        return [
+            'success' => false,
+            'message' => 'Database error while deleting post.'
+        ];
+    }
+}
+
 ?>
