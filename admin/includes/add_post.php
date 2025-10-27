@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-12 d-flex justify-content-between align-items-center">
                 <div>
                     <h2 class="h4 mb-1">Create New Post</h2>
-                    <p class="text-muted mb-0">Add a new blog post to your website</p>
+                    <p class="text-muted mb-0">Add a new post on the Jolaha blog.</p>
                 </div>
                 <a href="./posts.php" class="btn btn-primary"><i class="bi bi-arrow-left me-1"></i> Back to Posts</a>
             </div>
@@ -248,7 +248,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="post_content" class="form-label fw-semibold">Content *</label>
                         <textarea id="post_content" name="post_content" class="form-control"
                             rows="12" placeholder="Write your post content here..." required><?php echo htmlspecialchars($post_content); ?></textarea>
-                        <div class="form-text">Main body of your post. Use clear and engaging text.</div>
+                        <div class="form-text">Main body of the post. Only use contents with due approvals.</div>
                     </div>
 
                     <!-- Post Excerpt -->

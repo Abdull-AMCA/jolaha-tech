@@ -113,7 +113,7 @@ include 'includes/header-navbar.php';
                 <p style="color: var(--text);" class="mb-3">
                   Includes responsive web design, up to 10 custom pages, SEO optimization, and a content management system to keep your website up-to-date with ease.
                 </p>
-                <a href="web-design-dev.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                <a href="web-design-dev.php" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
                   View Details & Pricing
                   <i class="bi bi-arrow-right ms-2"></i>
                 </a>
@@ -201,7 +201,7 @@ include 'includes/header-navbar.php';
                 <p style="color: var(--text);" class="mb-3">
                   Includes custom app design, cross-platform development, API integration, and post-launch support to help your business succeed in the mobile-first era.
                 </p>
-                <a href="mobile-app.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                <a href="mobile-app.php" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
                   View Details & Pricing
                   <i class="bi bi-arrow-right ms-2"></i>
                 </a>
@@ -289,7 +289,7 @@ include 'includes/header-navbar.php';
                 <p style="color: var(--text);" class="mb-3">
                   Includes SEO optimization, targeted ad campaigns, social media management, and monthly performance reports to accelerate your digital growth.
                 </p>
-                <a href="online-marketing.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                <a href="online-marketing.php" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
                   View Details & Pricing
                   <i class="bi bi-arrow-right ms-2"></i>
                 </a>
@@ -377,7 +377,7 @@ include 'includes/header-navbar.php';
                 <p style="color: var(--text);" class="mb-3">
                   Includes logo design, brand guidelines, business card templates, and social media assets to ensure consistent branding across all platforms.
                 </p>
-                <a href="creative-design.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                <a href="creative-design.php" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
                   View Details & Pricing
                   <i class="bi bi-arrow-right ms-2"></i>
                 </a>
@@ -465,7 +465,7 @@ include 'includes/header-navbar.php';
                 <p style="color: var(--text);" class="mb-3">
                   Includes end-to-end functional testing, automated regression testing, performance benchmarking, and ongoing QA support for enterprise systems.
                 </p>
-                <a href="software-testing.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                <a href="software-testing.php" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
                   View Details & Pricing
                   <i class="bi bi-arrow-right ms-2"></i>
                 </a>

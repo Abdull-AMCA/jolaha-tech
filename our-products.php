@@ -118,7 +118,7 @@
                         <p style="color: var(--text);" class="mb-3">
                             Our premium package includes advanced AI-powered analytics, custom workflow automation, and dedicated support for large enterprises.
                         </p>
-                        <a href="jolaha-crms.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                        <a href="jolaha-crms.php" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
                             View Details & Pricing
                             <i class="bi bi-arrow-right ms-2"></i>
                         </a>
@@ -206,7 +206,7 @@
                 <p style="color: var(--text);" class="mb-3">
                   Includes advanced talent management, recruitment automation, learning & development modules, and AI-powered workforce analytics for growing enterprises.
                 </p>
-                <a href="jolaha-hrms.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                <a href="jolaha-hrms.php" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
                   View Details & Pricing
                   <i class="bi bi-arrow-right ms-2"></i>
                 </a>
@@ -294,7 +294,7 @@
                 <p style="color: var(--text);" class="mb-3">
                   Includes advanced financial consolidation, tax compliance automation, audit-ready reports, and integrations with banking & ERP systems for large organizations.
                 </p>
-                <a href="jolaha-accountrix.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                <a href="jolaha-accountrix.php" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
                   View Details & Pricing
                   <i class="bi bi-arrow-right ms-2"></i>
                 </a>
@@ -382,7 +382,7 @@
                 <p style="color: var(--text);" class="mb-3">
                   Our premium package includes advanced workflow automation, real-time dashboards, risk management tools, and dedicated support for large-scale projects.
                 </p>
-                <a href="jolaha-pms.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                <a href="jolaha-pms.php" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
                   View Details & Pricing
                   <i class="bi bi-arrow-right ms-2"></i>
                 </a>
@@ -470,7 +470,7 @@
                 <p style="color: var(--text);" class="mb-3">
                   Our enterprise package includes advanced ticket routing, automation workflows, priority escalation, and integration with existing IT systems.
                 </p>
-                <a href="jolaha-help-desk.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                <a href="jolaha-help-desk.php" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
                   View Details & Pricing
                   <i class="bi bi-arrow-right ms-2"></i>
                 </a>
@@ -558,7 +558,7 @@
                 <p style="color: var(--text);" class="mb-3">
                   The enterprise package includes advanced analytics, AI-based suspicious activity detection, automated regulatory reporting, and dedicated support for large institutions.
                 </p>
-                <a href="jolaha-aml.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                <a href="jolaha-aml.php" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
                   View Details & Pricing
                   <i class="bi bi-arrow-right ms-2"></i>
                 </a>
@@ -646,7 +646,7 @@
                 <p style="color: var(--text);" class="mb-3">
                   Our premium package includes advanced course authoring, AI-driven learning paths, gamification, and analytics for large-scale learning programs.
                 </p>
-                <a href="jolaha-lms.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+                <a href="jolaha-lms.php" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
                   View Details & Pricing
                   <i class="bi bi-arrow-right ms-2"></i>
                 </a>

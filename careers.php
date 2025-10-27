@@ -131,7 +131,7 @@
         
         <!-- Right Button -->
         <div>
-          <a href="contact.html" class="btn btn-secondary px-4 py-2 fw-bold">
+          <a href="contact-us.php" class="btn btn-secondary px-4 py-2 fw-bold">
             Submit Your Resume
           </a>
         </div>

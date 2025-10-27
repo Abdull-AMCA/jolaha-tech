@@ -64,7 +64,7 @@ include 'includes/header-navbar.php';
             <p style="color: var(--text);" class="mb-3">
               Designed for agile teams, this suite includes sprint planning tools, backlog management, and real-time progress tracking.
             </p>
-            <a href="our-products.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+            <a href="our-products.php" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
               View Other Products
               <i class="bi bi-arrow-right ms-2"></i>
             </a>

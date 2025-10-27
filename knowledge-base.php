@@ -107,7 +107,7 @@ include 'includes/header-navbar.php';
     <div class="container">
       <h2 class="fw-bold mb-4" style="color: var(--secondary);">Still Need Help?</h2>
       <p class="lead mb-4" style="color: var(--text);">Can’t find what you’re looking for? Reach out to our support team anytime.</p>
-      <a href="contact.html" class="btn btn-primary px-4 py-2 fw-bold">Contact Support</a>
+      <a href="contact-us.php" class="btn btn-primary px-4 py-2 fw-bold">Contact Support</a>
     </div>
   </section>
 

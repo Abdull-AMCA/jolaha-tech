@@ -17,13 +17,12 @@
 <?php
 include 'includes/header-navbar.php';
 ?>
-
     <!-- Hero Section -->
     <section class="about-hero d-flex align-items-center text-center py-5 px-3 px-md-5 text-white">
-    <div class="container py-5 px-md-5">
-    <h1 class="display-4 fw-bold">Comprehensive IT <span style="color: var(--secondary);">Solutions</span></h1>
-    <p class="lead px-2 px-md-5">Empowering businesses with cutting-edge technology services, strategic IT consulting, and innovative digital transformation</p>
-    </div>
+        <div class="container py-5 px-md-5">
+        <h1 class="display-4 fw-bold">Comprehensive IT <span style="color: var(--secondary);">Solutions</span></h1>
+        <p class="lead px-2 px-md-5">Empowering businesses with cutting-edge technology services, strategic IT consulting, and innovative digital transformation</p>
+        </div>
     </section>
 
     <!-- Services Overview -->
@@ -281,7 +280,7 @@ include 'includes/header-navbar.php';
         <div class="container cta py-4 text-center">
             <h3 class="fw-bold mb-3 text-white">Ready to Transform Your Business with Technology?</h3>
             <p class="lead mb-4 text-white opacity-90">Let's discuss how our IT services can drive your digital success</p>
-            <a href="#contact" class="btn btn-lg px-5 py-3 fw-bold" style="background-color: white; color: var(--primary); border-radius: var(--radius);">
+            <a href="contact-us.php" class="btn btn-lg px-5 py-3 fw-bold" style="background-color: white; color: var(--primary); border-radius: var(--radius);">
                 Start Your Project
                 <i class="bi bi-arrow-right ms-2"></i>
             </a>

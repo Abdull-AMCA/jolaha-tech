@@ -99,7 +99,7 @@ include 'includes/header-navbar.php';
             <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
               <h4 style="color: var(--secondary);" class="mb-3">Featured: Enterprise Server Care Package</h4>
               <p style="color: var(--text);" class="mb-3">Includes round-the-clock monitoring, proactive patching, disaster recovery, and advanced security configurations to maximize uptime and reliability.</p>
-              <a href="server-management.html" class="btn btn-primary px-4 py-2 fw-bold">View Details & Pricing <i class="bi bi-arrow-right ms-2"></i></a>
+              <a href="server-management.php" class="btn btn-primary px-4 py-2 fw-bold">View Details & Pricing <i class="bi bi-arrow-right ms-2"></i></a>
             </div>
           </div>
 
@@ -159,7 +159,7 @@ include 'includes/header-navbar.php';
             <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
               <h4 style="color: var(--secondary);" class="mb-3">Featured: Managed IT Support Package</h4>
               <p style="color: var(--text);" class="mb-3">Includes 24/7 helpdesk, proactive monitoring, hardware troubleshooting, and regular maintenance to keep your systems running seamlessly.</p>
-              <a href="it-support.html" class="btn btn-primary px-4 py-2 fw-bold">View Details & Pricing <i class="bi bi-arrow-right ms-2"></i></a>
+              <a href="it-support.php" class="btn btn-primary px-4 py-2 fw-bold">View Details & Pricing <i class="bi bi-arrow-right ms-2"></i></a>
             </div>
           </div>
 
@@ -219,7 +219,7 @@ include 'includes/header-navbar.php';
             <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
               <h4 style="color: var(--secondary);" class="mb-3">Featured: Cloud Transformation Package</h4>
               <p style="color: var(--text);" class="mb-3">Includes assessment, migration, and optimization of your workloads with 24/7 monitoring, ensuring a smooth transition to the cloud with minimal disruption.</p>
-              <a href="cloud-solution.html" class="btn btn-primary px-4 py-2 fw-bold">View Details & Pricing <i class="bi bi-arrow-right ms-2"></i></a>
+              <a href="cloud-solution.php" class="btn btn-primary px-4 py-2 fw-bold">View Details & Pricing <i class="bi bi-arrow-right ms-2"></i></a>
             </div>
           </div>
 
@@ -279,7 +279,7 @@ include 'includes/header-navbar.php';
             <div class="card border-0 p-4 mb-5" style="background-color: var(--card); border-radius: var(--radius);">
               <h4 style="color: var(--secondary);" class="mb-3">Featured: Premium Hosting Package</h4>
               <p style="color: var(--text);" class="mb-3">Includes dedicated hosting, free SSL certificate, daily backups, and 24/7 support to ensure your online presence is secure and uninterrupted.</p>
-              <a href="cloud-solution.html" class="btn btn-primary px-4 py-2 fw-bold">View Details & Pricing <i class="bi bi-arrow-right ms-2"></i></a>
+              <a href="hosting-solutions.php" class="btn btn-primary px-4 py-2 fw-bold">View Details & Pricing <i class="bi bi-arrow-right ms-2"></i></a>
             </div>
           </div>
 

@@ -64,7 +64,7 @@ include 'includes/header-navbar.php';
             <p style="color: var(--text);" class="mb-3">
               Includes responsive web design, up to 10 custom pages, SEO optimization, and a content management system to keep your website up-to-date with ease.
             </p>
-            <a href="contact.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+            <a href="contact-us.php" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
               Request a Quote
               <i class="bi bi-arrow-right ms-2"></i>
             </a>
@@ -155,7 +155,7 @@ include 'includes/header-navbar.php';
               <li>Basic SEO setup</li>
               <li>Responsive design</li>
             </ul>
-            <a href="contact.html" class="btn btn-primary mt-3">Get Started</a>
+            <a href="contact-us.php" class="btn btn-primary mt-3">Get Started</a>
           </div>
         </div>
         <div class="col-md-4">
@@ -168,7 +168,7 @@ include 'includes/header-navbar.php';
               <li>E-commerce functionality</li>
               <li>SEO optimization</li>
             </ul>
-            <a href="contact.html" class="btn btn-primary mt-3">Start Project</a>
+            <a href="contact-us.php" class="btn btn-primary mt-3">Start Project</a>
           </div>
         </div>
         <div class="col-md-4">
@@ -181,7 +181,7 @@ include 'includes/header-navbar.php';
               <li>Advanced integrations</li>
               <li>Dedicated support</li>
             </ul>
-            <a href="contact.html" class="btn btn-primary mt-3">Contact Sales</a>
+            <a href="contact-us.php" class="btn btn-primary mt-3">Contact Sales</a>
           </div>
         </div>
       </div>

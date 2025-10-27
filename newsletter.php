@@ -67,7 +67,7 @@ include 'includes/header-navbar.php';
           <p style="color: var(--text);" class="mb-3">
             Explore insights on cloud adoption, the future of AI-driven solutions, and highlights from our latest Jolaha LMS release.
           </p>
-          <a href="resources.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+          <a href="resources.php" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
             View All Resources
             <i class="bi bi-arrow-right ms-2"></i>
           </a>
@@ -175,7 +175,9 @@ include 'includes/header-navbar.php';
 
 </body>
 </html>
+<?php if (!is_null($subscription_result)): ?>
 
+<?php endif; ?>
 <!-- Footer -->
 <?php
 include 'includes/footer.php';

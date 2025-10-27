@@ -63,3 +63,17 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="./resources/js/main.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(function() {
+        <?php if ($subscription_result['success']): ?>
+        const successModal = new bootstrap.Modal(document.getElementById('newslettersuccessModal'));
+        successModal.show();
+        <?php else: ?>
+        document.getElementById('newslettererrorModalMessage').innerText = "<?php echo addslashes($subscription_result['message']); ?>";
+        const errorModal = new bootstrap.Modal(document.getElementById('newslettererrorModal'));
+        errorModal.show();
+        <?php endif; ?>
+    }, 500);
+    });
+</script>

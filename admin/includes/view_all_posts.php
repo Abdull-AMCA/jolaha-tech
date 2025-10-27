@@ -153,61 +153,61 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <?php
-// Handle Post Deletion
-if (isset($_GET['delete_post'])) {
-    $post_id = intval($_GET['delete_post']);
-    $result = delete_post($post_id);
+    // Handle Post Deletion
+    if (isset($_GET['delete_post'])) {
+        $post_id = intval($_GET['delete_post']);
+        $result = delete_post($post_id);
 
-    if ($result['success']) {
-        echo "
-        <script>
-            alert('{$result['message']}');
-            window.location.href = 'posts.php';
-        </script>
-        ";
-        exit;
-    } else {
-        echo "
-        <script>
-            alert('{$result['message']}');
-            window.location.href = 'posts.php';
-        </script>
-        ";
-        exit;
+        if ($result['success']) {
+            echo "
+            <script>
+                alert('{$result['message']}');
+                window.location.href = 'posts.php';
+            </script>
+            ";
+            exit;
+        } else {
+            echo "
+            <script>
+                alert('{$result['message']}');
+                window.location.href = 'posts.php';
+            </script>
+            ";
+            exit;
+        }
     }
-}
 ?>
 
 <style>
-.table th {
-    font-weight: 600;
-    background-color: #2c3e50 !important;
-    color: white;
-}
-.table-dark {
-    --bs-table-bg: #2c3e50;
-    --bs-table-color: white;
-}
-#postsTable tbody tr:hover {
-    background-color: rgba(241, 191, 112, 0.1);
-}
-.d-flex.gap-1 { gap: 0.25rem !important; }
-.badge { font-size: 0.75em; }
-.table td { vertical-align: middle; }
+    .table th {
+        font-weight: 600;
+        background-color: #2c3e50 !important;
+        color: white;
+    }
+    .table-dark {
+        --bs-table-bg: #2c3e50;
+        --bs-table-color: white;
+    }
+    #postsTable tbody tr:hover {
+        background-color: rgba(241, 191, 112, 0.1);
+    }
+    .d-flex.gap-1 { gap: 0.25rem !important; }
+    .badge { font-size: 0.75em; }
+    .table td { vertical-align: middle; }
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Add hover effects and tooltips
-    const buttons = document.querySelectorAll('.btn');
-    buttons.forEach(btn => {
-        btn.setAttribute('data-bs-toggle', 'tooltip');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add hover effects and tooltips
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(btn => {
+            btn.setAttribute('data-bs-toggle', 'tooltip');
+        });
+        
+        // Initialize Bootstrap tooltips
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
     });
-    
-    // Initialize Bootstrap tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-});
 </script>

@@ -233,7 +233,7 @@ include 'includes/header-navbar.php';
       <div class="container cta py-4 text-center">
           <h3 class="fw-bold mb-3 text-white">Transform Your Real Estate Business</h3>
           <p class="lead mb-4 text-white opacity-90">Join leading real estate firms using our technology solutions</p>
-          <a href="#contact" class="btn btn-lg px-5 py-3 fw-bold" style="background-color: white; color: var(--primary); border-radius: var(--radius);">
+          <a href="contact-us.php" class="btn btn-lg px-5 py-3 fw-bold" style="background-color: white; color: var(--primary); border-radius: var(--radius);">
               Get Started Today
               <i class="bi bi-arrow-right ms-2"></i>
           </a>
@@ -250,30 +250,30 @@ include 'includes/footer.php';
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-  const valueEl = document.getElementById("satisfactionValue");
-  const barEl = document.getElementById("satisfactionBar");
-  let animated = false;
+    const valueEl = document.getElementById("satisfactionValue");
+    const barEl = document.getElementById("satisfactionBar");
+    let animated = false;
 
-  function animateSatisfaction() {
-    if (animated) return; // prevent retrigger
-    animated = true;
+    function animateSatisfaction() {
+        if (animated) return; // prevent retrigger
+        animated = true;
 
-    let current = 0;
-    const target = 89; // final %
-    const interval = setInterval(() => {
-      current++;
-      valueEl.textContent = current;
-      barEl.style.width = current + "%";
-      if (current >= target) clearInterval(interval);
-    }, 30); // speed (30ms per step)
-  }
+        let current = 0;
+        const target = 89; // final %
+        const interval = setInterval(() => {
+        current++;
+        valueEl.textContent = current;
+        barEl.style.width = current + "%";
+        if (current >= target) clearInterval(interval);
+        }, 30); // speed (30ms per step)
+    }
 
-  // Trigger when visible
-  const observer = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) animateSatisfaction();
-  }, { threshold: 0.5 });
+    // Trigger when visible
+    const observer = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) animateSatisfaction();
+    }, { threshold: 0.5 });
 
-  observer.observe(document.querySelector(".satisfaction-card"));
+    observer.observe(document.querySelector(".satisfaction-card"));
   });
 
 </script>

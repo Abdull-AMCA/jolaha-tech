@@ -65,7 +65,7 @@ include 'includes/header-navbar.php';
             <p style="color: var(--text);" class="mb-3">
               Advanced enterprise-grade server management package including cloud failover solutions, AI-driven monitoring, and 24/7 dedicated support.
             </p>
-            <a href="solutions.html" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
+            <a href="our-solutions.php" class="btn btn-primary px-4 py-2 fw-bold" style="background-color: var(--primary); color: white; border-radius: var(--radius); width: fit-content;">
               View Other Solutions
               <i class="bi bi-arrow-right ms-2"></i>
             </a>
