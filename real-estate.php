@@ -248,6 +248,7 @@ include 'includes/footer.php';
 </body>
 </html>
 
+<!-- Image: satisfaction-animation.js Conter -->
 <script>
     document.addEventListener("DOMContentLoaded", () => {
     const valueEl = document.getElementById("satisfactionValue");

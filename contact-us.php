@@ -53,32 +53,89 @@ include 'includes/header-navbar.php'
       </div>
     </div>
   </section>
+
+  <!-- Service Inquiry Form -->
+  <section class="section checked py-5">
+    <div class="container">
+      <div class="form-wrapper mx-auto p-4 p-md-5">
+        <h2 class="fw-bold text-white mb-4 text-center">Get Started With Jolaha Tech</h2>
+        <form method="POST" action="">
+          <div class="row g-3">
+            <!-- Full Name -->
+            <div class="col-md-6">
+              <label class="form-label text-white">Full Name</label>
+              <input type="text" name="full_name" class="form-control" placeholder="Enter your full name" required>
+            </div>
+            <!-- Company Name -->
+            <div class="col-md-6">
+              <label class="form-label text-white">Company Name</label>
+              <input type="text" name="company_name" class="form-control" placeholder="Enter company name">
+            </div>
+            <!-- Email -->
+            <div class="col-md-6">
+              <label class="form-label text-white">Email ID</label>
+              <input type="email" name="email" class="form-control" placeholder="example@email.com" required>
+            </div>
+            <!-- Service Required -->
+            <div class="col-md-6">
+              <label class="form-label text-white">Which service do you require?</label>
+              <select name="service_type" class="form-select" required>
+                <option value="">Select...</option>
+                <option value="Web Design & Development">Web Design & Development</option>
+                <option value="Mobile Application">Mobile Application</option>
+                <option value="Online Marketing">Online Marketing</option>
+                <option value="Design">Creative Design</option>
+                <option value="Testing">Software Testing</option>
+              </select>
+            </div>
+            <!-- Project Type -->
+            <div class="col-md-6">
+              <label class="form-label text-white">Project Type</label>
+              <input type="text" name="project_type" class="form-control" placeholder="e.g., Website Revamp, New App Development">
+            </div>
+            <!-- Budget Range -->
+            <div class="col-md-6">
+              <label class="form-label text-white">Estimated Budget Range (AED)</label>
+              <input type="text" name="budget_range" class="form-control" placeholder="e.g., 10,000 - 25,000">
+            </div>
+            <!-- Timeline -->
+            <div class="col-md-6">
+              <label class="form-label text-white">Preferred Timeline</label>
+              <input type="text" name="timeline" class="form-control" placeholder="e.g., 1 Month, 3 Weeks">
+            </div>
+            <!-- Description -->
+            <div class="col-12">
+              <label class="form-label text-white">Project Description</label>
+              <textarea name="description" rows="4" class="form-control" placeholder="Tell us a bit more about your project"></textarea>
+            </div>
+            <!-- Submit -->
+            <div class="col-12 text-center mt-4">
+              <button type="submit" name="service_inquiry_submit" class="btn btn-primary px-4">Submit Details</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <?php
+      $inquiry_result = null;
+
+      if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_inquiry_submit'])) {
+          $inquiry_result = handle_service_inquiry();
+      }
+    ?>
+  </section>
   
   <section class="py-5" style="background-color: var(--surface);">
     <div class="container">
       <div class="row g-5">
-        <!-- Contact Form -->
-        <div class="col-lg-6">
-          <div class="card border-0 p-4" style="background-color: var(--card); border-radius: var(--radius);">
-            <h3 class="mb-4" style="color: var(--secondary);">Send Us a Message</h3>
-            <form method="POST" action="">
-              <input type="hidden" name="contact_form" value="1">
-              <div class="mb-3"><input type="text" class="form-control" placeholder="Full Name" required></div>
-              <div class="mb-3"><input type="email" class="form-control" placeholder="Email Address" required></div>
-              <div class="mb-3"><input type="text" class="form-control" placeholder="Subject"></div>
-              <div class="mb-3"><textarea class="form-control" rows="5" placeholder="Your Message" required></textarea></div>
-              <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Submit</button>
-            </form>
-          </div>
-        </div>
 
         <!-- Google Map -->
-        <div class="col-lg-6">
+        <div class="col-lg-12">
           <h3 class="mb-4" style="color: var(--secondary);">Find Us</h3>
           <div class="ratio ratio-16x9 shadow rounded">
             <iframe 
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3609.122198588098!2d55.15345281501077!3d25.074282983957303!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f6cf9b7b4cbe5%3A0x5f9f7b7b32c77bb8!2sMazaya%20Business%20Avenue%20BB2!5e0!3m2!1sen!2sae!4v1695300000000"
-              width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+              width="100%" height="100%" style="border:0; border-radius: 20px;" allowfullscreen="" loading="lazy"></iframe>
           </div>
         </div>
       </div>
