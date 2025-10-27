@@ -338,66 +338,62 @@ function handle_service_inquiry() {
 }
 
 
-// Handle newsletter subscription
+///////////////////////// FUNCTION TO HANDLE NEWSLETTER SUBSCRIPTION /////////////////////////
 function handle_newsletter_subscription() {
     global $connection;
 
-    $email = sanitize_input($_POST['email'] ?? '');
-    $name = sanitize_input($_POST['name'] ?? '');
-
-    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "<script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const modal = new bootstrap.Modal(document.getElementById('newslettererrorModal'));
-                document.getElementById('errorModalMessage').innerText = 'Please enter a valid email address.';
-                modal.show();
-            });
-        </script>";
-        return;
-    }
-
     try {
-        // Check for existing active subscriber
-        $check_query = 'SELECT id FROM newsletter_subscriptions WHERE email = :email AND is_active = 1';
-        $stmt = $connection->prepare($check_query);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-
-        if ($stmt->rowCount() > 0) {
-            echo "<script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    const modal = new bootstrap.Modal(document.getElementById('newslettererrorModal'));
-                    document.getElementById('serviceenqerrorModalMessage').innerText = 'This email is already subscribed.';
-                    modal.show();
-                });
-            </script>";
-            return;
+        // Validate input
+        if (empty($_POST['name']) || empty($_POST['email'])) {
+            return [
+                'success' => false,
+                'message' => 'Please provide both name and email.'
+            ];
         }
 
-        // Insert new subscriber
-        $insert = 'INSERT INTO newsletter_subscriptions (name, email, is_active) VALUES (:name, :email, 1)';
-        $stmt = $connection->prepare($insert);
-        $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':email', $email);
+        $name = htmlspecialchars(trim($_POST['name']), ENT_QUOTES, 'UTF-8');
+        $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+
+        // Validate email format
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return [
+                'success' => false,
+                'message' => 'Invalid email address.'
+            ];
+        }
+
+        // Check if email already subscribed
+        $checkStmt = $connection->prepare("SELECT id FROM newsletter_subscribers WHERE email = :email");
+        $checkStmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $checkStmt->execute();
+
+        if ($checkStmt->rowCount() > 0) {
+            return [
+                'success' => false,
+                'message' => 'This email is already subscribed.'
+            ];
+        }
+
+        // Insert subscriber
+        $stmt = $connection->prepare("
+            INSERT INTO newsletter_subscribers (name, email, subscription_date)
+            VALUES (:name, :email, NOW())
+        ");
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
 
-        // ✅ Show success modal
-        echo "<script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const modal = new bootstrap.Modal(document.getElementById('newslettersuccessModal'));
-                modal.show();
-            });
-        </script>";
+        return [
+            'success' => true,
+            'message' => 'Thank you for subscribing to our newsletter!'
+        ];
 
     } catch (PDOException $e) {
-        error_log('Newsletter subscription error: ' . $e->getMessage());
-        echo "<script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const modal = new bootstrap.Modal(document.getElementById('newslettererrorModal'));
-                document.getElementById('newslettererrorModalMessage').innerText = 'An error occurred. Please try again later.';
-                modal.show();
-            });
-        </script>";
+        error_log("Newsletter subscription error: " . $e->getMessage());
+        return [
+            'success' => false,
+            'message' => 'An error occurred while processing your subscription. Please try again later.'
+        ];
     }
 }
 

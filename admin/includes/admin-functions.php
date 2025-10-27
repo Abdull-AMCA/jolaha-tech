@@ -16,13 +16,11 @@ function handle_service_addition() {
         return ['success' => false, 'message' => 'Invalid request'];
     }
 
-    // Get and sanitize form data
     $service_name = sanitize_input($_POST['service_name'] ?? '');
     $service_description = sanitize_input($_POST['service_description'] ?? '');
     $service_icon = sanitize_input($_POST['service_icon'] ?? '');
     $sub_services = $_POST['sub_services'] ?? [];
 
-    // Validate required fields
     if (empty($service_name)) {
         return ['success' => false, 'message' => 'Service name is required'];
     }
@@ -30,7 +28,6 @@ function handle_service_addition() {
     try {
         $connection->beginTransaction();
 
-        // Insert main service
         $service_query = "INSERT INTO services (service_name, service_description, service_icon) 
                          VALUES (:service_name, :service_description, :service_icon)";
         
@@ -45,7 +42,6 @@ function handle_service_addition() {
 
         $service_id = $connection->lastInsertId();
 
-        // Insert sub-services
         if (!empty($sub_services) && is_array($sub_services)) {
             $sub_service_query = "INSERT INTO sub_services (service_id, sub_service_name, sub_service_description) 
                                  VALUES (:service_id, :sub_service_name, :sub_service_description)";
@@ -72,7 +68,6 @@ function handle_service_addition() {
     }
 }
 
-// Get all services with their sub-services
 // Get all services with their sub-services
 function get_all_services_with_subservices() {
     global $connection;
@@ -163,13 +158,11 @@ function handle_service_update($service_id) {
         return ['success' => false, 'message' => 'Invalid request'];
     }
 
-    // Get and sanitize form data
     $service_name = sanitize_input($_POST['service_name'] ?? '');
     $service_description = sanitize_input($_POST['service_description'] ?? '');
     $service_icon = sanitize_input($_POST['service_icon'] ?? '');
     $sub_services = $_POST['sub_services'] ?? [];
 
-    // Validate required fields
     if (empty($service_name)) {
         return ['success' => false, 'message' => 'Service name is required'];
     }
@@ -177,7 +170,6 @@ function handle_service_update($service_id) {
     try {
         $connection->beginTransaction();
 
-        // Update main service
         $service_query = "UPDATE services 
                          SET service_name = :service_name, 
                              service_description = :service_description, 
@@ -195,13 +187,11 @@ function handle_service_update($service_id) {
             throw new Exception('Failed to update service');
         }
 
-        // Soft delete existing sub-services
         $delete_sub_query = "UPDATE sub_services SET is_active = 0 WHERE service_id = :service_id";
         $delete_sub_stmt = $connection->prepare($delete_sub_query);
         $delete_sub_stmt->bindParam(':service_id', $service_id, PDO::PARAM_INT);
         $delete_sub_stmt->execute();
 
-        // Insert/update sub-services
         if (!empty($sub_services) && is_array($sub_services)) {
             $sub_service_query = "INSERT INTO sub_services (service_id, sub_service_name, sub_service_description) 
                                  VALUES (:service_id, :sub_service_name, :sub_service_description)";
@@ -260,7 +250,9 @@ function handle_service_deletion($service_id) {
     }
 }
 
-// PRODUCTS MODULE FUNCTIONS
+
+
+//////////////////////// PRODUCTS MODULE FUNCTIONS ////////////////////////
 // Function to count total products
 function countProducts() {
     global $connection;
@@ -275,18 +267,16 @@ function countProducts() {
     }
 }
 
-
-//////////////////////// Function to insert/update products ////////////////////////
 function insert_products() {
     global $connection; // PDO instance
 
     if (isset($_POST['submit'])) {
-        // Trim and basic sanitize
+       
         $product_name = trim($_POST['product_name'] ?? '');
         $product_id = isset($_POST['product_id']) ? intval($_POST['product_id']) : 0;
 
         if ($product_name === '') {
-            // showAlert is assumed to be a JS function defined in your UI to show toastr/alerts
+            
             echo "<script>showAlert('Product name should not be empty', 'error');</script>";
             return;
         }
@@ -318,7 +308,7 @@ function insert_products() {
                 $success_message = "Product added successfully!";
             }
 
-            // Notify and redirect (escape JS string)
+            
             $jsMessage = addslashes($success_message);
 
             echo "<script>
@@ -389,7 +379,7 @@ function deleteProduct() {
             $stmt->execute([':product_id' => $product_id]);
 
             if ($stmt->rowCount() > 0) {
-                // Return JSON response for AJAX
+               
                 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
                     echo json_encode(['success' => true, 'message' => 'Product deleted successfully!']);
                 } else {
@@ -458,12 +448,12 @@ function insert_solutions() {
     global $connection; // PDO instance
 
     if (isset($_POST['submit'])) {
-        // Trim and basic sanitize
+       
         $solution_name = trim($_POST['solution_name'] ?? '');
         $solution_id = isset($_POST['solution_id']) ? intval($_POST['solution_id']) : 0;
 
         if ($solution_name === '') {
-            // showAlert is assumed to be a JS function defined in your UI to show toastr/alerts
+           
             echo "<script>showAlert('Solution name should not be empty', 'error');</script>";
             return;
         }
@@ -495,7 +485,6 @@ function insert_solutions() {
                 $success_message = "Solution added successfully!";
             }
 
-            // Notify and redirect (escape JS string)
             $jsMessage = addslashes($success_message);
 
             echo "<script>
@@ -566,7 +555,7 @@ function deleteSolution() {
             $stmt->execute([':solution_id' => $solution_id]);
 
             if ($stmt->rowCount() > 0) {
-                // Return JSON response for AJAX
+            
                 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
                     echo json_encode(['success' => true, 'message' => 'Solution deleted successfully!']);
                 } else {
@@ -616,7 +605,7 @@ function getSolutionById($solution_id) {
 
 
 ///////////////////////// POSTS MODULE FUNCTIONS ////////////////////////
-// ✅ Create a new post
+// Create a new post
 function insert_post($data) {
     global $connection;
 
@@ -665,7 +654,7 @@ function insert_post($data) {
     }
 }
 
-// ✅ Read all posts (with optional filters)
+// Read all posts (with optional filters)
 function get_all_posts($status = null) {
     global $connection;
 
@@ -689,7 +678,7 @@ function get_all_posts($status = null) {
     }
 }
 
-// ✅ Read a single post by ID
+// Read a single post by ID
 function get_post_by_id($id) {
     global $connection;
 
@@ -704,7 +693,7 @@ function get_post_by_id($id) {
     }
 }
 
-// ✅ Update an existing post
+// Update an existing post
 function update_post($id, $data) {
     global $connection;
 
@@ -757,7 +746,7 @@ function update_post($id, $data) {
     }
 }
 
-// ✅ Delete a post
+// Delete a post
 function delete_post($id) {
     global $connection;
 

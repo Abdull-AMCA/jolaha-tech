@@ -503,6 +503,7 @@ include 'includes/head.php';
       if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newsletter_submit'])) {
           $subscription_result = handle_newsletter_subscription();
       }
+      
     ?>
   </section>
 
@@ -731,6 +732,22 @@ include 'includes/head.php';
 <?php
 include 'includes/footer.php';
 ?>
-
+<?php if (!is_null($subscription_result)): ?>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Wait until Bootstrap JS is loaded and DOM is ready
+  setTimeout(function() {
+    <?php if ($subscription_result['success']): ?>
+      const successModal = new bootstrap.Modal(document.getElementById('newslettersuccessModal'));
+      successModal.show();
+    <?php else: ?>
+      document.getElementById('newslettererrorModalMessage').innerText = "<?php echo addslashes($subscription_result['message']); ?>";
+      const errorModal = new bootstrap.Modal(document.getElementById('newslettererrorModal'));
+      errorModal.show();
+    <?php endif; ?>
+  }, 500);
+});
+</script>
+<?php endif; ?>
 </body>
 </html>
