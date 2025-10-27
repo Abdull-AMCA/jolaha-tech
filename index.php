@@ -402,7 +402,11 @@ include 'includes/head.php';
           $postedLabel = "Posted Yesterday";
         } elseif ($hoursDiff < 72) {
           $postedLabel = "Posted 3 days ago";
-        } else {
+        } elseif ($hoursDiff < 96) {
+          $postedLabel = "Posted 4 days ago";
+        } elseif ($hoursDiff < 120) {
+          $postedLabel = "Posted 5 days ago";
+        }else {
           $postedLabel = "Posted on " . date("M j, Y", $createdTime);
         }
       ?>
@@ -425,7 +429,7 @@ include 'includes/head.php';
               <p class="blog-excerpt" style="text-align:left;">
                 <?php echo htmlspecialchars($excerpt); ?>
               </p>
-              <a href="post.php?id=<?php echo urlencode($post['post_id']); ?>" class="read-more">
+              <a href="post-details.php?slug=<?php echo urlencode($rpost['post_slug']); ?>" class="read-more">
                 Read More →
               </a>
             </div>
