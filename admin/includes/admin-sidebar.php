@@ -50,7 +50,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 // Mark parent active if we're on any services page
                 $is_services_active = in_array($current_page, ['services.php', 'add_service.php', 'edit_service.php']);
             ?>
-            <a class="nav-link menu-toggle-btn <?php echo $is_services_active ? 'active' : ''; ?>" href="#" data-menu="services">
+            <a class="nav-link menu-toggle-btn <?php echo $is_services_active ? 'active' : ''; ?>" href="includes/services?source=add_service.php" data-menu="services">
                 <i class="bi bi-tools nav-icon"></i>
                 <span class="nav-text">Services</span>
                 <i class="bi bi-chevron-right menu-toggle"></i>

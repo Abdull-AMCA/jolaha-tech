@@ -307,7 +307,7 @@ class ServiceManager {
         fetch('delete_service.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `service_id=${serviceId}`
+            body: new URLSearchParams({ service_id: serviceId }).toString()
         })
         .then(response => {
             if (!response.ok) throw new Error('Network response was not ok');

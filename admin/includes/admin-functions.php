@@ -1,14 +1,14 @@
 <?php
 
 //////////////////////// SERVICE MODULE FUNCTIONS ////////////////////////
-// Sanitize input helper
+
+// ========== UTILITY ==========
 function sanitize_input($data) {
-    if (is_array($data)) {
-        return array_map('sanitize_input', $data);
-    }
+    if (is_array($data)) return array_map('sanitize_input', $data);
     return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
 }
 
+// ========== CREATE ==========
 function handle_service_addition() {
     global $connection;
 
@@ -28,225 +28,285 @@ function handle_service_addition() {
     try {
         $connection->beginTransaction();
 
-        $service_query = "INSERT INTO services (service_name, service_description, service_icon) 
-                         VALUES (:service_name, :service_description, :service_icon)";
-        
-        $service_stmt = $connection->prepare($service_query);
-        $service_stmt->bindParam(':service_name', $service_name);
-        $service_stmt->bindParam(':service_description', $service_description);
-        $service_stmt->bindParam(':service_icon', $service_icon);
-        
-        if (!$service_stmt->execute()) {
-            throw new Exception('Failed to add service');
-        }
+        $stmt = $connection->prepare("
+            INSERT INTO services (service_name, service_description, service_icon) 
+            VALUES (:service_name, :service_description, :service_icon)
+        ");
+        $stmt->execute([
+            ':service_name' => $service_name,
+            ':service_description' => $service_description,
+            ':service_icon' => $service_icon
+        ]);
 
         $service_id = $connection->lastInsertId();
 
-        if (!empty($sub_services) && is_array($sub_services)) {
-            $sub_service_query = "INSERT INTO sub_services (service_id, sub_service_name, sub_service_description) 
-                                 VALUES (:service_id, :sub_service_name, :sub_service_description)";
-            $sub_service_stmt = $connection->prepare($sub_service_query);
-            foreach ($sub_services as $sub_service) {
-                if (!empty(trim($sub_service['name']))) {
-                    $sub_service_stmt->bindParam(':service_id', $service_id);
-                    $sub_service_stmt->bindParam(':sub_service_name', $sub_service['name']);
-                    $sub_service_stmt->bindParam(':sub_service_description', $sub_service['description']);
-                    if (!$sub_service_stmt->execute()) {
-                        throw new Exception('Failed to add sub-service');
-                    }
+        if (!empty($sub_services)) {
+            $sub_stmt = $connection->prepare("
+                INSERT INTO sub_services (service_id, sub_service_name, sub_service_description)
+                VALUES (:service_id, :name, :description)
+            ");
+            foreach ($sub_services as $sub) {
+                $name = trim($sub['name'] ?? '');
+                $desc = trim($sub['description'] ?? '');
+                if (!empty($name)) {
+                    $sub_stmt->execute([
+                        ':service_id' => $service_id,
+                        ':name' => $name,
+                        ':description' => $desc
+                    ]);
                 }
             }
         }
 
         $connection->commit();
-        return ['success' => true, 'message' => 'Service added successfully!', 'service_id' => $service_id];
-
+        return ['success' => true, 'message' => 'Service added successfully!'];
     } catch (Exception $e) {
         $connection->rollBack();
-        error_log("Service addition error: " . $e->getMessage());
-        return ['success' => false, 'message' => 'Failed to add service. Please try again.'];
+        error_log('Service addition error: ' . $e->getMessage());
+        return ['success' => false, 'message' => 'Failed to add service.'];
     }
 }
 
-// Get all services with their sub-services
+// ========== READ ==========
 function get_all_services_with_subservices() {
     global $connection;
 
     try {
-        // First, get all active services
-        $service_query = "SELECT * FROM services WHERE is_active = 1 ORDER BY service_name";
-        $service_stmt = $connection->prepare($service_query);
-        $service_stmt->execute();
-        $services = $service_stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        // Then, for each service, get its sub-services
-        $result = [];
-        foreach ($services as $service) {
-            $sub_service_query = "SELECT * FROM sub_services WHERE service_id = :service_id AND is_active = 1 ORDER BY sub_service_name";
-            $sub_service_stmt = $connection->prepare($sub_service_query);
-            $sub_service_stmt->execute([':service_id' => $service['id']]);
-            $sub_services = $sub_service_stmt->fetchAll(PDO::FETCH_ASSOC);
-            
-            $service['sub_services'] = $sub_services;
-            $result[] = $service;
+        $stmt = $connection->prepare("SELECT * FROM services WHERE is_active = 1 ORDER BY created_at DESC");
+        $stmt->execute();
+        $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($services as &$service) {
+            $sub_stmt = $connection->prepare("
+                SELECT sub_service_name, sub_service_description 
+                FROM sub_services 
+                WHERE service_id = :id AND is_active = 1
+            ");
+            $sub_stmt->execute([':id' => $service['id']]);
+            $service['sub_services'] = $sub_stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-        
-        return $result;
-        
+
+        return $services;
     } catch (PDOException $e) {
-        error_log("Get services error: " . $e->getMessage());
+        error_log('Get services error: ' . $e->getMessage());
         return [];
     }
 }
 
-// Get service by ID for editing
-function get_service_by_id($service_id) {
-    global $connection;
-
-    try {
-        $query = "SELECT s.*, 
-                         ss.id as sub_service_id, 
-                         ss.sub_service_name, 
-                         ss.sub_service_description, 
-                         ss.price, 
-                         ss.duration
-                  FROM services s
-                  LEFT JOIN sub_services ss ON s.id = ss.service_id AND ss.is_active = 1
-                  WHERE s.id = :service_id AND s.is_active = 1
-                  ORDER BY ss.sub_service_name";
-        
-        $stmt = $connection->prepare($query);
-        $stmt->bindParam(':service_id', $service_id, PDO::PARAM_INT);
-        $stmt->execute();
-        
-        $service = null;
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            if (!$service) {
-                $service = [
-                    'id' => $row['id'],
-                    'service_name' => $row['service_name'],
-                    'service_description' => $row['service_description'],
-                    'service_icon' => $row['service_icon'],
-                    'sub_services' => []
-                ];
-            }
-            
-            if ($row['sub_service_id']) {
-                $service['sub_services'][] = [
-                    'id' => $row['sub_service_id'],
-                    'name' => $row['sub_service_name'],
-                    'description' => $row['sub_service_description'],
-                    'price' => $row['price'],
-                    'duration' => $row['duration']
-                ];
-            }
-        }
-        
-        return $service;
-        
-    } catch (PDOException $e) {
-        error_log("Get service by ID error: " . $e->getMessage());
-        return null;
-    }
-}
-
-// Handle service update
-function handle_service_update($service_id) {
-    global $connection;
-
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['update_service'])) {
-        return ['success' => false, 'message' => 'Invalid request'];
-    }
-
-    $service_name = sanitize_input($_POST['service_name'] ?? '');
-    $service_description = sanitize_input($_POST['service_description'] ?? '');
-    $service_icon = sanitize_input($_POST['service_icon'] ?? '');
-    $sub_services = $_POST['sub_services'] ?? [];
-
-    if (empty($service_name)) {
-        return ['success' => false, 'message' => 'Service name is required'];
-    }
-
-    try {
-        $connection->beginTransaction();
-
-        $service_query = "UPDATE services 
-                         SET service_name = :service_name, 
-                             service_description = :service_description, 
-                             service_icon = :service_icon,
-                             updated_at = CURRENT_TIMESTAMP
-                         WHERE id = :service_id";
-        
-        $service_stmt = $connection->prepare($service_query);
-        $service_stmt->bindParam(':service_name', $service_name);
-        $service_stmt->bindParam(':service_description', $service_description);
-        $service_stmt->bindParam(':service_icon', $service_icon);
-        $service_stmt->bindParam(':service_id', $service_id, PDO::PARAM_INT);
-        
-        if (!$service_stmt->execute()) {
-            throw new Exception('Failed to update service');
-        }
-
-        $delete_sub_query = "UPDATE sub_services SET is_active = 0 WHERE service_id = :service_id";
-        $delete_sub_stmt = $connection->prepare($delete_sub_query);
-        $delete_sub_stmt->bindParam(':service_id', $service_id, PDO::PARAM_INT);
-        $delete_sub_stmt->execute();
-
-        if (!empty($sub_services) && is_array($sub_services)) {
-            $sub_service_query = "INSERT INTO sub_services (service_id, sub_service_name, sub_service_description) 
-                                 VALUES (:service_id, :sub_service_name, :sub_service_description)";
-            $sub_service_stmt = $connection->prepare($sub_service_query);
-            foreach ($sub_services as $sub_service) {
-                if (!empty(trim($sub_service['name']))) {
-                    $sub_service_stmt->bindParam(':service_id', $service_id);
-                    $sub_service_stmt->bindParam(':sub_service_name', $sub_service['name']);
-                    $sub_service_stmt->bindParam(':sub_service_description', $sub_service['description']);
-                    if (!$sub_service_stmt->execute()) {
-                        throw new Exception('Failed to update sub-service');
-                    }
-                }
-            }
-        }
-
-        $connection->commit();
-        return ['success' => true, 'message' => 'Service updated successfully!'];
-
-    } catch (Exception $e) {
-        $connection->rollBack();
-        error_log("Service update error: " . $e->getMessage());
-        return ['success' => false, 'message' => 'Failed to update service. Please try again.'];
-    }
-}
-
-// Handle service deletion
 function handle_service_deletion($service_id) {
     global $connection;
 
     try {
         $connection->beginTransaction();
 
-        // Soft delete the service
-        $service_query = "UPDATE services SET is_active = 0 WHERE id = :service_id";
-        $service_stmt = $connection->prepare($service_query);
-        $service_stmt->bindParam(':service_id', $service_id, PDO::PARAM_INT);
-        
-        if (!$service_stmt->execute()) {
-            throw new Exception('Failed to delete service');
-        }
+        // Soft delete main service
+        $stmt = $connection->prepare("
+            UPDATE services 
+            SET is_active = 0, updated_at = NOW() 
+            WHERE id = :service_id
+        ");
+        $stmt->execute([':service_id' => $service_id]);
 
-        // Soft delete associated sub-services
-        $sub_service_query = "UPDATE sub_services SET is_active = 0 WHERE service_id = :service_id";
-        $sub_service_stmt = $connection->prepare($sub_service_query);
-        $sub_service_stmt->bindParam(':service_id', $service_id, PDO::PARAM_INT);
-        $sub_service_stmt->execute();
+        // Soft delete all related sub-services
+        $sub_stmt = $connection->prepare("
+            UPDATE sub_services 
+            SET is_active = 0, updated_at = NOW() 
+            WHERE service_id = :service_id
+        ");
+        $sub_stmt->execute([':service_id' => $service_id]);
 
         $connection->commit();
-        return ['success' => true, 'message' => 'Service deleted successfully!'];
 
+        return [
+            'success' => true,
+            'message' => 'Service and its sub-services were deleted successfully.'
+        ];
     } catch (Exception $e) {
         $connection->rollBack();
-        error_log("Service deletion error: " . $e->getMessage());
-        return ['success' => false, 'message' => 'Failed to delete service. Please try again.'];
+        error_log('Delete service error: ' . $e->getMessage());
+        return [
+            'success' => false,
+            'message' => 'An error occurred while deleting the service.'
+        ];
+    }
+}
+
+
+
+// Get service by ID for editing
+function get_service_by_id($service_id) {
+    global $connection;
+
+    try {
+        // Step 1: Fetch the main service record
+        $query_service = "
+            SELECT 
+                id,
+                service_name,
+                service_description,
+                service_icon,
+                is_active,
+                created_at,
+                updated_at
+            FROM services
+            WHERE id = :service_id
+            LIMIT 1
+        ";
+
+        $stmt = $connection->prepare($query_service);
+        $stmt->bindParam(':service_id', $service_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $service = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$service) {
+            // No service found
+            return null;
+        }
+
+        // Step 2: Fetch sub-services for this service (if any)
+        $query_sub = "
+            SELECT 
+                id,
+                sub_service_name,
+                sub_service_description,
+                is_active,
+                created_at,
+                updated_at
+            FROM sub_services
+            WHERE service_id = :service_id
+            ORDER BY sub_service_name ASC
+        ";
+
+        $stmt_sub = $connection->prepare($query_sub);
+        $stmt_sub->bindParam(':service_id', $service_id, PDO::PARAM_INT);
+        $stmt_sub->execute();
+        $sub_services = $stmt_sub->fetchAll(PDO::FETCH_ASSOC);
+
+        // Step 3: Attach sub-services to main service array
+        $service['sub_services'] = [];
+        foreach ($sub_services as $sub) {
+            $service['sub_services'][] = [
+                'id' => $sub['id'],
+                'name' => $sub['sub_service_name'],
+                'description' => $sub['sub_service_description'],
+                'is_active' => $sub['is_active'],
+                'created_at' => $sub['created_at'],
+                'updated_at' => $sub['updated_at']
+            ];
+        }
+
+        return $service;
+
+    } catch (PDOException $e) {
+        error_log("Error fetching service by ID: " . $e->getMessage());
+        return null;
+    }
+}
+
+
+
+// ===============================
+// Handle Service Update
+// ===============================
+function handle_service_update($service_id) {
+    global $connection;
+
+    try {
+        $connection->beginTransaction();
+
+        // 1️⃣ Update the main service
+        $sql_service = "
+            UPDATE services 
+            SET service_name = :name, 
+                service_description = :description, 
+                service_icon = :icon, 
+                updated_at = NOW()
+            WHERE id = :id
+        ";
+
+        $stmt = $connection->prepare($sql_service);
+        $stmt->execute([
+            ':name' => $_POST['service_name'] ?? '',
+            ':description' => $_POST['service_description'] ?? '',
+            ':icon' => $_POST['service_icon'] ?? '',
+            ':id' => $service_id
+        ]);
+
+        // 2️⃣ Handle sub-services (update or insert)
+        $sub_services = $_POST['sub_services'] ?? [];
+
+        // Fetch existing sub_service IDs for this service
+        $stmt_ids = $connection->prepare("SELECT id FROM sub_services WHERE service_id = :sid");
+        $stmt_ids->execute([':sid' => $service_id]);
+        $existing_ids = $stmt_ids->fetchAll(PDO::FETCH_COLUMN);
+
+        $updated_ids = [];
+
+        foreach ($sub_services as $sub) {
+            $name = trim($sub['name'] ?? '');
+            $description = trim($sub['description'] ?? '');
+            $sub_id = $sub['id'] ?? null;
+
+            // Skip empty rows
+            if ($name === '') continue;
+
+            if ($sub_id && in_array($sub_id, $existing_ids)) {
+                // Update existing sub-service
+                $update_sql = "
+                    UPDATE sub_services 
+                    SET sub_service_name = :name, 
+                        sub_service_description = :description,
+                        is_active = 1,
+                        updated_at = NOW()
+                    WHERE id = :id
+                ";
+                $stmt_sub = $connection->prepare($update_sql);
+                $stmt_sub->execute([
+                    ':name' => $name,
+                    ':description' => $description,
+                    ':id' => $sub_id
+                ]);
+                $updated_ids[] = $sub_id;
+            } else {
+                // Insert new sub-service
+                $insert_sql = "
+                    INSERT INTO sub_services (service_id, sub_service_name, sub_service_description, is_active, created_at, updated_at)
+                    VALUES (:service_id, :name, :description, 1, NOW(), NOW())
+                ";
+                $stmt_sub = $connection->prepare($insert_sql);
+                $stmt_sub->execute([
+                    ':service_id' => $service_id,
+                    ':name' => $name,
+                    ':description' => $description
+                ]);
+            }
+        }
+
+        // 3️⃣ Mark removed sub-services as inactive
+        if (!empty($existing_ids)) {
+            $inactive_ids = array_diff($existing_ids, $updated_ids);
+            if (!empty($inactive_ids)) {
+                $placeholders = implode(',', array_fill(0, count($inactive_ids), '?'));
+                $deactivate_sql = "UPDATE sub_services SET is_active = 0 WHERE id IN ($placeholders)";
+                $stmt_deactivate = $connection->prepare($deactivate_sql);
+                $stmt_deactivate->execute($inactive_ids);
+            }
+        }
+
+        $connection->commit();
+
+        return [
+            'success' => true,
+            'message' => 'Service and sub-services updated successfully.'
+        ];
+
+    } catch (PDOException $e) {
+        $connection->rollBack();
+        error_log("Service update failed: " . $e->getMessage());
+        return [
+            'success' => false,
+            'message' => 'Failed to update service. Please try again.'
+        ];
     }
 }
 
