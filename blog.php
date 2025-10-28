@@ -18,9 +18,8 @@
     <?php
       include 'includes/header-navbar.php';
 
-      // Fetch published posts
-      try {
-          $sql = "SELECT post_id, post_slug, post_title, post_content, post_author_name, post_image, post_category, created_at 
+      try {  
+        $sql = "SELECT post_id, post_slug, post_title, post_content, post_author_name, post_image, post_category, created_at 
                   FROM posts 
                   WHERE post_status = 'published'
                   ORDER BY created_at DESC";

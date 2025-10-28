@@ -352,11 +352,11 @@ include 'includes/head.php';
     </div>
   </section>
 
-<!-- Blog -->
-<section id="blog" class="section blog-section bg-light">
-  <div class="container">
-    <!-- Heading -->
-    <div class="text-center mb-5">
+  <!-- Blog -->
+  <section id="blog" class="section blog-section bg-light">
+    <div class="container">
+      <!-- Heading -->
+      <div class="text-center mb-5">
       <h2 class="section-title">Latest Insights</h2>
       <div class="d-flex justify-content-center">
         <p class="lead text-center">
@@ -366,85 +366,78 @@ include 'includes/head.php';
     </div>
 
     <?php
-    // -------------------
-    // Fetch latest 3 posts (using your existing $connection)
-    // -------------------
-    $query = "SELECT post_id, post_title, post_content, post_author_name, post_image, post_category, created_at 
-              FROM posts 
-              ORDER BY created_at DESC 
-              LIMIT 3";
+      $query = "SELECT post_id, post_slug, post_title, post_content, post_author_name, post_image, post_category, created_at 
+                  FROM posts 
+                ORDER BY created_at DESC 
+                LIMIT 3";
 
-    $stmt = $connection->prepare($query);
-    $stmt->execute();
-    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      $stmt = $connection->prepare($query);
+      $stmt->execute();
+      $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
 
-<!-- -------------------
-    Blog Section Cards
-------------------- -->
-<div class="row gy-4">
-  <?php if (!empty($posts)): ?>
-    <?php foreach ($posts as $post): ?>
-      <?php
-        // Truncate post content
-        $excerpt = strlen($post['post_content']) > 150 
-          ? substr($post['post_content'], 0, 150) . '...' 
-          : $post['post_content'];
+    <!-- Blog Section Cards -->
+    <div class="row gy-4">
+      <?php if (!empty($posts)): ?>
+        <?php foreach ($posts as $post): ?>
+          <?php
+            // Truncate post content
+            $excerpt = strlen($post['post_content']) > 150 
+              ? substr($post['post_content'], 0, 150) . '...' 
+              : $post['post_content'];
 
-        // Calculate time difference for the "posted" label
-        $createdTime = strtotime($post['created_at']);
-        $currentTime = time();
-        $hoursDiff = ($currentTime - $createdTime) / 3600;
+            // Calculate time difference for the "posted" label
+            $createdTime = strtotime($post['created_at']);
+            $currentTime = time();
+            $hoursDiff = ($currentTime - $createdTime) / 3600;
 
-        if ($hoursDiff < 24) {
-          $postedLabel = "Posted Today";
-        } elseif ($hoursDiff < 48) {
-          $postedLabel = "Posted Yesterday";
-        } elseif ($hoursDiff < 72) {
-          $postedLabel = "Posted 3 days ago";
-        } elseif ($hoursDiff < 96) {
-          $postedLabel = "Posted 4 days ago";
-        } elseif ($hoursDiff < 120) {
-          $postedLabel = "Posted 5 days ago";
-        }else {
-          $postedLabel = "Posted on " . date("M j, Y", $createdTime);
-        }
-      ?>
-        <div class="col-md-6 col-lg-4">
-          <article class="blog-card card h-100">
-            <img 
-              src="resources/img/uploads/posts/<?php echo htmlspecialchars($post['post_image']); ?>" 
-              class="card-img-top" 
-              alt="<?php echo htmlspecialchars($post['post_title']); ?>"
-            >
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="chip"><?php echo htmlspecialchars($post['post_category']); ?></span>
-                <small class="text-light" style="font-size: 0.85rem;">
-                  <?php echo htmlspecialchars($postedLabel); ?>
-                </small>
+            if ($hoursDiff < 24) {
+              $postedLabel = "Posted Today";
+            } elseif ($hoursDiff < 48) {
+              $postedLabel = "Posted Yesterday";
+            } elseif ($hoursDiff < 72) {
+              $postedLabel = "Posted 3 days ago";
+            } elseif ($hoursDiff < 96) {
+              $postedLabel = "Posted 4 days ago";
+            } elseif ($hoursDiff < 120) {
+              $postedLabel = "Posted 5 days ago";
+            }else {
+              $postedLabel = "Posted on " . date("M j, Y", $createdTime);
+            }
+          ?>
+          <div class="col-md-6 col-lg-4">
+            <article class="blog-card card h-100">
+              <img 
+                src="resources/img/uploads/posts/<?php echo htmlspecialchars($post['post_image']); ?>" 
+                class="card-img-top" 
+                alt="<?php echo htmlspecialchars($post['post_title']); ?>"
+              >
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="chip"><?php echo htmlspecialchars($post['post_category']); ?></span>
+                  <small class="text-light" style="font-size: 0.85rem;">
+                    <?php echo htmlspecialchars($postedLabel); ?>
+                  </small>
+                </div>
+
+                <h3 class="blog-title"><?php echo htmlspecialchars($post['post_title']); ?></h3>
+                <p class="blog-excerpt" style="text-align:left;">
+                  <?php echo htmlspecialchars($excerpt); ?>
+                </p>
+                <a href="post-details.php?slug=<?php echo urlencode($post['post_slug']); ?>" class="read-more">
+                  Read More →
+                </a>
               </div>
-
-              <h3 class="blog-title"><?php echo htmlspecialchars($post['post_title']); ?></h3>
-              <p class="blog-excerpt" style="text-align:left;">
-                <?php echo htmlspecialchars($excerpt); ?>
-              </p>
-              <a href="post-details.php?slug=<?php echo urlencode($rpost['post_slug']); ?>" class="read-more">
-                Read More →
-              </a>
-            </div>
-          </article>
+            </article>
+          </div>
+        <?php endforeach; ?>
+          <?php else: ?>
+            <p class="text-center text-muted">No posts found.</p>
+          <?php endif; ?>
         </div>
-      <?php endforeach; ?>
-        <?php else: ?>
-          <p class="text-center text-muted">No posts found.</p>
-        <?php endif; ?>
       </div>
-
     </div>
-  </div>
-</section>
-
+  </section>
 
   <!-- Service Inquiry Form -->
   <section class="section checked py-5">
