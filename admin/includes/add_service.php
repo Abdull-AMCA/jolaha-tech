@@ -1,33 +1,30 @@
 <?php
-// add-service.php
+    $services_result = null;
+    $all_services = get_all_services_with_subservices();
 
-// Fetch existing services for display
-$services_result = null;
-$all_services = get_all_services_with_subservices();
+    // Handle add/delete form submissions
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['add_service'])) {
+            $services_result = handle_service_addition();
+            if ($services_result['success']) {
+                $all_services = get_all_services_with_subservices();
+            }
+        }
 
-// Handle add/delete form submissions
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['add_service'])) {
-        $services_result = handle_service_addition();
-        if ($services_result['success']) {
-            $all_services = get_all_services_with_subservices();
+        if (isset($_POST['delete_service'])) {
+            $service_id = intval($_POST['service_id']);
+            $services_result = handle_service_deletion($service_id);
+            if ($services_result['success']) {
+                $all_services = get_all_services_with_subservices();
+            }
+
+            // AJAX delete response
+            if (isset($_POST['ajax'])) {
+                echo json_encode($services_result);
+                exit;
+            }
         }
     }
-
-    if (isset($_POST['delete_service'])) {
-        $service_id = intval($_POST['service_id']);
-        $services_result = handle_service_deletion($service_id);
-        if ($services_result['success']) {
-            $all_services = get_all_services_with_subservices();
-        }
-
-        // AJAX delete response
-        if (isset($_POST['ajax'])) {
-            echo json_encode($services_result);
-            exit;
-        }
-    }
-}
 
 ?>
 
@@ -151,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 </div>
 
-<!-- ✅ Success Modal -->
+<!-- Success Modal -->
 <div class="modal fade" id="successModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -170,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 </div>
 
-<!-- ❌ Delete Confirmation Modal -->
+<!-- Delete Confirmation Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">

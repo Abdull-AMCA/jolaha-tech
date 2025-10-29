@@ -1,5 +1,4 @@
 <?php
-
 //////////////////////// SERVICE MODULE FUNCTIONS ////////////////////////
 
 // ========== UTILITY ==========
@@ -93,46 +92,6 @@ function get_all_services_with_subservices() {
     }
 }
 
-function handle_service_deletion($service_id) {
-    global $connection;
-
-    try {
-        $connection->beginTransaction();
-
-        // Soft delete main service
-        $stmt = $connection->prepare("
-            UPDATE services 
-            SET is_active = 0, updated_at = NOW() 
-            WHERE id = :service_id
-        ");
-        $stmt->execute([':service_id' => $service_id]);
-
-        // Soft delete all related sub-services
-        $sub_stmt = $connection->prepare("
-            UPDATE sub_services 
-            SET is_active = 0, updated_at = NOW() 
-            WHERE service_id = :service_id
-        ");
-        $sub_stmt->execute([':service_id' => $service_id]);
-
-        $connection->commit();
-
-        return [
-            'success' => true,
-            'message' => 'Service and its sub-services were deleted successfully.'
-        ];
-    } catch (Exception $e) {
-        $connection->rollBack();
-        error_log('Delete service error: ' . $e->getMessage());
-        return [
-            'success' => false,
-            'message' => 'An error occurred while deleting the service.'
-        ];
-    }
-}
-
-
-
 // Get service by ID for editing
 function get_service_by_id($service_id) {
     global $connection;
@@ -203,11 +162,7 @@ function get_service_by_id($service_id) {
     }
 }
 
-
-
-// ===============================
 // Handle Service Update
-// ===============================
 function handle_service_update($service_id) {
     global $connection;
 
@@ -309,6 +264,46 @@ function handle_service_update($service_id) {
         ];
     }
 }
+
+// Handle Service Deletion
+function handle_service_deletion($service_id) {
+    global $connection;
+
+    try {
+        $connection->beginTransaction();
+
+        // Soft delete main service
+        $stmt = $connection->prepare("
+            UPDATE services 
+            SET is_active = 0, updated_at = NOW() 
+            WHERE id = :service_id
+        ");
+        $stmt->execute([':service_id' => $service_id]);
+
+        // Soft delete all related sub-services
+        $sub_stmt = $connection->prepare("
+            UPDATE sub_services 
+            SET is_active = 0, updated_at = NOW() 
+            WHERE service_id = :service_id
+        ");
+        $sub_stmt->execute([':service_id' => $service_id]);
+
+        $connection->commit();
+
+        return [
+            'success' => true,
+            'message' => 'Service and its sub-services were deleted successfully.'
+        ];
+    } catch (Exception $e) {
+        $connection->rollBack();
+        error_log('Delete service error: ' . $e->getMessage());
+        return [
+            'success' => false,
+            'message' => 'An error occurred while deleting the service.'
+        ];
+    }
+}
+
 
 
 
@@ -486,6 +481,7 @@ function getProductById($product_id) {
         return null;
     }
 }
+
 
 
 //////////////////////////// SOLUTIONS MODULE FUNCTIONS ////////////////////////
@@ -824,6 +820,141 @@ function delete_post($id) {
         return [
             'success' => false,
             'message' => 'Database error while deleting post.'
+        ];
+    }
+}
+
+
+///////////////////////// CAREERS CRUD FUNCTIONS /////////////////////////
+
+// Add new career
+function add_career($job_title, $job_description, $location, $employment_type, $joining_date) {
+    global $connection;
+    
+    try {
+        $stmt = $connection->prepare("
+            INSERT INTO careers (job_title, job_description, location, employment_type, joining_date) 
+            VALUES (:job_title, :job_description, :location, :employment_type, :joining_date)
+        ");
+        
+        $stmt->execute([
+            ':job_title' => $job_title,
+            ':job_description' => $job_description,
+            ':location' => $location,
+            ':employment_type' => $employment_type,
+            ':joining_date' => $joining_date
+        ]);
+        
+        return [
+            'success' => true,
+            'message' => 'Career posting added successfully!',
+            'job_id' => $connection->lastInsertId()
+        ];
+    } catch (Exception $e) {
+        error_log('Add career error: ' . $e->getMessage());
+        return [
+            'success' => false,
+            'message' => 'Error adding career posting: ' . $e->getMessage()
+        ];
+    }
+}
+
+// Get all careers
+function get_all_careers($active_only = true) {
+    global $connection;
+    
+    try {
+        $sql = "SELECT * FROM careers";
+        if ($active_only) {
+            $sql .= " WHERE is_active = 1";
+        }
+        $sql .= " ORDER BY posted_date DESC";
+        
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        error_log('Get careers error: ' . $e->getMessage());
+        return [];
+    }
+}
+
+// Get career by ID
+function get_career_by_id($job_id) {
+    global $connection;
+    
+    try {
+        $stmt = $connection->prepare("SELECT * FROM careers WHERE job_id = :job_id");
+        $stmt->execute([':job_id' => $job_id]);
+        
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        error_log('Get career by ID error: ' . $e->getMessage());
+        return false;
+    }
+}
+
+// Update career
+function update_career($job_id, $job_title, $job_description, $location, $employment_type, $joining_date) {
+    global $connection;
+    
+    try {
+        $stmt = $connection->prepare("
+            UPDATE careers 
+            SET job_title = :job_title, 
+                job_description = :job_description, 
+                location = :location, 
+                employment_type = :employment_type, 
+                joining_date = :joining_date,
+                updated_at = NOW()
+            WHERE job_id = :job_id
+        ");
+        
+        $stmt->execute([
+            ':job_id' => $job_id,
+            ':job_title' => $job_title,
+            ':job_description' => $job_description,
+            ':location' => $location,
+            ':employment_type' => $employment_type,
+            ':joining_date' => $joining_date
+        ]);
+        
+        return [
+            'success' => true,
+            'message' => 'Career posting updated successfully!'
+        ];
+    } catch (Exception $e) {
+        error_log('Update career error: ' . $e->getMessage());
+        return [
+            'success' => false,
+            'message' => 'Error updating career posting: ' . $e->getMessage()
+        ];
+    }
+}
+
+// Delete career (soft delete)
+function delete_career($job_id) {
+    global $connection;
+    
+    try {
+        $stmt = $connection->prepare("
+            UPDATE careers 
+            SET is_active = 0, updated_at = NOW() 
+            WHERE job_id = :job_id
+        ");
+        
+        $stmt->execute([':job_id' => $job_id]);
+        
+        return [
+            'success' => true,
+            'message' => 'Career posting deleted successfully!'
+        ];
+    } catch (Exception $e) {
+        error_log('Delete career error: ' . $e->getMessage());
+        return [
+            'success' => false,
+            'message' => 'Error deleting career posting: ' . $e->getMessage()
         ];
     }
 }
