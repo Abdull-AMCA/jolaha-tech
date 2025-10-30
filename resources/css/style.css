@@ -839,46 +839,87 @@ header .brand {
   align-items: center;
   justify-content: center;
   color: #fff;
+  background: radial-gradient(ellipse at center, #0b1120 0%, #090b17 100%);
 }
  
-/* Animated gradient blobs (mesh) */
+/* Main gradient blobs layer */
 .about-hero::before {
   content: "";
   position: absolute;
   inset: 0;
-background: 
-    /* Main, more focused brand gradients - balanced opacity */
-    radial-gradient(circle at 15% 20%, rgba(113, 37, 235, 0.3) 0%, transparent 30%), /* --primary */
-    radial-gradient(circle at 85% 30%, rgba(251, 173, 89, 0.25) 0%, transparent 30%), /* --secondary */
-    radial-gradient(circle at 50% 75%, rgba(139, 92, 246, 0.25) 0%, transparent 35%),
-    radial-gradient(circle at 90% 80%, rgba(34, 197, 94, 0.2) 0%, transparent 30%),   /* --accent */
-
-    /* Light accent gradients - subtle but visible */
-    radial-gradient(circle at 25% 65%, rgba(100, 220, 255, 0.2) 0%, transparent 20%), /* Light Blue */
-    radial-gradient(circle at 70% 15%, rgba(200, 255, 100, 0.15) 0%, transparent 20%),  /* Lemon Green */
-    radial-gradient(circle at 40% 40%, rgba(255, 150, 235, 0.12) 0%, transparent 15%), /* Light Pink */
-    radial-gradient(circle at 60% 90%, rgba(255, 220, 100, 0.15) 0%, transparent 15%),  /* Light Yellow */
-
-    /* Base gradient */
-    linear-gradient(45deg, var(--bg), var(--surface)),
-    var(--bg); /* Base fallback */
-  mix-blend-mode: screen;
-  animation: meshShift 18s ease-in-out infinite alternate;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(155, 80, 255, 0.6) 0%, transparent 50%),  /* Bright violet */
+    radial-gradient(circle at 80% 20%, rgba(0, 165, 255, 0.55) 0%, transparent 50%),  /* Aqua-blue */
+    radial-gradient(circle at 65% 75%, rgba(255, 80, 179, 0.512) 0%, transparent 45%),  /* Magenta */
+    radial-gradient(circle at 10% 85%, rgba(255, 170, 0, 0.35) 0%, transparent 40%),  /* Green */
+    linear-gradient(135deg, rgba(20, 0, 50, 0.8), rgba(0, 0, 30, 0.8));              /* Base tint */
+  
+  background-blend-mode: color-dodge, screen, lighten, overlay;
+  filter: blur(50px) saturate(125%);
+  animation: meshMove 25s ease-in-out infinite alternate;
   z-index: 0;
   pointer-events: none;
 }
 
-.about-hero-class {
-    background: 
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E"),
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(113, 37, 235, 0.4), transparent 60%),
-        radial-gradient(ellipse 50% 50% at 90% 90%, rgba(251, 173, 89, 0.3), transparent 50%),
-        radial-gradient(ellipse 50% 50% at 10% 90%, rgba(34, 197, 94, 0.2), transparent 50%),
-        var(--bg);
-    background-repeat: no-repeat;
-    /* background-attachment: fixed; */
+/* Orange glowing blob (animated separately) */
+.about-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 90% 90%, rgba(251, 173, 89, 0.5) 0%, transparent 50%); /* Orange blob */
+  mix-blend-mode: color-dodge;
+  filter: blur(70px) saturate(150%);
+  opacity: 0.9;
+  animation: orangeDrift 18s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 1;
 }
- 
+
+/* Noise overlay for texture */
+.about-hero::after::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.025'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* Gradient blob subtle motion */
+@keyframes meshMove {
+  0% {
+    background-position: 20% 30%, 80% 20%, 65% 75%, 10% 85%;
+  }
+  50% {
+    background-position: 25% 35%, 70% 25%, 60% 65%, 15% 80%;
+  }
+  100% {
+    background-position: 30% 40%, 75% 30%, 55% 70%, 20% 75%;
+  }
+}
+
+/* Smooth orange drift animation */
+@keyframes orangeDrift {
+  0% {
+    background-position: 90% 90%;
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    background-position: 40% 50%;
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  100% {
+    background-position: 10% 70%;
+    opacity: 0.8;
+    transform: scale(1);
+  }
+}
+
+
 /* make sure text sits above effects */
 .about-hero .container {
   position: relative;
