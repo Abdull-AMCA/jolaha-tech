@@ -389,21 +389,3 @@ Then I want to view all careers in a tabular format similar to how services are 
 </div>
 
 Then create a delete career functionality that removes the career from the database using its ID, with appropriate success and failure modals. Make sure to not create a seperate delete_career.php file but include the delete functionality within the functions.php file and js if necessary
-
-
-
-
-
-
-
-Jolaha Logo
-Tech.
-User
-Admin User
-
-
-Warning
-: Undefined variable $job_id in
-C:\xampp\htdocs\jolaha-tech\admin\includes\view_all_careers.php
-on line
-6

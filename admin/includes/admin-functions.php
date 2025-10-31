@@ -959,4 +959,39 @@ function delete_career($job_id) {
     }
 }
 
+///////////////////////// SERVICE INQUIRIES FUNCTIONS /////////////////////////
+
+// Get all service inquiries
+function get_all_service_inquiries() {
+    global $connection;
+    
+    try {
+        $stmt = $connection->prepare("
+            SELECT * FROM service_inquiries 
+            ORDER BY submitted_at DESC
+        ");
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        error_log('Get service inquiries error: ' . $e->getMessage());
+        return [];
+    }
+}
+
+// Get service inquiry by ID
+function get_service_inquiry_by_id($inquiry_id) {
+    global $connection;
+    
+    try {
+        $stmt = $connection->prepare("SELECT * FROM service_inquiries WHERE id = :id");
+        $stmt->execute([':id' => $inquiry_id]);
+        
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        error_log('Get service inquiry by ID error: ' . $e->getMessage());
+        return false;
+    }
+}
+
 ?>

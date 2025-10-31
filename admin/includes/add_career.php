@@ -1,28 +1,27 @@
 <?php
+    $message = '';
+    $message_type = '';
 
-$message = '';
-$message_type = '';
-
-// Form submission handling
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $job_title = trim($_POST['job_title']);
-    $job_description = trim($_POST['job_description']);
-    $location = trim($_POST['location']);
-    $employment_type = $_POST['employment_type'];
-    $joining_date = $_POST['joining_date'];
-    
-    $result = add_career($job_title, $job_description, $location, $employment_type, $joining_date);
-    
-    if ($result['success']) {
-        $message = $result['message'];
-        $message_type = 'success';
-        // Clear form fields on success
-        $job_title = $job_description = $location = $employment_type = $joining_date = '';
-    } else {
-        $message = $result['message'];
-        $message_type = 'error';
+    // Form submission handling
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $job_title = trim($_POST['job_title']);
+        $job_description = trim($_POST['job_description']);
+        $location = trim($_POST['location']);
+        $employment_type = $_POST['employment_type'];
+        $joining_date = $_POST['joining_date'];
+        
+        $result = add_career($job_title, $job_description, $location, $employment_type, $joining_date);
+        
+        if ($result['success']) {
+            $message = $result['message'];
+            $message_type = 'success';
+            // Clear form fields on success
+            $job_title = $job_description = $location = $employment_type = $joining_date = '';
+        } else {
+            $message = $result['message'];
+            $message_type = 'error';
+        }
     }
-}
 ?>
 
 <div class="main-content" id="mainContent">
@@ -91,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label for="location" class="form-label fw-semibold">Location *</label>
                                 <input type="text" id="location" name="location" class="form-control"
                                     value="<?php echo htmlspecialchars($location ?? ''); ?>"
-                                    placeholder="e.g., New York, NY" required>
+                                    placeholder="e.g., Dubai, Nigeria" required>
                                 <div class="form-text">Job location</div>
                             </div>
 
@@ -152,10 +151,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <?php if (!empty($message) && $message_type === 'success'): ?>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-    successModal.show();
-});
-</script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+        });
+    </script>
 <?php endif; ?>

@@ -13,17 +13,17 @@
 </head>
 <body>
 
-    <!-- Header / Navigation -->
-    <?php
-    include 'includes/header-navbar.php';
-    ?>
+<!-- Header / Navigation -->
+<?php
+include 'includes/header-navbar.php';
+?>
 
     <!-- Hero Section -->
     <section class="about-hero d-flex align-items-center text-center py-5 px-3 px-md-5 text-white">
-    <div class="container py-5 px-md-5">
-        <h1 class="display-4 fw-bold">Accounting & Auditing <span style="color: var(--secondary);">Solutions</span></h1>
-        <p class="lead px-2 px-md-5">Comprehensive financial services designed for corporate excellence and regulatory compliance</p>
-    </div>
+        <div class="container py-5 px-md-5">
+            <h1 class="display-4 fw-bold">Accounting & Auditing <span style="color: var(--secondary);">Solutions</span></h1>
+            <p class="lead px-2 px-md-5">Comprehensive financial services designed for corporate excellence and regulatory compliance</p>
+        </div>
     </section>
 
     <!-- Services Overview -->
@@ -43,7 +43,7 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 border-0 p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                         <div class="card-body text-center">
-                            <div class="mb-3" style="color: var(--primary); font-size: 2.5rem;">
+                            <div class="mb-3" style="color: var(--secondary); font-size: 2.5rem;">
                                 <i class="bi bi-cash-coin"></i>
                             </div>
                             <h4 style="color: var(--heading);">Financial Accounting</h4>
@@ -58,7 +58,7 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 border-0 p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                         <div class="card-body text-center">
-                            <div class="mb-3" style="color: var(--primary); font-size: 2.5rem;">
+                            <div class="mb-3" style="color: var(--secondary); font-size: 2.5rem;">
                                 <i class="bi bi-clipboard-check"></i>
                             </div>
                             <h4 style="color: var(--heading);">External Auditing</h4>
@@ -73,7 +73,7 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 border-0 p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                         <div class="card-body text-center">
-                            <div class="mb-3" style="color: var(--primary); font-size: 2.5rem;">
+                            <div class="mb-3" style="color: var(--secondary); font-size: 2.5rem;">
                                 <i class="bi bi-graph-up"></i>
                             </div>
                             <h4 style="color: var(--heading);">Tax Consulting</h4>

@@ -43,7 +43,7 @@ include 'includes/header-navbar.php';
               <div class="col-md-6 col-lg-4">
                   <div class="card h-100 border-0 p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                       <div class="card-body text-center">
-                          <div class="mb-3" style="color: var(--primary); font-size: 2.5rem;">
+                          <div class="mb-3" style="color: var(--secondary); font-size: 2.5rem;">
                               <i class="bi bi-building"></i>
                           </div>
                           <h4 style="color: var(--heading);">Property Management Systems</h4>
@@ -58,7 +58,7 @@ include 'includes/header-navbar.php';
               <div class="col-md-6 col-lg-4">
                   <div class="card h-100 border-0 p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                       <div class="card-body text-center">
-                          <div class="mb-3" style="color: var(--primary); font-size: 2.5rem;">
+                          <div class="mb-3" style="color: var(--secondary); font-size: 2.5rem;">
                               <i class="bi bi-house-check"></i>
                           </div>
                           <h4 style="color: var(--heading);">Real Estate Portals</h4>
@@ -73,7 +73,7 @@ include 'includes/header-navbar.php';
               <div class="col-md-6 col-lg-4">
                   <div class="card h-100 border-0 p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                       <div class="card-body text-center">
-                          <div class="mb-3" style="color: var(--primary); font-size: 2.5rem;">
+                          <div class="mb-3" style="color: var(--secondary); font-size: 2.5rem;">
                               <i class="bi bi-graph-up-arrow"></i>
                           </div>
                           <h4 style="color: var(--heading);">Investment Analytics</h4>
@@ -88,7 +88,7 @@ include 'includes/header-navbar.php';
               <div class="col-md-6 col-lg-4">
                   <div class="card h-100 border-0 p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                       <div class="card-body text-center">
-                          <div class="mb-3" style="color: var(--primary); font-size: 2.5rem;">
+                          <div class="mb-3" style="color: var(--secondary); font-size: 2.5rem;">
                               <i class="bi bi-phone"></i>
                           </div>
                           <h4 style="color: var(--heading);">Mobile Applications</h4>
@@ -103,7 +103,7 @@ include 'includes/header-navbar.php';
               <div class="col-md-6 col-lg-4">
                   <div class="card h-100 border-0 p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                       <div class="card-body text-center">
-                          <div class="mb-3" style="color: var(--primary); font-size: 2.5rem;">
+                          <div class="mb-3" style="color: var(--secondary); font-size: 2.5rem;">
                               <i class="bi bi-database"></i>
                           </div>
                           <h4 style="color: var(--heading);">CRM Integration</h4>
@@ -118,7 +118,7 @@ include 'includes/header-navbar.php';
               <div class="col-md-6 col-lg-4">
                   <div class="card h-100 border-0 p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                       <div class="card-body text-center">
-                          <div class="mb-3" style="color: var(--primary); font-size: 2.5rem;">
+                          <div class="mb-3" style="color: var(--secondary); font-size: 2.5rem;">
                               <i class="bi bi-shield-check"></i>
                           </div>
                           <h4 style="color: var(--heading);">Compliance Solutions</h4>

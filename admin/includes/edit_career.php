@@ -1,37 +1,37 @@
 <?php
-$message = '';
-$message_type = '';
+    $message = '';
+    $message_type = '';
 
-// Get career ID from URL
-$job_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+    // Get career ID from URL
+    $job_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-// Fetch career data
-$career = get_career_by_id($job_id);
-if (!$career) {
-    header('Location: careers.php');
-    exit;
-}
-
-// Form submission handling
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $job_title = trim($_POST['job_title']);
-    $job_description = trim($_POST['job_description']);
-    $location = trim($_POST['location']);
-    $employment_type = $_POST['employment_type'];
-    $joining_date = $_POST['joining_date'];
-    
-    $result = update_career($job_id, $job_title, $job_description, $location, $employment_type, $joining_date);
-    
-    if ($result['success']) {
-        $message = $result['message'];
-        $message_type = 'success';
-        // Refresh career data
-        $career = get_career_by_id($job_id);
-    } else {
-        $message = $result['message'];
-        $message_type = 'error';
+    // Fetch career data
+    $career = get_career_by_id($job_id);
+    if (!$career) {
+        header('Location: careers.php');
+        exit;
     }
-}
+
+    // Form submission handling
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $job_title = trim($_POST['job_title']);
+        $job_description = trim($_POST['job_description']);
+        $location = trim($_POST['location']);
+        $employment_type = $_POST['employment_type'];
+        $joining_date = $_POST['joining_date'];
+        
+        $result = update_career($job_id, $job_title, $job_description, $location, $employment_type, $joining_date);
+        
+        if ($result['success']) {
+            $message = $result['message'];
+            $message_type = 'success';
+            // Refresh career data
+            $career = get_career_by_id($job_id);
+        } else {
+            $message = $result['message'];
+            $message_type = 'error';
+        }
+    }
 ?>
 
 <div class="main-content" id="mainContent">
@@ -189,10 +189,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <?php if (!empty($message) && $message_type === 'success'): ?>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-    successModal.show();
-});
-</script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+        });
+    </script>
 <?php endif; ?>

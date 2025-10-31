@@ -169,7 +169,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo ($current_page === 'service_inquiries.php') ? 'active' : ''; ?>" href="service_inquiries.php">
+                    <a class="nav-link <?php echo ($current_page === 'includes/view_all_inquiries.php') ? 'active' : ''; ?>" href="view_all_inquiries.php">
                         <i class="bi bi-chat-square-text nav-icon"></i>
                         <span class="nav-text">Service Inquiries</span>
                     </a>

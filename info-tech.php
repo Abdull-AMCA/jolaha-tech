@@ -42,7 +42,7 @@ include 'includes/header-navbar.php';
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 border-0 p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                         <div class="card-body text-center">
-                            <div class="mb-3" style="color: var(--primary); font-size: 2.5rem;">
+                            <div class="mb-3" style="color: var(--secondary); font-size: 2.5rem;">
                                 <i class="bi bi-code-slash"></i>
                             </div>
                             <h4 style="color: var(--heading);">Web Development</h4>
@@ -62,7 +62,7 @@ include 'includes/header-navbar.php';
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 border-0 p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                         <div class="card-body text-center">
-                            <div class="mb-3" style="color: var(--primary); font-size: 2.5rem;">
+                            <div class="mb-3" style="color: var(--secondary); font-size: 2.5rem;">
                                 <i class="bi bi-cloud"></i>
                             </div>
                             <h4 style="color: var(--heading);">Cloud Solutions</h4>
@@ -82,7 +82,7 @@ include 'includes/header-navbar.php';
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 border-0 p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                         <div class="card-body text-center">
-                            <div class="mb-3" style="color: var(--primary); font-size: 2.5rem;">
+                            <div class="mb-3" style="color: var(--secondary); font-size: 2.5rem;">
                                 <i class="bi bi-shield-lock"></i>
                             </div>
                             <h4 style="color: var(--heading);">Cybersecurity</h4>
@@ -102,7 +102,7 @@ include 'includes/header-navbar.php';
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 border-0 p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                         <div class="card-body text-center">
-                            <div class="mb-3" style="color: var(--primary); font-size: 2.5rem;">
+                            <div class="mb-3" style="color: var(--secondary); font-size: 2.5rem;">
                                 <i class="bi bi-phone"></i>
                             </div>
                             <h4 style="color: var(--heading);">Mobile Development</h4>
@@ -122,7 +122,7 @@ include 'includes/header-navbar.php';
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 border-0 p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                         <div class="card-body text-center">
-                            <div class="mb-3" style="color: var(--primary); font-size: 2.5rem;">
+                            <div class="mb-3" style="color: var(--secondary); font-size: 2.5rem;">
                                 <i class="bi bi-gear"></i>
                             </div>
                             <h4 style="color: var(--heading);">DevOps & Automation</h4>
@@ -142,7 +142,7 @@ include 'includes/header-navbar.php';
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 border-0 p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                         <div class="card-body text-center">
-                            <div class="mb-3" style="color: var(--primary); font-size: 2.5rem;">
+                            <div class="mb-3" style="color: var(--secondary); font-size: 2.5rem;">
                                 <i class="bi bi-graph-up"></i>
                             </div>
                             <h4 style="color: var(--heading);">IT Consulting</h4>
@@ -230,7 +230,7 @@ include 'includes/header-navbar.php';
                 <div class="col-md-8 col-lg-3 mb-4">
                     <div class="card h-100 border-0 text-center p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                         <div class="card-body">
-                            <div class="mb-3" style="color: var(--primary); font-size: 2rem;">
+                            <div class="mb-3" style="color: var(--secondary); font-size: 2rem;">
                                 <i class="bi bi-search"></i>
                             </div>
                             <h5 style="color: var(--heading);">1. Discovery</h5>
@@ -241,7 +241,7 @@ include 'includes/header-navbar.php';
                 <div class="col-md-8 col-lg-3 mb-4">
                     <div class="card h-100 border-0 text-center p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                         <div class="card-body">
-                            <div class="mb-3" style="color: var(--primary); font-size: 2rem;">
+                            <div class="mb-3" style="color: var(--secondary); font-size: 2rem;">
                                 <i class="bi bi-palette"></i>
                             </div>
                             <h5 style="color: var(--heading);">2. Design</h5>
@@ -252,7 +252,7 @@ include 'includes/header-navbar.php';
                 <div class="col-md-8 col-lg-3 mb-4">
                     <div class="card h-100 border-0 text-center p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                         <div class="card-body">
-                            <div class="mb-3" style="color: var(--primary); font-size: 2rem;">
+                            <div class="mb-3" style="color: var(--secondary); font-size: 2rem;">
                                 <i class="bi bi-code-square"></i>
                             </div>
                             <h5 style="color: var(--heading);">3. Development</h5>
@@ -263,7 +263,7 @@ include 'includes/header-navbar.php';
                 <div class="col-md-8 col-lg-3 mb-4">
                     <div class="card h-100 border-0 text-center p-4" style="background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);">
                         <div class="card-body">
-                            <div class="mb-3" style="color: var(--primary); font-size: 2rem;">
+                            <div class="mb-3" style="color: var(--secondary); font-size: 2rem;">
                                 <i class="bi bi-rocket"></i>
                             </div>
                             <h5 style="color: var(--heading);">4. Deployment</h5>

@@ -1,22 +1,21 @@
 <?php
-$careers = get_all_careers(true);
+    $careers = get_all_careers(true);
 
-// Handle career deletion
-if (isset($_GET['delete_career'])) {
-    $job_id = intval($_GET['delete_career']);
-    $result = delete_career($job_id);
-    
-    if ($result['success']) {
-        $delete_message = $result['message'];
-        $delete_message_type = 'success';
-    } else {
-        $delete_message = $result['message'];
-        $delete_message_type = 'error';
+    // Handle career deletion
+    if (isset($_GET['delete_career'])) {
+        $job_id = intval($_GET['delete_career']);
+        $result = delete_career($job_id);
+        
+        if ($result['success']) {
+            $delete_message = $result['message'];
+            $delete_message_type = 'success';
+        } else {
+            $delete_message = $result['message'];
+            $delete_message_type = 'error';
+        }
     }
-}
-
-// Get all active careers
-$careers = get_all_careers(true);
+    // Get all active careers
+    $careers = get_all_careers(true);
 ?>
 
 <div class="main-content" id="mainContent">
@@ -181,27 +180,27 @@ $careers = get_all_careers(true);
 </div>
 
 <script>
-// Delete Career Functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-    const deleteJobTitle = document.getElementById('deleteJobTitle');
-    const confirmDeleteBtn = document.getElementById('confirmDelete');
-    let jobToDelete = null;
+    // Delete Career Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        const deleteJobTitle = document.getElementById('deleteJobTitle');
+        const confirmDeleteBtn = document.getElementById('confirmDelete');
+        let jobToDelete = null;
 
-    document.querySelectorAll('.delete-career-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            jobToDelete = this.getAttribute('data-job-id');
-            const title = this.getAttribute('data-job-title');
-            deleteJobTitle.textContent = title;
-            confirmDeleteBtn.href = `careers.php?delete_career=${jobToDelete}`;
-            deleteModal.show();
+        document.querySelectorAll('.delete-career-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                jobToDelete = this.getAttribute('data-job-id');
+                const title = this.getAttribute('data-job-title');
+                deleteJobTitle.textContent = title;
+                confirmDeleteBtn.href = `careers.php?delete_career=${jobToDelete}`;
+                deleteModal.show();
+            });
         });
-    });
 
-    // Show success modal if deletion was successful
-    <?php if (isset($delete_message) && $delete_message_type === 'success'): ?>
-        const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-        successModal.show();
-    <?php endif; ?>
-});
+        // Show success modal if deletion was successful
+        <?php if (isset($delete_message) && $delete_message_type === 'success'): ?>
+            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+        <?php endif; ?>
+    });
 </script>
