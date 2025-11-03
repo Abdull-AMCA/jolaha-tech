@@ -3,6 +3,7 @@ include 'includes/head.php';
 ?>
 
 <body>
+  <!-- Hero Section -->
   <section class="hero position-relative">
     <!-- Background Video >
     <video autoplay muted loop playsinline class="hero-bg-video">
@@ -47,7 +48,7 @@ include 'includes/head.php';
               </div>
               <!--div class="col-lg-5">
                 <div class="hero-illustration card">
-                  <img src="images/hero1.jpg" alt="Audit working session" class="img-fluid rounded-3">
+                  <img src="images/hero1.jpg" alt="" class="img-fluid rounded-3">
                 </div>
               </div-->
             </div>
@@ -59,16 +60,16 @@ include 'includes/head.php';
           <div class="container">
             <div class="row align-items-center gy-4">
               <div class="col-lg-7 mb-5">
-                <span class="chip">Financial Reporting</span>
-                <h1 class="hero-title">Clear, compliant, and timely IFRS reporting.</h1>
-                <p class="lead hero-lead">Accurate preparation, conversion, and consolidation of financial statements aligned with global standards.</p>
+                <span class="chip">Some Jolaha Service or Product</span>
+                <h1 class="hero-title">Some Title of Jolaha Service will go Here</h1>
+                <p class="lead hero-lead">Some description of Jolaha service will go here.</p>
                 <div class="d-flex gap-3 flex-wrap">
-                  <a class="btn btn-primary" href="#contact">Get IFRS support</a>
+                  <a class="btn btn-primary" href="#contact">Call To Action</a>
                 </div>
               </div>
               <!--div class="col-lg-5">
                 <div class="hero-illustration card">
-                  <img src="images/hero2.jpg" alt="Financial reporting" class="img-fluid rounded-3">
+                  <img src="images/hero2.jpg" alt="Call To Action" class="img-fluid rounded-3">
                 </div>
               </div
             </div>
@@ -80,16 +81,16 @@ include 'includes/head.php';
           <div class="container">
             <div class="row align-items-center gy-4">
               <div class="col-lg-7 mb-5">
-                <span class="chip">Advisory & Compliance</span>
-                <h1 class="hero-title">Strengthen governance & controls with Jolaha.</h1>
-                <p class="lead hero-lead">Risk assessments, SOPs, internal audits, and tax compliance tailored to your sector.</p>
+                <span class="chip">Some Jolaha Service or Product</span>
+                <h1 class="hero-title">Some Title of Jolaha Service will go Here</h1>
+                <p class="lead hero-lead">Some description of Jolaha service will go here.</p>
                 <div class="d-flex gap-3 flex-wrap">
-                  <a class="btn btn-primary" href="#contact">Talk to an advisor</a>
+                  <a class="btn btn-primary" href="#contact">Call To Action</a>
                 </div>
               </div>
               <!--div class="col-lg-5">
                 <div class="hero-illustration card">
-                  <img src="images/hero3.jpg" alt="Advisory session" class="img-fluid rounded-3">
+                  <img src="images/hero3.jpg" alt="" class="img-fluid rounded-3">
                 </div>
               </div
             </div>
@@ -109,7 +110,7 @@ include 'includes/head.php';
     </div>
   </section>
 
-  <!-- Overlapping Contact CTA -->
+  <!-- Contact CTA -->
   <div class="contact-cta container position-relative">
     <div class="contact-cta-inner d-flex flex-column flex-md-row align-items-center justify-content-between p-4 rounded-4 shadow-lg">
       
@@ -135,144 +136,342 @@ include 'includes/head.php';
   </div>
 
   <!-- Services -->
-  <section id="services" class="section">
+  <section id="services" class="services-section py-6">
     <div class="container">
-      <h2>Services</h2>
-      <div class="d-flex justify-content-center">
-        <p class="lead text-center">
-          From innovative design to seamless applications and digital growth, we deliver end-to-end solutions for your business.
-        </p>
-      </div> 
+      <div class="row justify-content-center text-center mb-6">
+        <div class="col-lg-8">
+          <span class="section-badge">OUR EXPERTISE</span>
+          <h2 class="display-5 fw-bold mb-4">Comprehensive Digital Solutions</h2>
+          <p class="text">
+            From innovative design to seamless applications and digital growth, we deliver end-to-end solutions 
+            that transform your business vision into digital reality.
+          </p>
+        </div>
+      </div>
 
-      <div class="row g-4 services">
-
+      <div class="row g-4">
         <!-- Web Design & Development -->
         <div class="col-lg-4 col-md-6">
-          <article class="service card h-100 text-center">
-            <a href="web-design-dev.php" class="chip text-decoration-none d-inline-block">
-              Web Design & Development
-            </a>
-            <div class="service-icon">
-              <i class="bi bi-laptop"></i>
+          <article class="service-card">
+            <div class="service-card-inner">
+              <div class="service-header">
+                <div class="service-chip">
+                  <span>Web Design & Development</span>
+                </div>
+                <div class="service-icon">
+                  <div class="icon-wrapper">
+                    <i class="bi bi-laptop"></i>
+                  </div>
+                  <div class="icon-glow"></div>
+                </div>
+              </div>
+              
+              <div class="service-content">
+                <h3 class="service-title">
+                  <a href="web-design-dev.php" class="text-decoration-none">
+                    Custom Website Design
+                  </a>
+                </h3>
+                <p class="service-description">
+                  We craft responsive, modern websites tailored to your brand identity and optimized for performance and scalability.
+                </p>
+              </div>
+
+              <div class="service-footer">
+                <a href="web-design-dev.php" class="service-link">
+                  <span>Explore Service</span>
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
             </div>
-            <h3>
-              <a href="web-design-dev.php" class="text-decoration-none" style="color: inherit;">
-                Custom Website Design
-              </a>
-            </h3>
-            <p>We craft responsive, modern websites tailored to your brand identity and optimized for performance and scalability.</p>
+            <div class="service-hover-effect"></div>
           </article>
         </div>
 
         <!-- Mobile Application -->
         <div class="col-lg-4 col-md-6">
-          <article class="service card h-100 text-center">
-            <a href="mobile-app.php" class="chip text-decoration-none d-inline-block">
-              Mobile Application
-            </a>
-            <div class="service-icon">
-              <i class="bi bi-phone"></i>
+          <article class="service-card">
+            <div class="service-card-inner">
+              <div class="service-header">
+                <div class="service-chip">
+                  <span>Mobile Application</span>
+                </div>
+                <div class="service-icon">
+                  <div class="icon-wrapper">
+                    <i class="bi bi-phone"></i>
+                  </div>
+                  <div class="icon-glow"></div>
+                </div>
+              </div><br/>
+              
+              <div class="service-content">
+                <h3 class="service-title">
+                  <a href="mobile-app.php" class="text-decoration-none">
+                    Cross-Platform Apps
+                  </a>
+                </h3>
+                <p class="service-description">
+                  We develop intuitive mobile apps for iOS and Android that ensure smooth user experience across all devices.
+                </p>
+              </div>
+
+              <div class="service-footer">
+                <a href="mobile-app.php" class="service-link">
+                  <span>Explore Service</span>
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
             </div>
-            <h3>
-              <a href="mobile-app.php" class="text-decoration-none" style="color: inherit;">
-                Cross-Platform Apps
-              </a>
-            </h3>
-            <p>We develop intuitive mobile apps for iOS and Android that ensure smooth user experience across all devices.</p>
+            <div class="service-hover-effect"></div>
           </article>
         </div>
 
         <!-- Online Marketing -->
         <div class="col-lg-4 col-md-6">
-          <article class="service card h-100 text-center">
-            <a href="online-marketing.php" class="chip text-decoration-none d-inline-block">
-              Online Marketing
-            </a>
-            <div class="service-icon">
-              <i class="bi bi-graph-up"></i>
+          <article class="service-card">
+            <div class="service-card-inner">
+              <div class="service-header">
+                <div class="service-chip">
+                  <span>Online Marketing</span>
+                </div>
+                <div class="service-icon">
+                  <div class="icon-wrapper">
+                    <i class="bi bi-graph-up"></i>
+                  </div>
+                  <div class="icon-glow"></div>
+                </div>
+              </div>
+              
+              <div class="service-content">
+                <h3 class="service-title">
+                  <a href="online-marketing.php" class="text-decoration-none">
+                    Digital Marketing
+                  </a>
+                </h3>
+                <p class="service-description">
+                  Boost your online presence with targeted campaigns, SEO, and social media strategies that drive measurable growth.
+                </p>
+              </div>
+
+              <div class="service-footer">
+                <a href="online-marketing.php" class="service-link">
+                  <span>Explore Service</span>
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
             </div>
-            <h3>
-              <a href="online-marketing.php" class="text-decoration-none" style="color: inherit;">
-                Digital Marketing
-              </a>
-            </h3>
-            <p>Boost your online presence with targeted campaigns, SEO, and social media strategies that drive measurable growth.</p>
+            <div class="service-hover-effect"></div>
           </article>
         </div>
 
         <!-- Design -->
         <div class="col-lg-4 col-md-6">
-          <article class="service card h-100 text-center">
-            <a href="creative-design.php" class="chip text-decoration-none d-inline-block">
-              Creative Designs
-            </a>
-            <div class="service-icon">
-              <i class="bi bi-palette"></i>
+          <article class="service-card">
+            <div class="service-card-inner">
+              <div class="service-header">
+                <div class="service-chip">
+                  <span>Creative Designs</span>
+                </div>
+                <div class="service-icon">
+                  <div class="icon-wrapper">
+                    <i class="bi bi-palette"></i>
+                  </div>
+                  <div class="icon-glow"></div>
+                </div>
+              </div>
+              
+              <div class="service-content">
+                <h3 class="service-title">
+                  <a href="creative-design.php" class="text-decoration-none">
+                    UI & UX Design & More
+                  </a>
+                </h3>
+                <p class="service-description">
+                  Enhance usability and engagement with creative UI and UX solutions that put your users at the center.
+                </p>
+              </div>
+
+              <div class="service-footer">
+                <a href="creative-design.php" class="service-link">
+                  <span>Explore Service</span>
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
             </div>
-            <h3>
-              <a href="creative-design.php" class="text-decoration-none" style="color: inherit;">
-                UI & UX Design & More
-              </a>
-            </h3>
-            <p>Enhance usability and engagement with creative UI and UX solutions that put your users at the center.</p>
+            <div class="service-hover-effect"></div>
           </article>
         </div>
 
         <!-- Testing -->
         <div class="col-lg-4 col-md-6">
-          <article class="service card h-100 text-center">
-            <a href="software-testing.php" class="chip text-decoration-none d-inline-block">
-              Software Testing
-            </a>
-            <div class="service-icon">
-              <i class="bi bi-bug"></i>
+          <article class="service-card">
+            <div class="service-card-inner">
+              <div class="service-header">
+                <div class="service-chip">
+                  <span>Software Testing</span>
+                </div>
+                <div class="service-icon">
+                  <div class="icon-wrapper">
+                    <i class="bi bi-bug"></i>
+                  </div>
+                  <div class="icon-glow"></div>
+                </div>
+              </div>
+              
+              <div class="service-content">
+                <h3 class="service-title">
+                  <a href="software-testing.php" class="text-decoration-none">
+                    Software Testing
+                  </a>
+                </h3>
+                <p class="service-description">
+                  We ensure quality and reliability with thorough manual and automated testing across multiple environments.
+                </p>
+              </div>
+
+              <div class="service-footer">
+                <a href="software-testing.php" class="service-link">
+                  <span>Explore Service</span>
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
             </div>
-            <h3>
-              <a href="software-testing.php" class="text-decoration-none" style="color: inherit;">
-                Software Testing
-              </a>
-            </h3>
-            <p>We ensure quality and reliability with thorough manual and automated testing across multiple environments.</p>
+            <div class="service-hover-effect"></div>
+          </article>
+        </div>
+
+        <!-- Consultation -->
+        <div class="col-lg-4 col-md-6">
+          <article class="service-card">
+            <div class="service-card-inner">
+              <div class="service-header">
+                <div class="service-chip">
+                  <span>Consultation</span>
+                </div>
+                <div class="service-icon">
+                  <div class="icon-wrapper">
+                    <i class="bi bi-chat-dots"></i>
+                  </div>
+                  <div class="icon-glow"></div>
+                </div>
+              </div>
+              
+              <div class="service-content">
+                <h3 class="service-title">
+                  <a href="consultation.php" class="text-decoration-none">
+                    Strategic Consultation
+                  </a>
+                </h3>
+                <p class="service-description">
+                  Get expert guidance and strategic insights to make informed decisions about your digital transformation journey.
+                </p>
+              </div>
+
+              <div class="service-footer">
+                <a href="consultation.php" class="service-link">
+                  <span>Explore Service</span>
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+            <div class="service-hover-effect"></div>
           </article>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="stats" class="bg-light py-5">
-    <div class="container text-center">
-      <h2 class="text-dark">Why Choose Us</h2>
-      <p class="text-dark mb-5">
-        We are committed to making a positive impact on our clients' businesses and helping them 
-        navigate the complexities of today's business environment with confidence and success.
-      </p>
+  <!-- Stats/Why Choose Us -->
+  <section id="stats" class="stats-section py-6" style="background: var(--bg-light);">
+    <div class="container">
+      <div class="row justify-content-center text-center mb-6">
+        <div class="col-lg-8">
+          <span class="section-badge">OUR IMPACT</span>
+          <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary)">Why Trust Jolaha Tech</h2>
+          <p class="" style="color: var(--surface)">
+            We're committed to delivering exceptional results that drive real business growth. 
+            Our track record speaks for itself through measurable success and client satisfaction.
+          </p>
+        </div>
+      </div>
 
       <div class="row g-4">
-        <div class="container">
-          <div class="row g-4 text-center">
-            <div class="col-sm-6 col-md-3">
-              <div class="stat card p-3">
-                <div class="num display-6" data-target="150+">0</div>
-                <div class="label muted">Engagements delivered</div>
-              </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="bi bi-rocket-takeoff"></i>
             </div>
-            <div class="col-sm-6 col-md-3">
-              <div class="stat card p-3">
-                <div class="num display-6" data-target="98%">0</div>
-                <div class="label muted">On-time completion</div>
-              </div>
+            <div class="stat-content">
+              <div class="stat-number num" data-target="150+">0</div>
+              <div class="stat-label">Projects Delivered</div>
+              <div class="stat-description">Successful engagements across diverse industries</div>
             </div>
-            <div class="col-sm-6 col-md-3">
-              <div class="stat card p-3">
-                <div class="num display-6" data-target="40+">0</div>
-                <div class="label muted">Industries served</div>
-              </div>
+            <div class="stat-glow"></div>
+          </div>
+        </div>
+        
+        <div class="col-sm-6 col-lg-3">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="bi bi-clock"></i>
             </div>
-            <div class="col-sm-6 col-md-3">
-              <div class="stat card p-3">
-                <div class="num display-6" data-target="A+">0</div>
-                <div class="label muted">Client satisfaction</div>
-              </div>
+            <div class="stat-content">
+              <div class="stat-number num" data-target="98%">0</div>
+              <div class="stat-label">On-Time Delivery</div>
+              <div class="stat-description">Meeting deadlines with precision</div>
+            </div>
+            <div class="stat-glow"></div>
+          </div>
+        </div>
+        
+        <div class="col-sm-6 col-lg-3">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="bi bi-building"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number num" data-target="40+">0</div>
+              <div class="stat-label">Industries Served</div>
+              <div class="stat-description">From startups to enterprises</div>
+            </div>
+            <div class="stat-glow"></div>
+          </div>
+        </div>
+        
+        <div class="col-sm-6 col-lg-3">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="bi bi-award"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-grade num" data-target="A+">0</div>
+              <div class="stat-label">Client Satisfaction</div>
+              <div class="stat-description">Rated excellent by our partners</div>
+            </div>
+            <div class="stat-glow"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust Indicators -->
+      <div class="row mt-6 pt-5">
+        <div class="col-12">
+          <div class="trust-bar" style="background: var(--card);">
+            <div class="trust-item">
+              <i class="bi bi-shield-check"></i>
+              <span>Enterprise-Grade Security</span>
+            </div>
+            <div class="trust-item">
+              <i class="bi bi-patch-check"></i>
+              <span>Certified Experts</span>
+            </div>
+            <div class="trust-item">
+              <i class="bi bi-globe2"></i>
+              <span>Global Delivery</span>
+            </div>
+            <div class="trust-item">
+              <i class="bi bi-headset"></i>
+              <span>24/7 Support</span>
             </div>
           </div>
         </div>
@@ -281,88 +480,274 @@ include 'includes/head.php';
   </section>
 
   <!-- Testimonials -->
-  <section class="section">
+  <section class="testimonials-section py-6">
     <div class="container">
-      <h2>What Clients Say</h2>
-      <div class="d-flex justify-content-center">
-        <p class="lead text-center">
-          Board-ready insights, clear communication, and pragmatic recommendations.
-        </p>
+      <div class="row justify-content-center text-center mb-6">
+        <div class="col-lg-8">
+          <span class="section-badge">CLIENT SUCCESS</span>
+          <h2 class="display-5 fw-bold mb-4">Trusted by Industry Leaders</h2>
+          <p class="text">
+            Discover why businesses choose Jolaha Tech as their trusted digital transformation partner.
+          </p>
+        </div>
       </div>
 
-      <div id="clientCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
+      <div class="testimonials-carousel-wrapper">
+        <div id="testimonialsCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#testimonialsCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#testimonialsCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          </div>
 
-          <!-- Slide 1 (first 3 clients) -->
-          <div class="carousel-item active">
-            <div class="row g-4 justify-content-center">
-              <div class="col-md-4">
-                <article class="quote card p-4 text-center">
-                  <img src="resources/img/photo.jpg" alt="Client 1" class="rounded-circle mx-auto d-block client-img">
-                  <p class="mt-3">“Jolaha helped us convert to IFRS and tightened our controls before our fundraise. Smooth end-to-end.”</p>
-                  <div class="text-light mt-2">CFO, Growth-stage Fintech</div>
-                </article>
+          <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+              <div class="row g-4 justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                  <article class="testimonial-card">
+                    <div class="testimonial-header">
+                      <div class="client-avatar">
+                        <img src="resources/img/photo.jpg" alt="CFO, Growth-stage Fintech" class="avatar-img">
+                        <div class="avatar-glow"></div>
+                      </div>
+                      <div class="client-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                      </div>
+                    </div>
+                    
+                    <div class="testimonial-content">
+                      <div class="quote-icon">
+                        <i class="bi bi-quote"></i>
+                      </div>
+                      <p class="testimonial-text">
+                        "Jolaha helped us convert to IFRS and tightened our controls before our fundraise. Smooth end-to-end delivery with exceptional attention to detail."
+                      </p>
+                    </div>
+
+                    <div class="testimonial-footer">
+                      <div class="client-info">
+                        <h4 class="client-name">Sarah Johnson</h4>
+                        <p class="client-position">CFO, Growth-stage Fintech</p>
+                      </div>
+                    </div>
+                    <div class="testimonial-hover-effect"></div>
+                  </article>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                  <article class="testimonial-card">
+                    <div class="testimonial-header">
+                      <div class="client-avatar">
+                        <img src="resources/img/photo.jpg" alt="Chair, Audit Committee" class="avatar-img">
+                        <div class="avatar-glow"></div>
+                      </div>
+                      <div class="client-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                      </div>
+                    </div>
+                    
+                    <div class="testimonial-content">
+                      <div class="quote-icon">
+                        <i class="bi bi-quote"></i>
+                      </div>
+                      <p class="testimonial-text">
+                        "Their audit team kept us informed and on schedule. The management letter was practical, prioritized, and provided clear actionable insights."
+                      </p>
+                    </div>
+
+                    <div class="testimonial-footer">
+                      <div class="client-info">
+                        <h4 class="client-name">Michael Chen</h4>
+                        <p class="client-position">Chair, Audit Committee</p>
+                      </div>
+                    </div>
+                    <div class="testimonial-hover-effect"></div>
+                  </article>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                  <article class="testimonial-card">
+                    <div class="testimonial-header">
+                      <div class="client-avatar">
+                        <img src="resources/img/photo.jpg" alt="MD, Manufacturing Group" class="avatar-img">
+                        <div class="avatar-glow"></div>
+                      </div>
+                      <div class="client-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                      </div>
+                    </div>
+                    
+                    <div class="testimonial-content">
+                      <div class="quote-icon">
+                        <i class="bi bi-quote"></i>
+                      </div>
+                      <p class="testimonial-text">
+                        "Reliable partner for compliance and reporting. Responsive, meticulous, and exceptionally easy to work with. Highly recommended."
+                      </p>
+                    </div>
+
+                    <div class="testimonial-footer">
+                      <div class="client-info">
+                        <h4 class="client-name">Robert Martinez</h4>
+                        <p class="client-position">MD, Manufacturing Group</p>
+                      </div>
+                    </div>
+                    <div class="testimonial-hover-effect"></div>
+                  </article>
+                </div>
               </div>
-              <div class="col-md-4">
-                <article class="quote card p-4 text-center">
-                  <img src="resources/img/photo.jpg" alt="Client 2" class="rounded-circle mx-auto d-block client-img">
-                  <p class="mt-3">“Their audit team kept us informed and on schedule. The management letter was practical and prioritized.”</p>
-                  <div class="text-light mt-2">Chair, Audit Committee</div>
-                </article>
-              </div>
-              <div class="col-md-4">
-                <article class="quote card p-4 text-center">
-                  <img src="resources/img/photo.jpg" alt="Client 3" class="rounded-circle mx-auto d-block client-img">
-                  <p class="mt-3">“Reliable partner for compliance and reporting. Responsive, meticulous, and easy to work with.”</p>
-                  <div class="text-light mt-2">MD, Manufacturing Group</div>
-                </article>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+              <div class="row g-4 justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                  <article class="testimonial-card">
+                    <div class="testimonial-header">
+                      <div class="client-avatar">
+                        <img src="resources/img/photo.jpg" alt="CEO, Tech Startup" class="avatar-img">
+                        <div class="avatar-glow"></div>
+                      </div>
+                      <div class="client-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                      </div>
+                    </div>
+                    
+                    <div class="testimonial-content">
+                      <div class="quote-icon">
+                        <i class="bi bi-quote"></i>
+                      </div>
+                      <p class="testimonial-text">
+                        "Great team to work with. They consistently deliver on time and provide actionable strategic insights that drive our business forward."
+                      </p>
+                    </div>
+
+                    <div class="testimonial-footer">
+                      <div class="client-info">
+                        <h4 class="client-name">Emily Rodriguez</h4>
+                        <p class="client-position">CEO, Tech Startup</p>
+                      </div>
+                    </div>
+                    <div class="testimonial-hover-effect"></div>
+                  </article>
+                </div>
+
+                <!-- Repeat first two for smooth cycling -->
+                <div class="col-lg-4 col-md-6">
+                  <article class="testimonial-card">
+                    <div class="testimonial-header">
+                      <div class="client-avatar">
+                        <img src="resources/img/photo.jpg" alt="CFO, Growth-stage Fintech" class="avatar-img">
+                        <div class="avatar-glow"></div>
+                      </div>
+                      <div class="client-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                      </div>
+                    </div>
+                    
+                    <div class="testimonial-content">
+                      <div class="quote-icon">
+                        <i class="bi bi-quote"></i>
+                      </div>
+                      <p class="testimonial-text">
+                        "Jolaha helped us convert to IFRS and tightened our controls before our fundraise. Smooth end-to-end delivery with exceptional attention to detail."
+                      </p>
+                    </div>
+
+                    <div class="testimonial-footer">
+                      <div class="client-info">
+                        <h4 class="client-name">Sarah Johnson</h4>
+                        <p class="client-position">CFO, Growth-stage Fintech</p>
+                      </div>
+                    </div>
+                    <div class="testimonial-hover-effect"></div>
+                  </article>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                  <article class="testimonial-card">
+                    <div class="testimonial-header">
+                      <div class="client-avatar">
+                        <img src="resources/img/photo.jpg" alt="Chair, Audit Committee" class="avatar-img">
+                        <div class="avatar-glow"></div>
+                      </div>
+                      <div class="client-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                      </div>
+                    </div>
+                    
+                    <div class="testimonial-content">
+                      <div class="quote-icon">
+                        <i class="bi bi-quote"></i>
+                      </div>
+                      <p class="testimonial-text">
+                        "Their audit team kept us informed and on schedule. The management letter was practical, prioritized, and provided clear actionable insights."
+                      </p>
+                    </div>
+
+                    <div class="testimonial-footer">
+                      <div class="client-info">
+                        <h4 class="client-name">Michael Chen</h4>
+                        <p class="client-position">Chair, Audit Committee</p>
+                      </div>
+                    </div>
+                    <div class="testimonial-hover-effect"></div>
+                  </article>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Slide 2 (last card + loop around) -->
-          <div class="carousel-item">
-            <div class="row g-4 justify-content-center">
-              <div class="col-md-4">
-                <article class="quote card p-4 text-center">
-                  <img src="resources/img/photo.jpg" alt="Client 4" class="rounded-circle mx-auto d-block client-img">
-                  <p class="mt-3">“Great team to work with. They deliver on time and provide actionable insights for our strategy.”</p>
-                  <div class="text-light mt-2">CEO, Tech Startup</div>
-                </article>
-              </div>
-              <!-- Re-show first 2 for smooth cycling -->
-              <div class="col-md-4">
-                <article class="quote card p-4 text-center">
-                  <img src="resources/img/photo.jpg" alt="Client 1" class="rounded-circle mx-auto d-block client-img">
-                  <p class="mt-3">“Jolaha helped us convert to IFRS and tightened our controls before our fundraise. Smooth end-to-end.”</p>
-                  <div class="text-light mt-2">CFO, Growth-stage Fintech</div>
-                </article>
-              </div>
-              <div class="col-md-4">
-                <article class="quote card p-4 text-center">
-                  <img src="resources/img/photo.jpg" alt="Client 2" class="rounded-circle mx-auto d-block client-img">
-                  <p class="mt-3">“Their audit team kept us informed and on schedule. The management letter was practical and prioritized.”</p>
-                  <div class="text-light mt-2">Chair, Audit Committee</div>
-                </article>
-              </div>
-            </div>
-          </div>
+          <!-- Carousel Controls -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#testimonialsCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#testimonialsCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Blog -->
-  <section id="blog" class="section blog-section bg-light">
+  <!-- Blog Section-->
+  <section id="blog" class="testimonials-section" style="background: var(--bg-light); padding-top: 4rem; padding-bottom: 4rem;">
     <div class="container">
       <!-- Heading -->
-      <div class="text-center mb-5">
-      <h2 class="section-title">Latest Insights</h2>
-      <div class="d-flex justify-content-center">
-        <p class="lead text-center">
-          Stay updated with expert commentary on web development, mobile apps, digital marketing, and technology trends.
-        </p>
-      </div>
+      <div class="row justify-content-center text-center text-center">
+        <div class="col-lg-8">
+          <span class="section-badge">LATEST INSIGHTS</span>
+          <h2 class="display-5 fw-bold mb-4" style="color: var(--secondary)">Blog Posts</h2>
+          <p class="text-dark">
+            Stay updated with expert commentary on web development, mobile apps, digital marketing, and technology trends.
+          </p>
+        </div>
     </div>
 
     <?php
@@ -376,8 +761,8 @@ include 'includes/head.php';
       $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
 
-    <!-- Blog Section Cards -->
-    <div class="row gy-4">
+    <!-- Cards -->
+    <div class="row gy-4 mb-5">
       <?php if (!empty($posts)): ?>
         <?php foreach ($posts as $post): ?>
           <?php
@@ -534,7 +919,6 @@ include 'includes/head.php';
       if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newsletter_submit'])) {
           $subscription_result = handle_newsletter_subscription();
       }
-      
     ?>
   </section>
 
@@ -766,7 +1150,6 @@ include 'includes/footer.php';
 
 <?php 
   if (!is_null($subscription_result)): ?>
-
   <?php endif; 
 ?>
 

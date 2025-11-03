@@ -81,62 +81,70 @@ document
 /* ===============================================
    Stats Counter
    =============================================== */
-const counters = document.querySelectorAll(".num");
-let counterStarted = false;
 
-function animateCount(counter) {
-  const target = counter.getAttribute("data-target");
-  const isPercentage = target.includes("%");
-  const isPlus = target.includes("+");
-  const isGrade = target.toUpperCase().includes("A+");
+  const counters = document.querySelectorAll(".num");
+  let counterStarted = false;
 
-  if (isGrade) {
-    let count = 0;
-    const duration = 2000;
-    const stepTime = 20;
-    const increment = Math.ceil(100 / (duration / stepTime));
+  function animateCount(counter) {
+    const target = counter.getAttribute("data-target");
+    const isPercentage = target.includes("%");
+    const isPlus = target.includes("+");
+    const isGrade = target.toUpperCase().includes("A+");
 
-    const timer = setInterval(() => {
-      count += increment;
-      if (count >= 100) {
-        clearInterval(timer);
-        counter.textContent = "A+";
-      } else {
-        counter.textContent = count;
-      }
-    }, stepTime);
-  } else {
-    const numericTarget = parseInt(target.replace(/\D/g, ""), 10);
-    let count = 0;
-    const duration = 2000;
-    const stepTime = Math.max(Math.floor(duration / numericTarget), 20);
+    if (isGrade) {
+      let count = 0;
+      const duration = 2000;
+      const stepTime = 20;
+      const increment = Math.ceil(100 / (duration / stepTime));
 
-    const timer = setInterval(() => {
-      count++;
-      if (count >= numericTarget) {
-        clearInterval(timer);
-        counter.textContent = isPercentage
-          ? numericTarget + "%"
-          : numericTarget + (isPlus ? "+" : "");
-      } else {
-        counter.textContent = isPercentage
-          ? count + "%"
-          : count + (isPlus ? "+" : "");
-      }
-    }, stepTime);
+      const timer = setInterval(() => {
+        count += increment;
+        if (count >= 100) {
+          clearInterval(timer);
+          counter.textContent = "A+";
+        } else {
+          counter.textContent = count;
+        }
+      }, stepTime);
+    } else {
+      const numericTarget = parseInt(target.replace(/\D/g, ""), 10);
+      let count = 0;
+      const duration = 2000;
+      const stepTime = Math.max(Math.floor(duration / numericTarget), 20);
+
+      const timer = setInterval(() => {
+        count++;
+        if (count >= numericTarget) {
+          clearInterval(timer);
+          counter.textContent = isPercentage
+            ? numericTarget + "%"
+            : numericTarget + (isPlus ? "+" : "");
+        } else {
+          counter.textContent = isPercentage
+            ? count + "%"
+            : count + (isPlus ? "+" : "");
+        }
+      }, stepTime);
+    }
   }
-}
 
-function checkScroll() {
-  const section = document.querySelector("#stats");
-  if (!section) return;
-  const rect = section.getBoundingClientRect();
-  if (!counterStarted && rect.top < window.innerHeight && rect.bottom > 0) {
-    counters.forEach(animateCount);
-    counterStarted = true;
+  function checkScroll() {
+    const section = document.querySelector("#stats");
+    if (!section) return;
+    const rect = section.getBoundingClientRect();
+    if (!counterStarted && rect.top < window.innerHeight && rect.bottom > 0) {
+      counters.forEach(animateCount);
+      counterStarted = true;
+    }
   }
-}
-window.addEventListener("scroll", checkScroll);
+
+  // Initialize on load and scroll
+  window.addEventListener("load", checkScroll);
+  window.addEventListener("scroll", checkScroll);
+
+  // Also check immediately in case the section is already in view
+  setTimeout(checkScroll, 100);
+
 
 /* ===============================================
    Satisfaction Progress Card

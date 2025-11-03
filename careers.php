@@ -62,7 +62,7 @@ include 'includes/header-navbar.php';
         <h2 class="fw-bold mb-4 text-center" style="color: var(--secondary);">Open Positions</h2>
         
         <?php
-          $careers = get_all_careers(true); // Use your existing function
+          $careers = get_all_careers(true);
           
           if (!empty($careers)): 
               // Group by employment type for filtering (optional)
