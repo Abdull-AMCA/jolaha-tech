@@ -1,10 +1,6 @@
 <?php
 require_once 'database.php';
 
-
-// config/functions.php
-require_once 'database.php';
-
 // Import PHPMailer classes
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;

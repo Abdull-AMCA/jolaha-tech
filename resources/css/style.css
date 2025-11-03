@@ -1227,6 +1227,89 @@ header .brand {
       }
   }
 
+  
+/* ================================
+   Coming Soon / Countdown / Error Pages
+   ================================ */
+
+.construction-icon {
+    position: relative;
+    display: inline-block;
+    animation: bounce 2s infinite;
+}
+
+.countdown-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary);
+    background: var(--surface);
+    padding: 1rem;
+    border-radius: var(--radius);
+    min-width: 80px;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.progress-bar-animated {
+    animation: progress-bar-stripes 1s linear infinite;
+}
+
+@keyframes progress-bar-stripes {
+    0% {
+        background-position: 1rem 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+
+.error-code {
+    position: relative;
+}
+
+.error-code::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+    opacity: 0.1;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.progress-bar-animated {
+    animation: progress-bar-stripes 1s linear infinite;
+}
+
+@keyframes progress-bar-stripes {
+    0% {
+        background-position: 1rem 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+.update-item {
+    border-left: 3px solid var(--primary);
+    padding-left: 1rem;
+}
+
 
 /* ================================
    Footer
