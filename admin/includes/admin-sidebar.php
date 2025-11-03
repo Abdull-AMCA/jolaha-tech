@@ -61,7 +61,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
             ?>
             <a class="nav-link menu-toggle-btn <?php echo $is_careers_active ? 'active' : ''; ?>" href="#" data-menu="careers">
                 <i class="bi bi-briefcase nav-icon"></i>
-                <span class="nav-text">Careers</span>
+                <span class="nav-text">Jobs & Careers</span>
                 <i class="bi bi-chevron-right menu-toggle"></i>
             </a>
             <ul class="sub-menu" id="careers-menu" style="<?php echo $is_careers_active ? 'display:block;' : ''; ?>">
@@ -74,7 +74,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($current_page === 'careers.php' && !isset($_GET['source'])) ? 'active' : ''; ?>" href="careers.php">
                         <i class="bi bi-card-checklist nav-icon"></i>
-                        <span class="nav-text">View All</span>
+                        <span class="nav-text">View All Jobs</span>
                     </a>
                 </li>
             </ul>
@@ -117,7 +117,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($current_page === 'services.php' && !isset($_GET['source'])) ? 'active' : ''; ?>" href="services.php">
                         <i class="bi bi-card-checklist nav-icon"></i>
-                        <span class="nav-text">View All</span>
+                        <span class="nav-text">View All Services</span>
                     </a>
                 </li>
             </ul>
@@ -141,7 +141,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($current_page === 'users.php') ? 'active' : ''; ?>" href="users.php">
                         <i class="bi bi-person-lines-fill nav-icon"></i>
-                        <span class="nav-text">View All</span>
+                        <span class="nav-text">View All Users</span>
                     </a>
                 </li>
             </ul>
@@ -149,27 +149,43 @@ $current_page = basename($_SERVER['PHP_SELF']);
         
         <!-- Submissions Menu -->
         <li class="nav-item">
-            <?php $is_submissions_active = in_array($current_page, ['contact_forms.php', 'trial_requests.php', 'service_inquiries.php']); ?>
-            <a class="nav-link menu-toggle-btn <?php echo $is_submissions_active ? 'active' : ''; ?>" href="#" data-menu="submissions">
+            <?php 
+            // Include ALL child pages that should make the Submissions menu active
+            $is_submissions_active = in_array($current_page, [
+                'contact_forms.php', 'trial_requests.php', 'service_inquiries.php', 'view_all_inquiries.php'
+            ]);
+            ?>
+            
+            <a class="nav-link menu-toggle-btn <?php echo $is_submissions_active ? 'active' : ''; ?>" 
+            href="#" 
+            data-menu="submissions">
                 <i class="bi bi-inbox nav-icon"></i>
                 <span class="nav-text">Submissions</span>
                 <i class="bi bi-chevron-right menu-toggle"></i>
             </a>
-            <ul class="sub-menu" id="submissions-menu" style="<?php echo $is_submissions_active ? 'display:block;' : ''; ?>">
+
+            <ul class="sub-menu" id="submissions-menu" 
+                style="<?php echo $is_submissions_active ? 'display:block;' : ''; ?>">
+                
                 <li class="nav-item">
-                    <a class="nav-link <?php echo ($current_page === 'contact_forms.php') ? 'active' : ''; ?>" href="contact_forms.php">
+                    <a class="nav-link <?php echo ($current_page === 'contact_forms.php') ? 'active' : ''; ?>" 
+                    href="contact_forms.php">
                         <i class="bi bi-envelope nav-icon"></i>
                         <span class="nav-text">Contact Forms</span>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link <?php echo ($current_page === 'trial_requests.php') ? 'active' : ''; ?>" href="trial_requests.php">
+                    <a class="nav-link <?php echo ($current_page === 'trial_requests.php') ? 'active' : ''; ?>" 
+                    href="trial_requests.php">
                         <i class="bi bi-cart-check nav-icon"></i>
                         <span class="nav-text">Trial Requests</span>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link <?php echo ($current_page === 'includes/view_all_inquiries.php') ? 'active' : ''; ?>" href="view_all_inquiries.php">
+                    <a class="nav-link <?php echo ($current_page === 'view_all_inquiries.php') ? 'active' : ''; ?>" 
+                    href="view_all_inquiries.php">
                         <i class="bi bi-chat-square-text nav-icon"></i>
                         <span class="nav-text">Service Inquiries</span>
                     </a>

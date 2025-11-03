@@ -533,4 +533,56 @@ function create_user($username, $email, $password, $full_name, $role = 'staff') 
 }
 
 
+///////////////////////// Get all careers /////////////////////////
+function get_all_careers($active_only = true) {
+    global $connection;
+    
+    try {
+        $sql = "SELECT * FROM careers";
+        if ($active_only) {
+            $sql .= " WHERE is_active = 1";
+        }
+        $sql .= " ORDER BY posted_date DESC";
+        
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        error_log('Get careers error: ' . $e->getMessage());
+        return [];
+    }
+}
+
+// Helper function for time elapsed (add to functions.php)
+function time_elapsed_string($datetime, $full = false) {
+    $now = new DateTime;
+    $ago = new DateTime($datetime);
+    $diff = $now->diff($ago);
+
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
+
+    $string = array(
+        'y' => 'year',
+        'm' => 'month',
+        'w' => 'week',
+        'd' => 'day',
+        'h' => 'hour',
+        'i' => 'minute',
+        's' => 'second',
+    );
+    
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+        } else {
+            unset($string[$k]);
+        }
+    }
+
+    if (!$full) $string = array_slice($string, 0, 1);
+    return $string ? implode(', ', $string) . ' ago' : 'just now';
+}
+
 ?>

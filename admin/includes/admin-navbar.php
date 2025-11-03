@@ -1,14 +1,16 @@
 <body>
     <div class="main-container">
+        
         <!-- Top Navigation Bar -->
         <nav class="navbar top-navbar">
             <div class="container-fluid">
+
                 <!-- Logo and mobile toggle on the left -->
                 <div class="d-flex align-items-center">
                     <button class="mobile-sidebar-toggle" id="mobileSidebarToggle">
                         <i class="bi bi-list"></i>
                     </button>
-                    <a href="#" class="navbar-logo">
+                    <a href="../index.php" class="navbar-logo">
                         <!-- SVG Logo as data URI -->
                         <img src="resources/img/logo.svg" alt="Jolaha Logo" class="logo-img">
                         <span class="logo-text">Tech<span class="logo-accent">.</span></span>
