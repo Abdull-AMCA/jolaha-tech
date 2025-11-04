@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2025 at 12:33 PM
+-- Generation Time: Nov 04, 2025 at 09:33 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,36 @@ SET time_zone = "+00:00";
 --
 -- Database: `jolaha`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `call_bookings`
+--
+
+CREATE TABLE `call_bookings` (
+  `id` int(11) NOT NULL,
+  `full_name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `company_name` varchar(255) DEFAULT NULL,
+  `phone` varchar(50) NOT NULL,
+  `preferred_date` date NOT NULL,
+  `preferred_time` time NOT NULL,
+  `additional_notes` text DEFAULT NULL,
+  `status` enum('pending','confirmed','cancelled') DEFAULT 'pending',
+  `submitted_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `call_bookings`
+--
+
+INSERT INTO `call_bookings` (`id`, `full_name`, `email`, `company_name`, `phone`, `preferred_date`, `preferred_time`, `additional_notes`, `status`, `submitted_at`, `updated_at`) VALUES
+(1, 'First', 'support1@amca.ae', 'AMCA', '1234567890', '2025-11-05', '12:40:00', 'Yoooooo', 'pending', '2025-11-04 06:57:34', '2025-11-04 06:57:34'),
+(2, 'First', 'support1@amca.ae', 'AMCA', '123456789', '2025-11-06', '00:58:00', 'yooooooooooooo', 'pending', '2025-11-04 06:58:14', '2025-11-04 06:58:14'),
+(3, 'First', 'support1@amca.ae', 'AMCA', '123456789', '2025-11-06', '00:58:00', 'yooooooooooooo', 'pending', '2025-11-04 07:02:41', '2025-11-04 07:02:41'),
+(4, 'First', 'support1@amca.ae', 'AMCA', '1234567890', '2025-11-06', '12:04:00', 'Hi', 'pending', '2025-11-04 07:03:45', '2025-11-04 07:03:45');
 
 -- --------------------------------------------------------
 
@@ -46,7 +76,8 @@ CREATE TABLE `careers` (
 
 INSERT INTO `careers` (`job_id`, `job_title`, `job_description`, `location`, `employment_type`, `joining_date`, `posted_date`, `is_active`, `created_at`, `updated_at`) VALUES
 (1, 'Test', 'New', 'Dubai', 'full-time', '2025-10-16', '2025-10-29 14:56:30', 0, '2025-10-29 10:56:30', '2025-10-29 11:28:06'),
-(2, 'Adding New Career - Edited', 'Adding new career for testing pupose. Now editing it', 'Abu Dhabi', 'part-time', '2025-10-30', '2025-10-29 15:23:29', 1, '2025-10-29 11:23:29', '2025-10-29 11:27:22');
+(2, 'Adding New Career - Edited', 'Adding new career for testing pupose. Now editing it', 'Abu Dhabi', 'part-time', '2025-10-30', '2025-10-29 15:23:29', 1, '2025-10-29 11:23:29', '2025-11-03 05:49:26'),
+(3, 'New Fresh Test', 'Freshly testing careers. Detailed description of responsibilities, requirements, and qualifications.', 'UAE', 'full-time', '2025-12-01', '2025-11-03 09:48:39', 1, '2025-11-03 05:48:39', '2025-11-03 05:48:39');
 
 -- --------------------------------------------------------
 
@@ -268,6 +299,12 @@ INSERT INTO `sub_services` (`id`, `service_id`, `sub_service_name`, `sub_service
 --
 
 --
+-- Indexes for table `call_bookings`
+--
+ALTER TABLE `call_bookings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `careers`
 --
 ALTER TABLE `careers`
@@ -322,10 +359,16 @@ ALTER TABLE `sub_services`
 --
 
 --
+-- AUTO_INCREMENT for table `call_bookings`
+--
+ALTER TABLE `call_bookings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `careers`
 --
 ALTER TABLE `careers`
-  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `newsletter_subscribers`

@@ -581,4 +581,142 @@ function time_elapsed_string($datetime, $full = false) {
     return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 
-?>
+
+// ========== CALL BOOKING FUNCTIONS ==========
+
+function handle_call_booking($data) {
+    global $connection;
+    
+    try {
+        // Validate required fields
+        $required_fields = ['full_name', 'email', 'phone', 'preferred_date', 'preferred_time'];
+        foreach ($required_fields as $field) {
+            if (empty(trim($data[$field]))) {
+                throw new Exception("Please fill in all required fields.");
+            }
+        }
+
+        // Validate email
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            throw new Exception("Please enter a valid email address.");
+        }
+
+        // Validate date (must be today or future)
+        $preferred_date = DateTime::createFromFormat('Y-m-d', $data['preferred_date']);
+        $today = new DateTime();
+        $today->setTime(0, 0, 0);
+        
+        if ($preferred_date < $today) {
+            throw new Exception("Preferred date must be today or in the future.");
+        }
+
+        // Insert into database
+        $stmt = $connection->prepare("
+            INSERT INTO call_bookings 
+            (full_name, email, company_name, phone, preferred_date, preferred_time, additional_notes) 
+            VALUES (:full_name, :email, :company_name, :phone, :preferred_date, :preferred_time, :additional_notes)
+        ");
+
+        $stmt->execute([
+            ':full_name' => trim($data['full_name']),
+            ':email' => trim($data['email']),
+            ':company_name' => !empty($data['company_name']) ? trim($data['company_name']) : null,
+            ':phone' => trim($data['phone']),
+            ':preferred_date' => $data['preferred_date'],
+            ':preferred_time' => $data['preferred_time'],
+            ':additional_notes' => !empty($data['additional_notes']) ? trim($data['additional_notes']) : null
+        ]);
+
+        $booking_id = $connection->lastInsertId();
+
+        // Send email notification
+        $email_sent = send_booking_email($data, $booking_id);
+
+        return [
+            'success' => true,
+            'message' => 'Call booking submitted successfully! Our team will contact you shortly.',
+            'booking_id' => $booking_id,
+            'email_sent' => $email_sent
+        ];
+
+    } catch (Exception $e) {
+        error_log('Call booking error: ' . $e->getMessage());
+        return [
+            'success' => false,
+            'message' => $e->getMessage()
+        ];
+    }
+}
+
+function send_booking_email($booking_data, $booking_id) {
+    try {
+        // Create PHPMailer instance
+        $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+        
+        // Server settings for local development
+        $mail->isSMTP();
+        $mail->Host = 'localhost';
+        $mail->SMTPAuth = false;
+        $mail->Port = 25;
+        
+        // For debugging
+        $mail->SMTPDebug = 0; // Set to 2 for verbose debugging
+
+        // Recipients
+        $mail->setFrom('noreply@jolaha.com', 'Jolaha Tech');
+        $mail->addAddress('support1@amca.ae', 'Jolaha Admin'); // CHANGE TO YOUR EMAIL
+        $mail->addReplyTo($booking_data['email'], $booking_data['full_name']);
+
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = 'New Call Booking Request - Booking #' . $booking_id;
+        
+        $mail->Body = "
+            <h2>New Call Booking Request</h2>
+            <p><strong>Booking ID:</strong> #{$booking_id}</p>
+            <p><strong>Client Name:</strong> {$booking_data['full_name']}</p>
+            <p><strong>Email:</strong> {$booking_data['email']}</p>
+            <p><strong>Phone:</strong> {$booking_data['phone']}</p>
+            <p><strong>Company:</strong> " . ($booking_data['company_name'] ?: 'Not provided') . "</p>
+            <p><strong>Preferred Date:</strong> {$booking_data['preferred_date']}</p>
+            <p><strong>Preferred Time:</strong> {$booking_data['preferred_time']}</p>
+            <p><strong>Additional Notes:</strong> " . ($booking_data['additional_notes'] ?: 'None') . "</p>
+            <p><strong>Submitted:</strong> " . date('Y-m-d H:i:s') . "</p>
+        ";
+
+        $mail->send();
+        return true;
+
+    } catch (Exception $e) {
+        error_log('Email sending failed: ' . $e->getMessage());
+        // Don't throw error for email failure, just log it
+        return false;
+    }
+}
+
+
+// Function to get all call bookings (for admin)
+function get_all_call_bookings($status = null) {
+    global $connection;
+    
+    try {
+        $sql = "SELECT * FROM call_bookings";
+        if ($status) {
+            $sql .= " WHERE status = :status";
+        }
+        $sql .= " ORDER BY submitted_at DESC";
+        
+        $stmt = $connection->prepare($sql);
+        
+        if ($status) {
+            $stmt->execute([':status' => $status]);
+        } else {
+            $stmt->execute();
+        }
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        error_log('Get call bookings error: ' . $e->getMessage());
+        return [];
+    }
+}

@@ -391,385 +391,58 @@ Then I want to view all careers in a tabular format similar to how services are 
 Then create a delete career functionality that removes the career from the database using its ID, with appropriate success and failure modals. Make sure to not create a seperate delete_career.php file but include the delete functionality within the functions.php file and js if necessary
 
 
+Below is the modal for booking a call with our agent, I need you to create a function that sends the booking details to my email using PHPMailer (based on local server setup that can be easily converted to a hosting server setup like hostinger or bluehost). 
 
+The function should be placed in functions.php and called when the form is submitted. Use prepared statements for any database interactions and ensure proper validation and sanitization of input data.
 
-This is the schema of my service_inquiries table;
+  <!-- Call Booking Modal -->
+  <div class="modal fade" id="bookCallModal" tabindex="-1" aria-labelledby="bookCallLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border-radius: var(--radius);">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="bookCallLabel" style="color: var(--secondary);">
+            Book a Call with Our Agent
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
 
-127.0.0.1/jolaha/service_inquiries/		http://localhost/phpmyadmin/index.php?route=/table/sql&db=jolaha&table=service_inquiries
-Your SQL query has been executed successfully.
-
-DESCRIBE service_inquiries;
-
-
-
-id	int(11)	NO	PRI	NULL	auto_increment	
-service_type	varchar(100)	NO		NULL		
-full_name	varchar(150)	NO		NULL		
-email	varchar(150)	NO		NULL		
-company_name	varchar(150)	YES		NULL		
-project_type	varchar(100)	YES		NULL		
-budget_range	varchar(100)	YES		NULL		
-timeline	varchar(100)	YES		NULL		
-description	text	YES		NULL		
-submitted_at	timestamp	NO		current_timestamp()		
-
-
-Now I want to create a query to fetch all the service inquiries made, ordered by the most recent submission date. 
-Structure the page to follow the same format as the view_all_posts we implemented above. 
-In the action column for this, only include a 'View Details' button that opens a modal displaying the full inquiry details when clicked. 
-Then on the modal create a button to respond to the request via email using the mailto: link with the email address prefilled.
-
-
-view_all_inquiries.php (instead of inquiries.php) look like this;
-
-<?php
-include 'includes/admin-head.php';
-include 'includes/admin-navbar.php';
-include 'includes/admin-sidebar.php';
-include 'includes/admin-functions.php';
-// Get all service inquiries
-$inquiries = get_all_service_inquiries();
-?>
-
-    <div class="main-content" id="mainContent">
-        <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1 class="page-title">Service Inquiries</h1>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-outline-secondary" onclick="window.location.reload()">
-                        <i class="bi bi-arrow-clockwise"></i> Refresh
-                    </button>
-                </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label class="form-label text-dark">Full Name</label>
+              <input type="text" class="form-control" placeholder="Enter your full name">
             </div>
-
-            <div class="card shadow-sm">
-                <div class="card-header">
-                    <h5 class="mb-0"><i class="bi bi-envelope me-2"></i>All Service Inquiries</h5>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-striped" id="inquiriesTable">
-                            <thead>
-                                <tr class="table-dark">
-                                    <th>#</th>
-                                    <th>Service Type</th>
-                                    <th>Full Name</th>
-                                    <th>Email</th>
-                                    <th>Company</th>
-                                    <th>Budget Range</th>
-                                    <th>Timeline</th>
-                                    <th>Submitted At</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (!empty($inquiries)): ?>
-                                    <?php $serial = 1; foreach ($inquiries as $inquiry): ?>
-                                        <tr>
-                                            <td class="fw-bold"><?php echo $serial++; ?></td>
-                                            <td>
-                                                <span class="badge bg-primary">
-                                                    <?php echo htmlspecialchars($inquiry['service_type']); ?>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <strong><?php echo htmlspecialchars($inquiry['full_name']); ?></strong>
-                                            </td>
-                                            <td>
-                                                <a href="mailto:<?php echo htmlspecialchars($inquiry['email']); ?>" 
-                                                class="text-decoration-none">
-                                                    <i class="bi bi-envelope me-1"></i>
-                                                    <?php echo htmlspecialchars($inquiry['email']); ?>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <?php if (!empty($inquiry['company_name'])): ?>
-                                                    <?php echo htmlspecialchars($inquiry['company_name']); ?>
-                                                <?php else: ?>
-                                                    <span class="text-muted">Not provided</span>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td>
-                                                <?php if (!empty($inquiry['budget_range'])): ?>
-                                                    <span class="badge bg-info">
-                                                        <?php echo htmlspecialchars($inquiry['budget_range']); ?>
-                                                    </span>
-                                                <?php else: ?>
-                                                    <span class="text-muted">Not specified</span>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td>
-                                                <?php if (!empty($inquiry['timeline'])): ?>
-                                                    <span class="badge bg-warning text-dark">
-                                                        <?php echo htmlspecialchars($inquiry['timeline']); ?>
-                                                    </span>
-                                                <?php else: ?>
-                                                    <span class="text-muted">Not specified</span>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex flex-column">
-                                                    <span class="fw-semibold"><?php echo date('M j, Y', strtotime($inquiry['submitted_at'])); ?></span>
-                                                    <small class="text-muted"><?php echo date('g:i A', strtotime($inquiry['submitted_at'])); ?></small>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-sm btn-primary view-inquiry-btn" 
-                                                        data-inquiry-id="<?php echo $inquiry['id']; ?>"
-                                                        title="View Details">
-                                                    <i class="bi bi-eye"></i> View Details
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <tr>
-                                        <td colspan="9" class="text-center py-4">
-                                            <div class="text-muted">
-                                                <i class="bi bi-envelope display-4 d-block mb-2"></i>
-                                                <h5>No service inquiries found</h5>
-                                                <p>All service inquiries will appear here.</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="mb-3">
+              <label class="form-label text-dark">Company Name</label>
+              <input type="text" class="form-control" placeholder="Enter your company name">
             </div>
-        </div>
-    </div>
-
-    <!-- View Inquiry Details Modal -->
-    <div class="modal fade" id="viewInquiryModal" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title"><i class="bi bi-envelope me-2"></i>Inquiry Details</h5>
-                    <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body" id="inquiryDetails">
-                    <!-- Content will be loaded via AJAX -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a href="#" class="btn btn-success" id="respondInquiryBtn">
-                        <i class="bi bi-reply me-1"></i> Respond via Email
-                    </a>
-                </div>
+            <div class="mb-3">
+              <label class="form-label text-dark">Phone Number</label>
+              <input type="tel" class="form-control" placeholder="Enter your phone number">
             </div>
+            <div class="mb-3">
+              <label class="form-label text-dark">Preferred Date</label>
+              <input type="date" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-dark">Preferred Time</label>
+              <input type="time" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-dark">Additional Notes</label>
+              <textarea class="form-control" rows="3" placeholder="Tell us more about your request..."></textarea>
+            </div>
+          </form>
         </div>
-    </div>
 
-<?php
-include 'includes/admin-footer.php';
-?>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const viewModal = new bootstrap.Modal(document.getElementById('viewInquiryModal'));
-    const inquiryDetails = document.getElementById('inquiryDetails');
-    const respondBtn = document.getElementById('respondInquiryBtn');
-    let currentInquiryEmail = '';
-
-    // View inquiry details
-    document.querySelectorAll('.view-inquiry-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const inquiryId = this.getAttribute('data-inquiry-id');
-            
-            // Show loading state
-            inquiryDetails.innerHTML = `
-                <div class="text-center py-4">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <p class="mt-2">Loading inquiry details...</p>
-                </div>
-            `;
-            
-            // Fetch inquiry details
-            fetch(`get_inquiry_details.php?id=${inquiryId}`)
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.success) {
-                        const inquiry = data.inquiry;
-                        currentInquiryEmail = inquiry.email;
-                        
-                        // Update respond button
-                        respondBtn.href = `mailto:${inquiry.email}?subject=Re: Your ${inquiry.service_type} Inquiry&body=Dear ${inquiry.full_name},%0D%0A%0D%0AThank you for your inquiry regarding our ${inquiry.service_type} services.%0D%0A%0D%0A`;
-                        
-                        // Populate modal content
-                        inquiryDetails.innerHTML = `
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h6 class="fw-bold text-primary">Personal Information</h6>
-                                    <div class="mb-3">
-                                        <label class="form-label fw-semibold">Full Name</label>
-                                        <p class="form-control-static">${escapeHtml(inquiry.full_name)}</p>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label fw-semibold">Email</label>
-                                        <p class="form-control-static">
-                                            <a href="mailto:${escapeHtml(inquiry.email)}" class="text-decoration-none">
-                                                <i class="bi bi-envelope me-1"></i>${escapeHtml(inquiry.email)}
-                                            </a>
-                                        </p>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label fw-semibold">Company</label>
-                                        <p class="form-control-static">
-                                            ${inquiry.company_name ? escapeHtml(inquiry.company_name) : '<span class="text-muted">Not provided</span>'}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <h6 class="fw-bold text-primary">Project Details</h6>
-                                    <div class="mb-3">
-                                        <label class="form-label fw-semibold">Service Type</label>
-                                        <p class="form-control-static">
-                                            <span class="badge bg-primary">${escapeHtml(inquiry.service_type)}</span>
-                                        </p>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label fw-semibold">Project Type</label>
-                                        <p class="form-control-static">
-                                            ${inquiry.project_type ? escapeHtml(inquiry.project_type) : '<span class="text-muted">Not specified</span>'}
-                                        </p>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label fw-semibold">Budget Range</label>
-                                        <p class="form-control-static">
-                                            ${inquiry.budget_range ? `<span class="badge bg-info">${escapeHtml(inquiry.budget_range)}</span>` : '<span class="text-muted">Not specified</span>'}
-                                        </p>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label fw-semibold">Timeline</label>
-                                        <p class="form-control-static">
-                                            ${inquiry.timeline ? `<span class="badge bg-warning text-dark">${escapeHtml(inquiry.timeline)}</span>` : '<span class="text-muted">Not specified</span>'}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-12">
-                                    <h6 class="fw-bold text-primary">Project Description</h6>
-                                    <div class="card bg-light">
-                                        <div class="card-body">
-                                            ${inquiry.description ? `<p class="mb-0">${escapeHtml(inquiry.description).replace(/\n/g, '<br>')}</p>` : '<p class="text-muted mb-0">No description provided.</p>'}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-12">
-                                    <div class="card bg-light">
-                                        <div class="card-body">
-                                            <h6 class="fw-bold text-primary">Submission Details</h6>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label class="form-label fw-semibold">Submitted On</label>
-                                                    <p class="form-control-static">${formatDate(inquiry.submitted_at)}</p>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="form-label fw-semibold">Inquiry ID</label>
-                                                    <p class="form-control-static">#${inquiry.id}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    } else {
-                        inquiryDetails.innerHTML = `
-                            <div class="alert alert-danger">
-                                <i class="bi bi-exclamation-triangle me-2"></i>
-                                Error loading inquiry details: ${data.message}
-                            </div>
-                        `;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    inquiryDetails.innerHTML = `
-                        <div class="alert alert-danger">
-                            <i class="bi bi-exclamation-triangle me-2"></i>
-                            Network error occurred while loading inquiry details.
-                        </div>
-                    `;
-                });
-            
-            viewModal.show();
-        });
-    });
-
-    // Utility functions
-    function escapeHtml(unsafe) {
-        return unsafe
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-    }
-
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    }
-});
-</script>
-
-
-
-Now, the below code is how I am showing the careers at jolaha (hard coded), 
-
- <!-- Open Positions -->
-  <section class="py-5" style="background-color: var(--surface);">
-    <div class="container">
-      <h2 class="fw-bold mb-4 text-center" style="color: var(--secondary);">Open Positions</h2>
-      <p class="lead text-center mb-5" style="color: var(--text);">Explore exciting opportunities across our teams and apply today.</p>
-      <div class="row g-4">
-        <div class="col-md-6">
-          <div class="card border-0 p-4 h-100" style="background: var(--card); border-radius: var(--radius);">
-            <h5 style="color: var(--heading);">Frontend Developer</h5>
-            <p style="color: var(--text);">Build engaging web experiences with React, Vue, and modern frameworks.</p>
-            <a href="#" class="btn btn-primary mt-2">Apply Now</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card border-0 p-4 h-100" style="background: var(--card); border-radius: var(--radius);">
-            <h5 style="color: var(--heading);">Mobile App Developer</h5>
-            <p style="color: var(--text);">Develop high-performance Android/iOS apps for businesses worldwide.</p>
-            <a href="#" class="btn btn-primary mt-2">Apply Now</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card border-0 p-4 h-100" style="background: var(--card); border-radius: var(--radius);">
-            <h5 style="color: var(--heading);">Cloud Engineer</h5>
-            <p style="color: var(--text);">Design and manage scalable, secure, and reliable cloud infrastructures.</p>
-            <a href="#" class="btn btn-primary mt-2">Apply Now</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card border-0 p-4 h-100" style="background: var(--card); border-radius: var(--radius);">
-            <h5 style="color: var(--heading);">UI/UX Designer</h5>
-            <p style="color: var(--text);">Create intuitive interfaces and delightful experiences for end users.</p>
-            <a href="#" class="btn btn-primary mt-2">Apply Now</a>
-          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Confirm Booking</button>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-so now I want to replace this with dynamic data fetched from the database instead of hard coding it. But follow the same style and structure as above. You can include the elements that we have in the database but are not available in the hard coded version above.
+I also need the bookin to be sent to the database table named call_bookings.
+
+Then show a success modal upon successful submission of booking or a failure modal if the booking fails.

@@ -22,4 +22,3 @@ class Database {
 
 $database = new Database();
 $connection = $database->getConnection();
-?>

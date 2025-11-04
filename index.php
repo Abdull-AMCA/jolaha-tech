@@ -1080,54 +1080,100 @@ include 'includes/head.php';
 
   <!-- Call Booking Modal -->
   <div class="modal fade" id="bookCallModal" tabindex="-1" aria-labelledby="bookCallLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content" style="border-radius: var(--radius);">
-        <div class="modal-header">
-          <h5 class="modal-title fw-bold" id="bookCallLabel" style="color: var(--secondary);">
-            Book a Call with Our Agent
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content" style="border-radius: var(--radius);">
+              <div class="modal-header">
+                  <h5 class="modal-title fw-bold" id="bookCallLabel" style="color: var(--secondary);">
+                      Book a Call with Our Agent
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
 
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label class="form-label text-dark">Full Name</label>
-              <input type="text" class="form-control" placeholder="Enter your full name">
-            </div>
-            <div class="mb-3">
-              <label class="form-label text-dark">Company Name</label>
-              <input type="text" class="form-control" placeholder="Enter your company name">
-            </div>
-            <div class="mb-3">
-              <label class="form-label text-dark">Email Address</label>
-              <input type="email" class="form-control" placeholder="Enter your email">
-            </div>
-            <div class="mb-3">
-              <label class="form-label text-dark">Phone Number</label>
-              <input type="tel" class="form-control" placeholder="Enter your phone number">
-            </div>
-            <div class="mb-3">
-              <label class="form-label text-dark">Preferred Date</label>
-              <input type="date" class="form-control">
-            </div>
-            <div class="mb-3">
-              <label class="form-label text-dark">Preferred Time</label>
-              <input type="time" class="form-control">
-            </div>
-            <div class="mb-3">
-              <label class="form-label text-dark">Additional Notes</label>
-              <textarea class="form-control" rows="3" placeholder="Tell us more about your request..."></textarea>
-            </div>
-          </form>
-        </div>
+              
+                <form id="callBookingForm" method="POST">
+                  <div class="modal-body">
+                      <div id="bookingMessage" style="display: none;"></div>
+                      
+                      <div class="mb-3">
+                          <label class="form-label text-dark">Full Name *</label>
+                          <input type="text" class="form-control" name="full_name" placeholder="Enter your full name" required>
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label text-dark">Email Address *</label>
+                          <input type="email" class="form-control" name="email" placeholder="Enter your email address" required>
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label text-dark">Company Name</label>
+                          <input type="text" class="form-control" name="company_name" placeholder="Enter your company name">
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label text-dark">Phone Number *</label>
+                          <input type="tel" class="form-control" name="phone" placeholder="Enter your phone number" required>
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label text-dark">Preferred Date *</label>
+                          <input type="date" class="form-control" name="preferred_date" required min="<?php echo date('Y-m-d'); ?>">
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label text-dark">Preferred Time *</label>
+                          <input type="time" class="form-control" name="preferred_time" required>
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label text-dark">Additional Notes</label>
+                          <textarea class="form-control" name="additional_notes" rows="3" placeholder="Tell us more about your request..."></textarea>
+                      </div>
+                  </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Confirm Booking</button>
-        </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary" id="submitBookingBtn">
+                          <span class="spinner-border spinner-border-sm me-2" style="display: none;"></span>
+                          Confirm Booking
+                      </button>
+                  </div>
+              </form>
+          </div>
       </div>
-    </div>
+  </div>
+
+  <!--  Call Booking Success Modal -->
+  <div class="modal fade" id="successModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content text-center">
+              <div class="modal-header bg-success text-white border-0">
+                  <h5 class="modal-title"><i class="bi bi-check-circle-fill me-2"></i>Booking Confirmed!</h5>
+                  <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body py-4">
+                  <i class="bi bi-check-circle display-1 text-success mb-3"></i>
+                  <h4 class="text-success">Call Booked Successfully!</h4>
+                  <p class="text-muted">Our agent will contact you shortly to confirm the call details.</p>
+              </div>
+              <div class="modal-footer justify-content-center border-0">
+                  <button type="button" class="btn btn-success" data-bs-dismiss="modal">Continue</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!--  Call Booking Error Modal -->
+  <div class="modal fade" id="errorModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content text-center">
+              <div class="modal-header bg-danger text-white border-0">
+                  <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill me-2"></i>Booking Failed</h5>
+                  <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body py-4">
+                  <i class="bi bi-x-circle display-1 text-danger mb-3"></i>
+                  <h4 class="text-danger" id="errorTitle">Oops! Something went wrong</h4>
+                  <p class="text-muted" id="errorMessage">Please try again later or contact support.</p>
+              </div>
+              <div class="modal-footer justify-content-center border-0">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Try Again</button>
+              </div>
+          </div>
+      </div>
   </div>
 
   <!-- Floating Action Buttons -->
@@ -1152,6 +1198,92 @@ include 'includes/footer.php';
   if (!is_null($subscription_result)): ?>
   <?php endif; 
 ?>
+
+
+<script>
+// ================================
+// Call booking form submission with AJAX
+// ================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const bookingForm = document.getElementById('callBookingForm');
+    const submitBtn = document.getElementById('submitBookingBtn');
+    
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            const spinner = submitBtn.querySelector('.spinner-border');
+            if (spinner) {
+                spinner.style.display = 'inline-block';
+            }
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Processing...';
+            
+            // Get form data
+            const formData = new FormData(bookingForm);
+            
+            // Send AJAX request with correct path
+            fetch('includes/process_booking.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response data:', data); // Debug log
+                if (data.success) {
+                    // Show success modal
+                    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                    successModal.show();
+                    
+                    // Reset form and close booking modal
+                    bookingForm.reset();
+                    const bookingModal = bootstrap.Modal.getInstance(document.getElementById('bookCallModal'));
+                    if (bookingModal) {
+                        bookingModal.hide();
+                    }
+                } else {
+                    // Show error modal
+                    const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                    document.getElementById('errorMessage').textContent = data.message || 'An error occurred.';
+                    errorModal.show();
+                }
+            })
+            .catch(error => {
+                console.error('Fetch Error:', error);
+                const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                document.getElementById('errorMessage').textContent = 'Network error: ' + error.message;
+                errorModal.show();
+            })
+            .finally(() => {
+                // Reset button state
+                submitBtn.disabled = false;
+                const spinner = submitBtn.querySelector('.spinner-border');
+                if (spinner) {
+                    spinner.style.display = 'none';
+                }
+                submitBtn.innerHTML = 'Confirm Booking';
+            });
+        });
+    }
+    
+    // Reset form when modal is closed
+    const bookCallModal = document.getElementById('bookCallModal');
+    if (bookCallModal) {
+        bookCallModal.addEventListener('hidden.bs.modal', function() {
+            if (bookingForm) {
+                bookingForm.reset();
+            }
+        });
+    }
+});
+</script>
 
 </body>
 </html>
