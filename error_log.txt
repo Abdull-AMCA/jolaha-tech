@@ -1,0 +1,79 @@
+[04-Nov-2025 13:55:20 Europe/Berlin] process_booking error: Invalid request method.
+[04-Nov-2025 13:55:27 Europe/Berlin] process_booking error: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set()
+[04-Nov-2025 13:59:01 Europe/Berlin] process_booking error: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set()
+[04-Nov-2025 14:00:12 Europe/Berlin] process_booking error: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set()
+[04-Nov-2025 14:05:47 Europe/Berlin] process_booking error: Invalid request method.
+[04-Nov-2025 14:31:34 Europe/Berlin] process_booking error: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set()
+[04-Nov-2025 14:39:35 Europe/Berlin] process_booking error: Invalid request method.
+[04-Nov-2025 14:39:36 Europe/Berlin] process_booking error: Invalid request method.
+[04-Nov-2025 14:49:00 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 14:52:10 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 14:53:52 Europe/Berlin] PHPMailer error: SMTP Error: Could not connect to SMTP host. Connection failed. stream_socket_enable_crypto(): SSL operation failed with code 1. OpenSSL Error messages:
+error:0A000086:SSL routines::certificate verify failed
+[04-Nov-2025 14:59:37 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 14:59:38 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 14:59:40 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 14:59:40 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 14:59:40 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 14:59:44 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 15:02:07 Europe/Berlin] PHP Fatal error:  Uncaught ErrorException: fgets(): SSL: An existing connection was forcibly closed by the remote host in C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php:1374
+Stack trace:
+#0 [internal function]: {closure}(2, 'fgets(): SSL: A...', 'C:\\xampp\\htdocs...', 1374)
+#1 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php(1374): fgets(Resource id #11, 512)
+#2 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php(1099): PHPMailer\PHPMailer\SMTP->get_lines()
+#3 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php(898): PHPMailer\PHPMailer\SMTP->sendCommand('EHLO', 'EHLO localhost', 250)
+#4 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php(873): PHPMailer\PHPMailer\SMTP->sendHello('EHLO', 'localhost')
+#5 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\PHPMailer.php(2374): PHPMailer\PHPMailer\SMTP->hello('localhost')
+#6 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\PHPMailer.php(2175): PHPMailer\PHPMailer\PHPMailer->smtpConnect(Array)
+#7 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\PHPMailer.php(1798): PHPMailer\PHPMailer\PHPMailer->smtpSend('Date: Tue, 4 No...', '--b1=_ptymfVY0e...')
+#8 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\PHPMailer.php(1615): PHPMailer\PHPMailer\PHPMailer->postSend()
+#9 C:\xampp\htdocs\jolaha-tech\includes\process_booking.php(156): PHPMailer\PHPMailer\PHPMailer->send()
+#10 {main}
+  thrown in C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php on line 1374
+[04-Nov-2025 15:02:32 Europe/Berlin] PHP Fatal error:  Uncaught ErrorException: fgets(): SSL: An existing connection was forcibly closed by the remote host in C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php:1374
+Stack trace:
+#0 [internal function]: {closure}(2, 'fgets(): SSL: A...', 'C:\\xampp\\htdocs...', 1374)
+#1 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php(1374): fgets(Resource id #11, 512)
+#2 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php(1099): PHPMailer\PHPMailer\SMTP->get_lines()
+#3 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php(898): PHPMailer\PHPMailer\SMTP->sendCommand('EHLO', 'EHLO localhost', 250)
+#4 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php(873): PHPMailer\PHPMailer\SMTP->sendHello('EHLO', 'localhost')
+#5 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\PHPMailer.php(2374): PHPMailer\PHPMailer\SMTP->hello('localhost')
+#6 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\PHPMailer.php(2175): PHPMailer\PHPMailer\PHPMailer->smtpConnect(Array)
+#7 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\PHPMailer.php(1798): PHPMailer\PHPMailer\PHPMailer->smtpSend('Date: Tue, 4 No...', '--b1=_Uqk3zOZsh...')
+#8 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\PHPMailer.php(1615): PHPMailer\PHPMailer\PHPMailer->postSend()
+#9 C:\xampp\htdocs\jolaha-tech\includes\process_booking.php(156): PHPMailer\PHPMailer\PHPMailer->send()
+#10 {main}
+  thrown in C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php on line 1374
+[04-Nov-2025 15:03:14 Europe/Berlin] PHPMailer error: SMTP Error: Could not connect to SMTP host. Connection failed. stream_socket_enable_crypto(): SSL operation failed with code 1. OpenSSL Error messages:
+error:0A000086:SSL routines::certificate verify failed
+[04-Nov-2025 15:09:16 Europe/Berlin] PHP Fatal error:  Uncaught ErrorException: fgets(): SSL: An existing connection was forcibly closed by the remote host in C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php:1374
+Stack trace:
+#0 [internal function]: {closure}(2, 'fgets(): SSL: A...', 'C:\\xampp\\htdocs...', 1374)
+#1 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php(1374): fgets(Resource id #11, 512)
+#2 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php(1099): PHPMailer\PHPMailer\SMTP->get_lines()
+#3 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php(898): PHPMailer\PHPMailer\SMTP->sendCommand('EHLO', 'EHLO localhost', 250)
+#4 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php(873): PHPMailer\PHPMailer\SMTP->sendHello('EHLO', 'localhost')
+#5 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\PHPMailer.php(2374): PHPMailer\PHPMailer\SMTP->hello('localhost')
+#6 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\PHPMailer.php(2175): PHPMailer\PHPMailer\PHPMailer->smtpConnect(Array)
+#7 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\PHPMailer.php(1798): PHPMailer\PHPMailer\PHPMailer->smtpSend('Date: Tue, 4 No...', '--b1=_nBLOJjhta...')
+#8 C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\PHPMailer.php(1615): PHPMailer\PHPMailer\PHPMailer->postSend()
+#9 C:\xampp\htdocs\jolaha-tech\includes\process_booking.php(156): PHPMailer\PHPMailer\PHPMailer->send()
+#10 {main}
+  thrown in C:\xampp\htdocs\jolaha-tech\vendor\phpmailer\phpmailer\src\SMTP.php on line 1374[04-Nov-2025 15:23:49 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 15:23:50 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 15:23:50 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 15:23:56 Europe/Berlin] PHPMailer error: SMTP Error: Could not connect to SMTP host. Connection failed. stream_socket_enable_crypto(): SSL operation failed with code 1. OpenSSL Error messages:
+error:0A000086:SSL routines::certificate verify failed
+[04-Nov-2025 15:49:13 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 15:49:16 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 15:49:17 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 15:50:01 Europe/Berlin] PHPMailer error: SMTP Error: Could not connect to SMTP host. Connection failed. stream_socket_enable_crypto(): SSL operation failed with code 1. OpenSSL Error messages:
+error:0A000086:SSL routines::certificate verify failed
+[04-Nov-2025 16:04:21 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 16:04:22 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 16:04:22 Europe/Berlin] Booking error: Invalid request method.
+[04-Nov-2025 16:05:36 Europe/Berlin] PHPMailer error: SMTP Error: Could not connect to SMTP host. Connection failed. stream_socket_enable_crypto(): SSL operation failed with code 1. OpenSSL Error messages:
+error:0A000086:SSL routines::certificate verify failed
+[05-Nov-2025 07:19:31 Europe/Berlin] Booking error: Invalid request method.
+[05-Nov-2025 16:03:29 Europe/Berlin] Booking error: Invalid request method.
+[05-Nov-2025 16:04:56 Europe/Berlin] Booking error: Invalid request method.

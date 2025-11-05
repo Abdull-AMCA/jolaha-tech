@@ -612,3 +612,196 @@ document.addEventListener("DOMContentLoaded", function () {
     document.head.appendChild(style);
 
 });
+
+
+  
+    // =====================================================
+    // 5️⃣ VIEW INQUIRY DETAILS MODAL HANDLER
+    // =====================================================
+    document.addEventListener('DOMContentLoaded', function() {
+        const viewModal = new bootstrap.Modal(document.getElementById('viewInquiryModal'));
+        const inquiryDetails = document.getElementById('inquiryDetails');
+        const respondBtn = document.getElementById('respondInquiryBtn');
+        let currentInquiryEmail = '';
+
+        // Use event delegation for dynamically loaded buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('view-inquiry-btn') || e.target.closest('.view-inquiry-btn')) {
+                e.preventDefault();
+                const btn = e.target.classList.contains('view-inquiry-btn') ? e.target : e.target.closest('.view-inquiry-btn');
+                handleViewInquiry(btn);
+            }
+        });
+
+        function handleViewInquiry(btn) {
+            const inquiryId = btn.getAttribute('data-inquiry-id');
+            console.log('Fetching inquiry ID:', inquiryId);
+            
+            // Show loading state
+            inquiryDetails.innerHTML = `
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Loading inquiry details...</p>
+                </div>
+            `;
+            
+            // FIXED: Use backticks for template literal
+            fetch(`includes/get_inquiry_details.php?id=${inquiryId}`)
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text(); // First get as text to debug
+                })
+                .then(text => {
+                    console.log('Raw response:', text);
+                    
+                    try {
+                        const data = JSON.parse(text);
+                        console.log('Parsed data:', data);
+                        
+                        if (data.success) {
+                            const inquiry = data.inquiry;
+                            currentInquiryEmail = inquiry.email;
+                            
+                            // Update respond button
+                            respondBtn.href = `mailto:${inquiry.email}?subject=Re: Your ${inquiry.service_type} Inquiry&body=Dear ${inquiry.full_name},%0D%0A%0D%0AThank you for your inquiry regarding our ${inquiry.service_type} services.%0D%0A%0D%0A`;
+                            
+                            // Populate modal content
+                            inquiryDetails.innerHTML = generateInquiryHTML(inquiry);
+                        } else {
+                            inquiryDetails.innerHTML = `
+                                <div class="alert alert-danger">
+                                    <i class="bi bi-exclamation-triangle me-2"></i>
+                                    Error loading inquiry details: ${data.message}
+                                </div>
+                            `;
+                        }
+                    } catch (parseError) {
+                        console.error('JSON Parse Error:', parseError);
+                        throw new Error('Invalid JSON response: ' + text.substring(0, 100));
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch Error:', error);
+                    inquiryDetails.innerHTML = `
+                        <div class="alert alert-danger">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            Error loading inquiry details: ${error.message}
+                        </div>
+                    `;
+                });
+            
+            viewModal.show();
+        }
+
+        function generateInquiryHTML(inquiry) {
+            return `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="fw-bold text-primary">Personal Information</h6>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Full Name</label>
+                            <p class="form-control-static">${escapeHtml(inquiry.full_name)}</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Email</label>
+                            <p class="form-control-static">
+                                <a href="mailto:${escapeHtml(inquiry.email)}" class="text-decoration-none">
+                                    <i class="bi bi-envelope me-1"></i>${escapeHtml(inquiry.email)}
+                                </a>
+                            </p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Company</label>
+                            <p class="form-control-static">
+                                ${inquiry.company_name ? escapeHtml(inquiry.company_name) : '<span class="text-muted">Not provided</span>'}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="fw-bold text-primary">Project Details</h6>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Service Type</label>
+                            <p class="form-control-static">
+                                <span class="badge bg-primary">${escapeHtml(inquiry.service_type)}</span>
+                            </p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Project Type</label>
+                            <p class="form-control-static">
+                                ${inquiry.project_type ? escapeHtml(inquiry.project_type) : '<span class="text-muted">Not specified</span>'}
+                            </p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Budget Range</label>
+                            <p class="form-control-static">
+                                ${inquiry.budget_range ? `<span class="badge bg-info">${escapeHtml(inquiry.budget_range)}</span>` : '<span class="text-muted">Not specified</span>'}
+                            </p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Timeline</label>
+                            <p class="form-control-static">
+                                ${inquiry.timeline ? `<span class="badge bg-warning text-dark">${escapeHtml(inquiry.timeline)}</span>` : '<span class="text-muted">Not specified</span>'}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h6 class="fw-bold text-primary">Project Description</h6>
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                ${inquiry.description ? `<p class="mb-0">${escapeHtml(inquiry.description).replace(/\n/g, '<br>')}</p>` : '<p class="text-muted mb-0">No description provided.</p>'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6 class="fw-bold text-primary">Submission Details</h6>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">Submitted On</label>
+                                        <p class="form-control-static">${formatDate(inquiry.submitted_at)}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">Inquiry ID</label>
+                                        <p class="form-control-static">#${inquiry.id}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Utility functions
+        function escapeHtml(unsafe) {
+            if (!unsafe) return '';
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'Unknown date';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+    });

@@ -152,7 +152,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <?php 
             // Include ALL child pages that should make the Submissions menu active
             $is_submissions_active = in_array($current_page, [
-                'contact_forms.php', 'trial_requests.php', 'service_inquiries.php', 'view_all_inquiries.php'
+                'submissions.php'
             ]);
             ?>
             
@@ -184,8 +184,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link <?php echo ($current_page === 'view_all_inquiries.php') ? 'active' : ''; ?>" 
-                    href="view_all_inquiries.php">
+                    <a class="nav-link <?php echo ($current_page === 'submissions.php?source=view_all_inqueries') ? 'active' : ''; ?>" 
+                    href="submissions.php?source=view_all_inqueries">
                         <i class="bi bi-chat-square-text nav-icon"></i>
                         <span class="nav-text">Service Inquiries</span>
                     </a>

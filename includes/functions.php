@@ -584,7 +584,7 @@ function time_elapsed_string($datetime, $full = false) {
 
 // ========== CALL BOOKING FUNCTIONS ==========
 
-function handle_call_booking($data) {
+function handle_cal_booking($data) {
     global $connection;
     
     try {
@@ -653,11 +653,14 @@ function send_booking_email($booking_data, $booking_id) {
         // Create PHPMailer instance
         $mail = new PHPMailer\PHPMailer\PHPMailer(true);
         
-        // Server settings for local development
+        // In send_booking_email function, replace SMTP with:
         $mail->isSMTP();
-        $mail->Host = 'localhost';
-        $mail->SMTPAuth = false;
-        $mail->Port = 25;
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'abdullabalaamca@gmail.com';
+        $mail->Password = 'ndgg-nosb-qlpn-jxgt';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
         
         // For debugging
         $mail->SMTPDebug = 0; // Set to 2 for verbose debugging
@@ -696,7 +699,7 @@ function send_booking_email($booking_data, $booking_id) {
 
 
 // Function to get all call bookings (for admin)
-function get_all_call_bookings($status = null) {
+function get_all_cal_bookings($status = null) {
     global $connection;
     
     try {

@@ -1,3 +1,7 @@
+<?php
+if (defined('AJAX_REQUEST') && AJAX_REQUEST) return;
+?>
+
 <footer id="contact">
     <div class="container footer-grid">
         <!-- About -->
@@ -61,19 +65,12 @@
     </p>
 </footer>
 
+<?php if (isset($subscription_result)): ?>
+  <div id="newsletterResult"
+       data-success="<?php echo $subscription_result['success'] ? 'true' : 'false'; ?>"
+       data-message="<?php echo htmlspecialchars($subscription_result['message'] ?? '', ENT_QUOTES); ?>">
+  </div>
+<?php endif; ?>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="./resources/js/main.js" defer></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-    setTimeout(function() {
-        <?php if ($subscription_result['success']): ?>
-        const successModal = new bootstrap.Modal(document.getElementById('newslettersuccessModal'));
-        successModal.show();
-        <?php else: ?>
-        document.getElementById('newslettererrorModalMessage').innerText = "<?php echo addslashes($subscription_result['message']); ?>";
-        const errorModal = new bootstrap.Modal(document.getElementById('newslettererrorModal'));
-        errorModal.show();
-        <?php endif; ?>
-    }, 500);
-    });
-</script>

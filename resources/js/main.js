@@ -333,3 +333,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
+// ================================
+// Nwsletter Subscription Feedback Modals
+// ================================
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Check if newsletter result data exists
+  const newsletterContainer = document.getElementById("newsletterResult");
+
+  if (!newsletterContainer) return; // no result to process
+
+  const success = newsletterContainer.dataset.success === "true";
+  const message = newsletterContainer.dataset.message || "";
+
+  setTimeout(() => {
+    if (success) {
+      const successModal = new bootstrap.Modal(
+        document.getElementById("newslettersuccessModal")
+      );
+      successModal.show();
+    } else if (message) {
+      document.getElementById("newslettererrorModalMessage").innerText = message;
+      const errorModal = new bootstrap.Modal(
+        document.getElementById("newslettererrorModal")
+      );
+      errorModal.show();
+    }
+  }, 500);
+});
