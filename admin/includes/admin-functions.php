@@ -994,4 +994,78 @@ function get_service_inquiry_by_id($inquiry_id) {
     }
 }
 
+
+
+// ========== CALL BOOKINGS FUNCTIONS ==========
+
+// Get all call bookings
+function get_all_call_bookings($status = null) {
+    global $connection;
+    
+    try {
+        $sql = "SELECT * FROM call_bookings";
+        if ($status) {
+            $sql .= " WHERE status = :status";
+        }
+        $sql .= " ORDER BY submitted_at DESC";
+        
+        $stmt = $connection->prepare($sql);
+        
+        if ($status) {
+            $stmt->execute([':status' => $status]);
+        } else {
+            $stmt->execute();
+        }
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        error_log('Get call bookings error: ' . $e->getMessage());
+        return [];
+    }
+}
+
+// Get call booking by ID
+function get_call_booking_by_id($booking_id) {
+    global $connection;
+    
+    try {
+        $stmt = $connection->prepare("SELECT * FROM call_bookings WHERE id = :id");
+        $stmt->execute([':id' => $booking_id]);
+        
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        error_log('Get call booking by ID error: ' . $e->getMessage());
+        return false;
+    }
+}
+
+// Update call booking status
+function update_call_booking_status($booking_id, $status) {
+    global $connection;
+    
+    try {
+        $stmt = $connection->prepare("
+            UPDATE call_bookings 
+            SET status = :status, updated_at = NOW() 
+            WHERE id = :id
+        ");
+        
+        $stmt->execute([
+            ':id' => $booking_id,
+            ':status' => $status
+        ]);
+        
+        return [
+            'success' => true,
+            'message' => 'Call booking status updated successfully!'
+        ];
+    } catch (Exception $e) {
+        error_log('Update call booking status error: ' . $e->getMessage());
+        return [
+            'success' => false,
+            'message' => 'Error updating call booking status: ' . $e->getMessage()
+        ];
+    }
+}
+
 ?>

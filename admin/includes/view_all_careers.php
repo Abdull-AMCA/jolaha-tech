@@ -161,7 +161,8 @@
 </div>
 
 <!-- Success Modal -->
-<div class="modal fade" id="successModal" tabindex="-1">
+<div class="modal fade" id="successModal" tabindex="-1"
+     data-show-success="<?php echo (isset($delete_message) && $delete_message_type === 'success') ? 'true' : 'false'; ?>">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content text-center">
             <div class="modal-header bg-success text-white">
@@ -169,8 +170,8 @@
                 <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body py-4">
-                <h4 id="successMessage">Job Deleted Successfully!</h4>
-                <p class="text-muted">The career opportunity has been removed.</p>
+                <h4>Career Deleted Successfully!</h4>
+                <p class="text-muted">The job posting has been removed.</p>
             </div>
             <div class="modal-footer justify-content-center">
                 <button type="button" class="btn btn-success" data-bs-dismiss="modal">Continue</button>
@@ -179,28 +180,7 @@
     </div>
 </div>
 
-<script>
-    // Delete Career Functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-        const deleteJobTitle = document.getElementById('deleteJobTitle');
-        const confirmDeleteBtn = document.getElementById('confirmDelete');
-        let jobToDelete = null;
-
-        document.querySelectorAll('.delete-career-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                jobToDelete = this.getAttribute('data-job-id');
-                const title = this.getAttribute('data-job-title');
-                deleteJobTitle.textContent = title;
-                confirmDeleteBtn.href = `careers.php?delete_career=${jobToDelete}`;
-                deleteModal.show();
-            });
-        });
-
-        // Show success modal if deletion was successful
-        <?php if (isset($delete_message) && $delete_message_type === 'success'): ?>
-            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-            successModal.show();
-        <?php endif; ?>
-    });
-</script>
+<?php if (isset($delete_message) && $delete_message_type === 'success'): ?>
+    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+    successModal.show();
+<?php endif; ?>

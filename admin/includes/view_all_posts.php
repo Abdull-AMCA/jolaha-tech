@@ -1,9 +1,8 @@
 <?php
-// Fetch all posts without the users join
-$sql = "SELECT * FROM posts ORDER BY created_at DESC";
-$stmt = $connection->prepare($sql);
-$stmt->execute();
-$posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $sql = "SELECT * FROM posts ORDER BY created_at DESC";
+    $stmt = $connection->prepare($sql);
+    $stmt->execute();
+    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="main-content" id="mainContent">
@@ -177,37 +176,3 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     }
 ?>
-
-<style>
-    .table th {
-        font-weight: 600;
-        background-color: #2c3e50 !important;
-        color: white;
-    }
-    .table-dark {
-        --bs-table-bg: #2c3e50;
-        --bs-table-color: white;
-    }
-    #postsTable tbody tr:hover {
-        background-color: rgba(241, 191, 112, 0.1);
-    }
-    .d-flex.gap-1 { gap: 0.25rem !important; }
-    .badge { font-size: 0.75em; }
-    .table td { vertical-align: middle; }
-</style>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Add hover effects and tooltips
-        const buttons = document.querySelectorAll('.btn');
-        buttons.forEach(btn => {
-            btn.setAttribute('data-bs-toggle', 'tooltip');
-        });
-        
-        // Initialize Bootstrap tooltips
-        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-    });
-</script>

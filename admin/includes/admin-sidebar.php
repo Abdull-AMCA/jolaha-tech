@@ -190,6 +190,14 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <span class="nav-text">Service Inquiries</span>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link <?php echo ($current_page === 'submissions.php?source=view_all_call_bookings') ? 'active' : ''; ?>" 
+                    href="submissions.php?source=view_all_call_bookings">
+                        <i class="bi bi-telephone nav-icon"></i>
+                        <span class="nav-text">Call Bookings</span>
+                    </a>
+                </li>
             </ul>
         </li>
         

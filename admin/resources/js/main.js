@@ -497,9 +497,9 @@ document.addEventListener("DOMContentLoaded", function () {
         updateCharacterCount(metaDescription, 'metaDescCount');
     }
 
-    // =====================================================
-    // 2️⃣ POST CATEGORY SELECTION (Solution / Product / Service)
-    // =====================================================
+// =====================================================
+// 2️⃣ POST CATEGORY SELECTION (Solution / Product / Service)
+// =====================================================
     const categoryRadios = document.querySelectorAll('input[name="post_category_type"]');
     const categoryDropdownContainer = document.getElementById('categoryDropdownContainer');
     const categoryDropdown = document.getElementById('categoryDropdown');
@@ -551,9 +551,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // =====================================================
-    // 3️⃣ SERVICE / SUBSERVICE INTERACTION
-    // =====================================================
+// =====================================================
+// 3️⃣ SERVICE / SUBSERVICE INTERACTION
+// =====================================================
     if (serviceCardsContainer) {
         serviceCardsContainer.addEventListener('click', function (e) {
             const subBtn = e.target.closest('.subservice-btn');
@@ -594,30 +594,28 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // =====================================================
-    // 4️⃣ VISUAL ENHANCEMENTS
-    // =====================================================
-    // Service card highlight styles
+// =====================================================
+// 4️⃣ VISUAL ENHANCEMENTS / Service card highlight styles
+// =====================================================
     const style = document.createElement('style');
-    style.textContent = `
-        .service-card.selected {
-            border: 2px solid #0d6efd !important;
-            box-shadow: 0 0 0.5rem rgba(13,110,253,0.4);
-        }
-        .subservice-btn.active {
-            background-color: #0d6efd !important;
-            color: white !important;
-        }
-    `;
-    document.head.appendChild(style);
-
-});
+        style.textContent = `
+            .service-card.selected {
+                border: 2px solid #0d6efd !important;
+                box-shadow: 0 0 0.5rem rgba(13,110,253,0.4);
+            }
+            .subservice-btn.active {
+                background-color: #0d6efd !important;
+                color: white !important;
+            }
+        `;
+        document.head.appendChild(style);
+    });
 
 
   
-    // =====================================================
-    // 5️⃣ VIEW INQUIRY DETAILS MODAL HANDLER
-    // =====================================================
+// =====================================================
+// 5️⃣ VIEW INQUIRY DETAILS MODAL HANDLER
+// =====================================================
     document.addEventListener('DOMContentLoaded', function() {
         const viewModal = new bootstrap.Modal(document.getElementById('viewInquiryModal'));
         const inquiryDetails = document.getElementById('inquiryDetails');
@@ -805,3 +803,356 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
     });
+
+
+// =====================================================
+// 6️⃣ VIEW BOOKING DETAILS MODAL & STATUS UPDATE
+// =====================================================
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const viewModal = new bootstrap.Modal(document.getElementById('viewBookingModal'));
+    const bookingDetails = document.getElementById('bookingDetails');
+    const callBookingBtn = document.getElementById('callBookingBtn');
+    const emailBookingBtn = document.getElementById('emailBookingBtn');
+    
+    let currentBookingPhone = '';
+    let currentBookingEmail = '';
+
+    // View booking details
+    document.querySelectorAll('.view-booking-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const bookingId = this.getAttribute('data-booking-id');
+            console.log('Fetching booking ID:', bookingId);
+            
+            // Show loading state
+            bookingDetails.innerHTML = `
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Loading booking details...</p>
+                </div>
+            `;
+            
+            // Fetch booking details
+            fetch(`includes/get_booking_details.php?id=${bookingId}`)
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    console.log('Raw response:', text);
+                    
+                    // Try to extract JSON from the response
+                    let jsonText = text;
+                    const jsonStart = text.indexOf('{');
+                    if (jsonStart > 0) {
+                        jsonText = text.substring(jsonStart);
+                    }
+                    
+                    try {
+                        const data = JSON.parse(jsonText);
+                        console.log('Parsed data:', data);
+                        
+                        if (data.success) {
+                            const booking = data.booking;
+                            currentBookingPhone = booking.phone;
+                            currentBookingEmail = booking.email;
+                            
+                            // Update action buttons
+                            callBookingBtn.href = `tel:${booking.phone}`;
+                            emailBookingBtn.href = `mailto:${booking.email}?subject=Regarding Your Call Booking&body=Dear ${booking.full_name},%0D%0A%0D%0A`;
+                            
+                            // Populate modal content
+                            bookingDetails.innerHTML = generateBookingHTML(booking);
+                        } else {
+                            bookingDetails.innerHTML = `
+                                <div class="alert alert-danger">
+                                    <i class="bi bi-exclamation-triangle me-2"></i>
+                                    Error loading booking details: ${data.message}
+                                </div>
+                            `;
+                        }
+                    } catch (parseError) {
+                        console.error('JSON Parse Error:', parseError);
+                        throw new Error('Invalid JSON response: ' + text.substring(0, 100));
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch Error:', error);
+                    bookingDetails.innerHTML = `
+                        <div class="alert alert-danger">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            Error loading booking details: ${error.message}
+                        </div>
+                    `;
+                });
+            
+            viewModal.show();
+        });
+    });
+
+    // Status update functionality
+    document.querySelectorAll('.status-update-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const bookingId = this.getAttribute('data-booking-id');
+            const newStatus = this.getAttribute('data-status');
+            
+            if (confirm('Are you sure you want to update the status of this booking?')) {
+                updateBookingStatus(bookingId, newStatus);
+            }
+        });
+    });
+
+    function updateBookingStatus(bookingId, status) {
+        const formData = new FormData();
+        formData.append('booking_id', bookingId);
+        formData.append('status', status);
+        
+        fetch('includes/update_booking_status.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            if (data.success) {
+                document.getElementById('successTitle').textContent = 'Status Updated!';
+                document.getElementById('successMessage').textContent = data.message;
+                successModal.show();
+                
+                // Reload the page after a short delay
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            } else {
+                document.getElementById('successTitle').textContent = 'Update Failed';
+                document.getElementById('successMessage').textContent = data.message;
+                successModal.show();
+            }
+        })
+        .catch(error => {
+            console.error('Status update error:', error);
+            alert('Error updating status. Please try again.');
+        });
+    }
+
+    function generateBookingHTML(booking) {
+        return `
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="fw-bold text-primary">Contact Information</h6>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Full Name</label>
+                        <p class="form-control-static">${escapeHtml(booking.full_name)}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Email</label>
+                        <p class="form-control-static">
+                            <a href="mailto:${escapeHtml(booking.email)}" class="text-decoration-none">
+                                <i class="bi bi-envelope me-1"></i>${escapeHtml(booking.email)}
+                            </a>
+                        </p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Phone</label>
+                        <p class="form-control-static">
+                            <a href="tel:${escapeHtml(booking.phone)}" class="text-decoration-none">
+                                <i class="bi bi-telephone me-1"></i>${escapeHtml(booking.phone)}
+                            </a>
+                        </p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Company</label>
+                        <p class="form-control-static">
+                            ${booking.company_name ? escapeHtml(booking.company_name) : '<span class="text-muted">Not provided</span>'}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="fw-bold text-primary">Call Scheduling</h6>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Preferred Date</label>
+                        <p class="form-control-static">
+                            <span class="fw-semibold">${booking.preferred_date ? formatDate(booking.preferred_date) : 'Not specified'}</span>
+                        </p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Preferred Time</label>
+                        <p class="form-control-static">
+                            ${booking.preferred_time ? `<span class="badge bg-info">${formatTime(booking.preferred_time)}</span>` : '<span class="text-muted">Not specified</span>'}
+                        </p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Status</label>
+                        <p class="form-control-static">
+                            ${getStatusBadge(booking.status)}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h6 class="fw-bold text-primary">Additional Notes</h6>
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            ${booking.additional_notes ? `<p class="mb-0">${escapeHtml(booking.additional_notes).replace(/\n/g, '<br>')}</p>` : '<p class="text-muted mb-0">No additional notes provided.</p>'}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h6 class="fw-bold text-primary">Submission Details</h6>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Submitted On</label>
+                                    <p class="form-control-static">${formatDateTime(booking.submitted_at)}</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Last Updated</label>
+                                    <p class="form-control-static">${formatDateTime(booking.updated_at)}</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Booking ID</label>
+                                    <p class="form-control-static">#${booking.id}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+        // Utility functions
+        function escapeHtml(unsafe) {
+            if (!unsafe) return '';
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'Unknown date';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric'
+            });
+        }
+
+        function formatTime(timeString) {
+            if (!timeString) return 'Unknown time';
+            const date = new Date(`2000-01-01T${timeString}`);
+            return date.toLocaleTimeString('en-US', { 
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function formatDateTime(dateTimeString) {
+            if (!dateTimeString) return 'Unknown date/time';
+            const date = new Date(dateTimeString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function getStatusBadge(status) {
+            const statusConfig = {
+                'pending': ['bg-warning text-dark', 'Pending'],
+                'confirmed': ['bg-success', 'Confirmed'],
+                'cancelled': ['bg-danger', 'Cancelled']
+            };
+            
+            const [badgeClass, badgeText] = statusConfig[status] || ['bg-secondary', 'Unknown'];
+            return `<span class="badge ${badgeClass}">${badgeText}</span>`;
+        }
+    });
+
+
+// =====================================================
+// 6️⃣ DELETE CAREER FUNCTIONALITY
+// =====================================================
+    // main.js - Career deletion functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        const deleteJobTitle = document.getElementById('deleteJobTitle');
+        const confirmDeleteBtn = document.getElementById('confirmDelete');
+        
+        let jobToDelete = null;
+
+        // Use event delegation for delete buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('delete-career-btn') || e.target.closest('.delete-career-btn')) {
+                e.preventDefault();
+                const btn = e.target.classList.contains('delete-career-btn') ? e.target : e.target.closest('.delete-career-btn');
+                handleCareerDelete(btn);
+            }
+        });
+
+        function handleCareerDelete(btn) {
+            jobToDelete = btn.getAttribute('data-job-id');
+            const title = btn.getAttribute('data-job-title');
+            
+            if (deleteJobTitle) {
+                deleteJobTitle.textContent = title;
+            }
+            
+            if (confirmDeleteBtn) {
+                confirmDeleteBtn.href = `careers.php?delete_career=${jobToDelete}`;
+            }
+            
+            if (deleteModal) {
+                deleteModal.show();
+            }
+        }
+
+        // Show success modal if deletion was successful
+        // This will be triggered by data attributes from PHP
+        showDeletionSuccessModal();
+    });
+
+    // Function to show success modal based on data attributes
+    function showDeletionSuccessModal() {
+        const successModalElement = document.getElementById('successModal');
+        const showSuccessModal = successModalElement ? successModalElement.getAttribute('data-show-success') : null;
+        
+        if (showSuccessModal === 'true') {
+            const successModal = new bootstrap.Modal(successModalElement);
+            successModal.show();
+        }
+    }
+
+
+// =====================================================
+// 7️⃣ TOOLTIP INITIALIZATION
+// =====================================================
+    document.addEventListener('DOMContentLoaded', function() {
+    // Add hover effects and tooltips
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(btn => {
+        btn.setAttribute('data-bs-toggle', 'tooltip');
+    });
+    
+    // Initialize Bootstrap tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+});

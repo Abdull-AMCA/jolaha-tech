@@ -188,53 +188,53 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Tooltip
-  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
+  document.addEventListener('DOMContentLoaded', function() {
+    // Tooltip
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
 
-  // Delete Modal
-  const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-  const deleteServiceName = document.getElementById('deleteServiceName');
-  const confirmDeleteBtn = document.getElementById('confirmDelete');
-  let serviceToDelete = null;
+    // Delete Modal
+    const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+    const deleteServiceName = document.getElementById('deleteServiceName');
+    const confirmDeleteBtn = document.getElementById('confirmDelete');
+    let serviceToDelete = null;
 
-  document.querySelectorAll('.delete-service-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-      serviceToDelete = this.getAttribute('data-service-id');
-      deleteServiceName.textContent = this.getAttribute('data-service-name');
-      deleteModal.show();
+    document.querySelectorAll('.delete-service-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        serviceToDelete = this.getAttribute('data-service-id');
+        deleteServiceName.textContent = this.getAttribute('data-service-name');
+        deleteModal.show();
+      });
     });
+
+    confirmDeleteBtn.addEventListener('click', function() {
+      if (!serviceToDelete) return;
+      const formData = new FormData();
+      formData.append('delete_service', '1');
+      formData.append('service_id', serviceToDelete);
+      formData.append('ajax', '1');
+
+      fetch('', { method: 'POST', body: formData })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            showSuccessModal(data.message);
+            setTimeout(() => window.location.reload(), 1500);
+          } else alert('Error: ' + data.message);
+        })
+        .catch(err => console.error('Delete error:', err));
+
+      deleteModal.hide();
+    });
+
+    // Show success modal if PHP returned success
+    <?php if (isset($services_result) && $services_result['success']): ?>
+      showSuccessModal('<?php echo $services_result['message']; ?>');
+    <?php endif; ?>
+
+    function showSuccessModal(message) {
+      const msg = document.getElementById('successMessage');
+      msg.textContent = message;
+      new bootstrap.Modal(document.getElementById('successModal')).show();
+    }
   });
-
-  confirmDeleteBtn.addEventListener('click', function() {
-    if (!serviceToDelete) return;
-    const formData = new FormData();
-    formData.append('delete_service', '1');
-    formData.append('service_id', serviceToDelete);
-    formData.append('ajax', '1');
-
-    fetch('', { method: 'POST', body: formData })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          showSuccessModal(data.message);
-          setTimeout(() => window.location.reload(), 1500);
-        } else alert('Error: ' + data.message);
-      })
-      .catch(err => console.error('Delete error:', err));
-
-    deleteModal.hide();
-  });
-
-  // Show success modal if PHP returned success
-  <?php if (isset($services_result) && $services_result['success']): ?>
-    showSuccessModal('<?php echo $services_result['message']; ?>');
-  <?php endif; ?>
-
-  function showSuccessModal(message) {
-    const msg = document.getElementById('successMessage');
-    msg.textContent = message;
-    new bootstrap.Modal(document.getElementById('successModal')).show();
-  }
-});
 </script>

@@ -90,26 +90,26 @@ if (!$service) {
      JS Interactions
 ================================ -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(el => new bootstrap.Tooltip(el));
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize tooltips
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(el => new bootstrap.Tooltip(el));
 
-    // Initialize sub-service section
-    if (typeof initializeServiceForm === 'function') {
-        initializeServiceForm();
-    }
+        // Initialize sub-service section
+        if (typeof initializeServiceForm === 'function') {
+            initializeServiceForm();
+        }
 
-    // Show success modal if update was successful
-    <?php if (isset($update_result) && $update_result['success']): ?>
-        showSuccessModal('<?php echo addslashes($update_result['message']); ?>');
-    <?php endif; ?>
+        // Show success modal if update was successful
+        <?php if (isset($update_result) && $update_result['success']): ?>
+            showSuccessModal('<?php echo addslashes($update_result['message']); ?>');
+        <?php endif; ?>
 
-    function showSuccessModal(message) {
-        const successMessage = document.getElementById('successMessage');
-        const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-        successMessage.textContent = message;
-        successModal.show();
-    }
-});
+        function showSuccessModal(message) {
+            const successMessage = document.getElementById('successMessage');
+            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successMessage.textContent = message;
+            successModal.show();
+        }
+    });
 </script>

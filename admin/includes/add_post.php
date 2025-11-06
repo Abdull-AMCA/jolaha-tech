@@ -373,100 +373,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const categoryRadios = document.querySelectorAll('input[name="post_category"]');
-    const categorySelection = document.getElementById('categorySelection');
-    const solutionProductSection = document.getElementById('solutionProductSection');
-    const serviceSection = document.getElementById('serviceSection');
-    const dropdownLabel = document.getElementById('dropdownLabel');
-    const categoryDropdown = document.getElementById('category_dropdown');
-    const selectedSolution = document.getElementById('selected_solution');
-    const selectedProduct = document.getElementById('selected_product');
-    const solutions = <?php echo json_encode($solutions); ?>;
-    const products = <?php echo json_encode($products); ?>;
+    document.addEventListener('DOMContentLoaded', function() {
+        const categoryRadios = document.querySelectorAll('input[name="post_category"]');
+        const categorySelection = document.getElementById('categorySelection');
+        const solutionProductSection = document.getElementById('solutionProductSection');
+        const serviceSection = document.getElementById('serviceSection');
+        const dropdownLabel = document.getElementById('dropdownLabel');
+        const categoryDropdown = document.getElementById('category_dropdown');
+        const selectedSolution = document.getElementById('selected_solution');
+        const selectedProduct = document.getElementById('selected_product');
+        const solutions = <?php echo json_encode($solutions); ?>;
+        const products = <?php echo json_encode($products); ?>;
 
-    categoryRadios.forEach(radio => {
-        radio.addEventListener('change', function() {
-            categorySelection.style.display = 'block';
-            solutionProductSection.style.display = 'none';
-            serviceSection.style.display = 'none';
-            categoryDropdown.innerHTML = '<option value="">Select an option</option>';
+        categoryRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                categorySelection.style.display = 'block';
+                solutionProductSection.style.display = 'none';
+                serviceSection.style.display = 'none';
+                categoryDropdown.innerHTML = '<option value="">Select an option</option>';
 
-            const category = this.value;
-            if (category === 'solution') {
-                dropdownLabel.textContent = 'Solution';
-                solutionProductSection.style.display = 'block';
-                solutions.forEach(s => {
-                    const opt = document.createElement('option');
-                    opt.value = s.solution_id;
-                    opt.textContent = s.solution_name;
-                    if (selectedSolution.value == s.solution_id) opt.selected = true;
-                    categoryDropdown.appendChild(opt);
-                });
-            } else if (category === 'product') {
-                dropdownLabel.textContent = 'Product';
-                solutionProductSection.style.display = 'block';
-                products.forEach(p => {
-                    const opt = document.createElement('option');
-                    opt.value = p.product_id;
-                    opt.textContent = p.product_name;
-                    if (selectedProduct.value == p.product_id) opt.selected = true;
-                    categoryDropdown.appendChild(opt);
-                });
-            } else if (category === 'service') {
-                serviceSection.style.display = 'block';
+                const category = this.value;
+                if (category === 'solution') {
+                    dropdownLabel.textContent = 'Solution';
+                    solutionProductSection.style.display = 'block';
+                    solutions.forEach(s => {
+                        const opt = document.createElement('option');
+                        opt.value = s.solution_id;
+                        opt.textContent = s.solution_name;
+                        if (selectedSolution.value == s.solution_id) opt.selected = true;
+                        categoryDropdown.appendChild(opt);
+                    });
+                } else if (category === 'product') {
+                    dropdownLabel.textContent = 'Product';
+                    solutionProductSection.style.display = 'block';
+                    products.forEach(p => {
+                        const opt = document.createElement('option');
+                        opt.value = p.product_id;
+                        opt.textContent = p.product_name;
+                        if (selectedProduct.value == p.product_id) opt.selected = true;
+                        categoryDropdown.appendChild(opt);
+                    });
+                } else if (category === 'service') {
+                    serviceSection.style.display = 'block';
+                }
+            });
+        });
+
+        categoryDropdown.addEventListener('change', function() {
+            const selectedCategory = document.querySelector('input[name="post_category"]:checked').value;
+            if (selectedCategory === 'solution') {
+                selectedSolution.value = this.value;
+                selectedProduct.value = '';
+            } else if (selectedCategory === 'product') {
+                selectedProduct.value = this.value;
+                selectedSolution.value = '';
             }
         });
-    });
 
-    categoryDropdown.addEventListener('change', function() {
-        const selectedCategory = document.querySelector('input[name="post_category"]:checked').value;
-        if (selectedCategory === 'solution') {
-            selectedSolution.value = this.value;
-            selectedProduct.value = '';
-        } else if (selectedCategory === 'product') {
-            selectedProduct.value = this.value;
-            selectedSolution.value = '';
-        }
+        const initialCategory = document.querySelector('input[name="post_category"]:checked');
+        if (initialCategory) initialCategory.dispatchEvent(new Event('change'));
     });
-
-    const initialCategory = document.querySelector('input[name="post_category"]:checked');
-    if (initialCategory) initialCategory.dispatchEvent(new Event('change'));
-});
 </script>
-
-
-<style>
-.card-radio .form-check-input {
-    position: absolute;
-    opacity: 0;
-}
-
-.card-radio .card {
-    cursor: pointer;
-    transition: all 0.2s;
-    border: 2px solid transparent;
-}
-
-.card-radio .form-check-input:checked + .card {
-    border-color: #0d6efd;
-    background-color: #f8f9fa;
-}
-
-.card-radio .form-check-input:focus + .card {
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-}
-
-.service-card {
-    transition: all 0.2s;
-    cursor: pointer;
-}
-
-.service-card:hover {
-    border-color: #6c757d;
-}
-
-.service-card.border-primary {
-    border-width: 2px;
-}
-</style>

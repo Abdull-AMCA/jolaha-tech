@@ -1,6 +1,5 @@
 <?php
-// Get all service inquiries
-$inquiries = get_all_service_inquiries();
+    $inquiries = get_all_service_inquiries();
 ?>
     <div class="main-content" id="mainContent">
         <div class="container-fluid">
@@ -134,5 +133,5 @@ $inquiries = get_all_service_inquiries();
     </div>
 
 <?php
-include 'admin-footer.php';
+    include 'admin-footer.php';
 ?>

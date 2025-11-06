@@ -1,11 +1,10 @@
 <?php
-// service-form-component.php
-function render_service_form($service = null, $is_edit = false) {
+    function render_service_form($service = null, $is_edit = false) {
     $service_name = $service['service_name'] ?? '';
     $service_description = $service['service_description'] ?? '';
     $service_icon = $service['service_icon'] ?? '';
     $sub_services = $service['sub_services'] ?? [];
-    ?>
+?>
     
     <form method="POST" id="serviceForm">
         <!-- Main Service Section -->
@@ -77,7 +76,7 @@ function render_service_form($service = null, $is_edit = false) {
     <template id="subServiceTemplate">
         <?php echo render_sub_service_row('__INDEX__', [], false); ?>
     </template>
-    <?php
+<?php
 }
 
 function render_sub_service_row($index, $sub_service = [], $is_first = false) {
