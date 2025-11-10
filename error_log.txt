@@ -78,3 +78,4 @@ error:0A000086:SSL routines::certificate verify failed
 [05-Nov-2025 16:03:29 Europe/Berlin] Booking error: Invalid request method.
 [05-Nov-2025 16:04:56 Europe/Berlin] Booking error: Invalid request method.
 [06-Nov-2025 11:45:07 Europe/Berlin] Booking error: Invalid request method.
+[07-Nov-2025 16:00:30 Europe/Berlin] Booking error: Invalid request method.

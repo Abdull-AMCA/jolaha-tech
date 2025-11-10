@@ -71,23 +71,31 @@ function get_all_services_with_subservices() {
     global $connection;
 
     try {
-        $stmt = $connection->prepare("SELECT * FROM services WHERE is_active = 1 ORDER BY created_at DESC");
+        // Get all active services
+        $stmt = $connection->prepare("
+            SELECT id, service_name, service_description, service_icon, created_at 
+            FROM services 
+            WHERE is_active = 1 
+            ORDER BY created_at DESC
+        ");
         $stmt->execute();
         $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        // Get sub-services for each service
         foreach ($services as &$service) {
             $sub_stmt = $connection->prepare("
-                SELECT sub_service_name, sub_service_description 
+                SELECT id, sub_service_name, sub_service_description 
                 FROM sub_services 
-                WHERE service_id = :id AND is_active = 1
+                WHERE service_id = :service_id AND is_active = 1
+                ORDER BY sub_service_name
             ");
-            $sub_stmt->execute([':id' => $service['id']]);
+            $sub_stmt->execute([':service_id' => $service['id']]);
             $service['sub_services'] = $sub_stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         return $services;
     } catch (PDOException $e) {
-        error_log('Get services error: ' . $e->getMessage());
+        error_log('Get services with subservices error: ' . $e->getMessage());
         return [];
     }
 }
