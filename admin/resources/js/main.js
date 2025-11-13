@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.getElementById('mainContent');
     const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
@@ -126,8 +126,6 @@ document.addEventListener('DOMContentLoaded', function() {
     handleResize();
     window.addEventListener('resize', handleResize);
 });
-
-
 
 
 ////////////////////////////////////////
@@ -450,9 +448,9 @@ if (typeof module !== 'undefined' && module.exports) {
 // =====================================================
 document.addEventListener("DOMContentLoaded", function () {
 
-    // =====================================================
-    // 1️⃣ SEO FIELD CHARACTER COUNTERS
-    // =====================================================
+// =====================================================
+// 1️⃣ SEO FIELD CHARACTER COUNTERS
+// =====================================================
     const metaTitle = document.getElementById('meta_title');
     const metaDescription = document.getElementById('meta_description');
 
@@ -496,6 +494,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         updateCharacterCount(metaDescription, 'metaDescCount');
     }
+
 
 // =====================================================
 // 2️⃣ POST CATEGORY SELECTION (Solution / Product / Service)
@@ -1089,7 +1088,6 @@ document.addEventListener("DOMContentLoaded", function () {
 // =====================================================
 // 6️⃣ DELETE CAREER FUNCTIONALITY
 // =====================================================
-    // main.js - Career deletion functionality
     document.addEventListener('DOMContentLoaded', function() {
         const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
         const deleteJobTitle = document.getElementById('deleteJobTitle');
@@ -1139,20 +1137,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-
-// =====================================================
-// 7️⃣ TOOLTIP INITIALIZATION
-// =====================================================
-    document.addEventListener('DOMContentLoaded', function() {
-    // Add hover effects and tooltips
-    const buttons = document.querySelectorAll('.btn');
-    buttons.forEach(btn => {
-        btn.setAttribute('data-bs-toggle', 'tooltip');
-    });
+// // =====================================================
+// // 7️⃣ TOOLTIP INITIALIZATION For Careers
+// // =====================================================
+//     document.addEventListener('DOMContentLoaded', function() {
+//     // Add hover effects and tooltips
+//     const buttons = document.querySelectorAll('.btn');
+//     buttons.forEach(btn => {
+//         btn.setAttribute('data-bs-toggle', 'tooltip');
+//     });
     
-    // Initialize Bootstrap tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-});
+//     // Initialize Bootstrap tooltips
+//     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+//     const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+//         return new bootstrap.Tooltip(tooltipTriggerEl);
+//     });
+//});
