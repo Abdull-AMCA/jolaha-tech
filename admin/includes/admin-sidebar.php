@@ -167,13 +167,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <ul class="sub-menu" id="submissions-menu" 
                 style="<?php echo $is_submissions_active ? 'display:block;' : ''; ?>">
                 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link <?php echo ($current_page === 'contact_forms.php') ? 'active' : ''; ?>" 
                     href="contact_forms.php">
                         <i class="bi bi-envelope nav-icon"></i>
                         <span class="nav-text">Contact Forms</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($current_page === 'trial_requests.php') ? 'active' : ''; ?>" 
@@ -200,8 +200,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link <?php echo ($current_page === 'newsletter.php') ? 'active' : ''; ?>" 
-                    href="newsletter.php">
+                    <a class="nav-link <?php echo ($current_page === 'submissions.php?source=view_newsletter_subscribers') ? 'active' : ''; ?>" 
+                    href="submissions.php?source=view_newsletter_subscribers">
                         <i class="bi bi-envelope-paper nav-icon"></i>
                         <span class="nav-text">Newsletter</span>
                     </a>

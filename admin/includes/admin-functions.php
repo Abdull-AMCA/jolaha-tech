@@ -1004,7 +1004,7 @@ function get_service_inquiry_by_id($inquiry_id) {
 
 
 
-// ========== CALL BOOKINGS FUNCTIONS ==========
+///////////////////////// CALL BOOKINGS FUNCTIONS /////////////////////////
 
 // Get all call bookings
 function get_all_call_bookings($status = null) {
@@ -1160,6 +1160,69 @@ function get_total_users() {
 function get_engagement_rate() {
     // Example: (total interactions / total visitors) * 100
     return "83%";
+}
+
+
+///////////////////////// NEWSLETTER SUBSCRIBERS FUNCTIONS /////////////////////////
+
+// Get all newsletter subscribers
+function get_all_newsletter_subscribers() {
+    global $connection;
+    
+    try {
+        $stmt = $connection->prepare("
+            SELECT * FROM newsletter_subscribers
+            ORDER BY subscription_date DESC
+        ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Error fetching newsletter subscribers: " . $e->getMessage());
+        return [];
+    }
+}
+
+// Delete newsletter subscriber (hard delete, no is_active column)
+function delete_newsletter_subscriber($subscriber_id) {
+    global $connection;
+    try {
+        $stmt = $connection->prepare("
+            DELETE FROM newsletter_subscribers
+            WHERE id = :id
+        ");
+        $stmt->execute([':id' => $subscriber_id]);
+        if ($stmt->rowCount() > 0) {
+            return [
+                'success' => true,
+                'message' => 'Subscriber deleted successfully.'
+            ];
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Subscriber not found or already deleted.'
+            ];
+        }
+    } catch (PDOException $e) {
+        error_log("Error deleting newsletter subscriber: " . $e->getMessage());
+        return [
+            'success' => false,
+            'message' => 'Database error: ' . $e->getMessage()
+        ];
+    }
+}
+
+// Get total newsletter subscribers
+function get_total_newsletter_subscribers() {
+    global $connection;
+    try {
+        $stmt = $connection->prepare("SELECT COUNT(*) as total FROM newsletter_subscribers");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    } catch (PDOException $e) {
+        error_log("Error fetching total newsletter subscribers: " . $e->getMessage());
+        return 0;
+    }
 }
 
 ?>

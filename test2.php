@@ -451,5 +451,3 @@ Then show a success modal upon successful submission of booking or a failure mod
 
 App Password:
 xnae stou zjvv bgec
-
-
