@@ -79,8 +79,3 @@ error:0A000086:SSL routines::certificate verify failed
 [05-Nov-2025 16:04:56 Europe/Berlin] Booking error: Invalid request method.
 [06-Nov-2025 11:45:07 Europe/Berlin] Booking error: Invalid request method.
 [07-Nov-2025 16:00:30 Europe/Berlin] Booking error: Invalid request method.
-[11-Nov-2025 07:28:56 Europe/Berlin] PHPMailer error: SMTP Error: Could not connect to SMTP host. Connection failed. stream_socket_enable_crypto(): SSL operation failed with code 1. OpenSSL Error messages:
-error:0A000086:SSL routines::certificate verify failed
-[13-Nov-2025 05:58:07 Europe/Berlin] Booking error: Invalid request method.
-[21-Nov-2025 08:51:40 Europe/Berlin] PHPMailer error: SMTP Error: Could not connect to SMTP host. Connection failed. stream_socket_enable_crypto(): SSL operation failed with code 1. OpenSSL Error messages:
-error:0A000086:SSL routines::certificate verify failed
