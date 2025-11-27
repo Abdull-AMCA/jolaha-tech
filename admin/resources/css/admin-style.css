@@ -108,15 +108,24 @@ body {
     background-color: var(--surface);
     color: var(--text);
     width: 250px;
-    height: 100vh;
+    /* Set height to fill viewport minus navbar */
+    height: calc(100vh - 90px);
     position: fixed;
     left: 0;
     top: 70px; /* Start below navbar */
-    padding-top: 20px;
+    padding-top: 0; /* Remove extra top padding */
     transition: all 0.3s ease;
     z-index: 1020;
     box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
-    overflow-y: auto;
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden;
+    /* Hide scrollbar but keep scroll functionality */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
 
 .sidebar.collapsed {
@@ -124,9 +133,13 @@ body {
 }
 
 .sidebar-logo-container {
-    padding: 0 1rem 1.5rem;
+    padding: 1rem 1rem 1.5rem;
     border-bottom: 1px solid var(--card);
     margin-bottom: 1rem;
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .sidebar-logo {
@@ -223,7 +236,7 @@ body {
 }
 
 .sub-menu.show {
-    max-height: 200px;
+    max-height: 100%;
 }
 
 .sub-menu .nav-link {

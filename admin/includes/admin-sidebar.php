@@ -177,7 +177,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($current_page === 'trial_requests.php') ? 'active' : ''; ?>" 
-                    href="trial_requests.php">
+                    href="../404-error.php">
                         <i class="bi bi-cart-check nav-icon"></i>
                         <span class="nav-text">Trial Requests</span>
                     </a>
@@ -196,6 +196,14 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     href="submissions.php?source=view_all_call_bookings">
                         <i class="bi bi-telephone nav-icon"></i>
                         <span class="nav-text">Call Bookings</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link <?php echo ($current_page === 'newsletter.php') ? 'active' : ''; ?>" 
+                    href="newsletter.php">
+                        <i class="bi bi-envelope-paper nav-icon"></i>
+                        <span class="nav-text">Newsletter</span>
                     </a>
                 </li>
             </ul>

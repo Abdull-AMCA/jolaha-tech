@@ -1,0 +1,46 @@
+jolaha-tech/
+├─ index.php                             # (site front page — not shared but expected)
+├─ about.php                             # Public About page
+├─ our-solutions.php                     # Solutions overview page
+├─ server-management.php                 # Server Management detail page
+├─ software-testing.php                  # Software Testing page
+├─ real-estate.php                       # Real Estate solution page
+├─ audit-accounting.php                  # Accounting & Auditing page
+├─ jolaha-hrms.php                       # Product page (HRMS)
+├─ contact-us.php                        # (referenced) Contact page
+├─ includes/                             # Shared components & AJAX endpoints
+│  ├─ header-navbar.php                  # Site header / navigation
+│  ├─ footer.php                         # Site footer; loads resources/js/main.js
+│  ├─ config.php                         # (optional) DB & SMTP constants
+│  ├─ process_booking.php                # AJAX: insert booking + send email (you modified)
+│  ├─ get_booking_details.php            # AJAX: return booking JSON (referenced)
+│  ├─ update_booking_status.php          # AJAX: update booking status (referenced)
+│  ├─ get_inquiry_details.php            # AJAX: return inquiry JSON (referenced)
+│  ├─ delete_sub_service.php             # AJAX: delete sub-service (referenced)
+│  └─ ...other server-side endpoints...
+├─ resources/
+│  ├─ css/
+│  │  └─ style.css                       # Site CSS / variables
+│  ├─ js/
+│  │  └─ main.js                         # Front-end JS (animations, modals, fetch)
+│  └─ img/
+│     └─ ...images...
+├─ vendor/                               # Composer packages (PHPMailer, etc.)
+│  └─ autoload.php
+├─ admin/                                # Admin dashboard
+│  ├─ admin-head.php                     # Admin <head> includes
+│  ├─ admin-navbar.php                   # Admin top navigation
+│  ├─ admin-sidebar.php                  # Admin sidebar menu (menu-toggle-btn, sub-menu)
+│  ├─ admin-footer.php                   # Admin footer; loads admin/resources/js/main.js
+│  ├─ solutions.php                      # Admin solutions management page
+│  ├─ posts.php                          # Admin posts router
+│  ├─ includes/
+│  │  ├─ admin-functions.php             # Large server-side CRUD functions (services, products, solutions, posts, careers, enquiries, bookings)
+│  │  ├─ add_service.php                 # Admin add/list services UI
+│  │  └─ ...other admin includes...
+│  └─ resources/
+│     └─ js/
+│        └─ main.js                      # Admin JS (ServiceManager, delete handlers, modals)
+├─ logs/
+│  └─ error_log.txt                      # Written by PHP (process_booking sets this)
+└─ README.md (optional)
