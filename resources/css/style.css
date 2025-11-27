@@ -2005,7 +2005,7 @@ header .brand {
   .floating-buttons {
       position: fixed;
       bottom: 20px;
-      right: 13px;
+      right: 25px;
       z-index: 1000;
       display: flex;
       flex-direction: column;
@@ -2198,3 +2198,418 @@ footer .brand { font-size:1.2rem; font-weight:700; }
 }
 
 @keyframes fadeIn { from{opacity:0; transform:translateY(-10px);} to{opacity:1; transform:translateY(0);} }
+
+
+
+/* ================================
+   Footer
+   ================================ */
+
+/* JolAI Chat Widget Styles */
+.jolai-floating-btn {
+    position: fixed;
+    bottom: 140px;
+    right: 20px;
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-700));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    z-index: 10000;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.jolai-floating-btn:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 20px 40px rgba(113, 37, 235, 0.3);
+}
+
+.jolai-avatar {
+    width: 32px;
+    height: 32px;
+    color: var(--text);
+}
+
+.jolai-pulse {
+    position: absolute;
+    width: 72px;
+    height: 72px;
+    background: var(--primary);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: jolai-pulse 2s infinite;
+}
+
+@keyframes jolai-pulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    70% { transform: scale(1.3); opacity: 0; }
+    100% { transform: scale(1.3); opacity: 0; }
+}
+
+.jolai-chat-widget {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 380px;
+    height: 600px;
+    background: var(--surface);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    z-index: 10001;
+    overflow: hidden;
+}
+
+.jolai-hidden {
+    display: none;
+}
+
+.jolai-header {
+    background: var(--card);
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.jolai-header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.jolai-avatar-sm {
+    width: 36px;
+    height: 36px;
+    background: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+}
+
+.jolai-header-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.jolai-title {
+    color: var(--heading);
+    font-weight: 600;
+    margin: 0;
+    font-size: 14px;
+}
+
+.jolai-status {
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.jolai-close-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.jolai-close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+}
+
+.jolai-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background: var(--bg);
+}
+
+.jolai-welcome-message {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.jolai-welcome-avatar {
+    flex-shrink: 0;
+}
+
+.jolai-welcome-text h4 {
+    color: var(--heading);
+    margin: 0 0 8px 0;
+    font-size: 16px;
+}
+
+.jolai-welcome-text p {
+    color: var(--text);
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.jolai-message {
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+}
+
+.jolai-message-user {
+    flex-direction: row-reverse;
+}
+
+.jolai-message-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.jolai-message-bot .jolai-message-avatar {
+    background: var(--primary);
+    color: var(--text);
+}
+
+.jolai-message-user .jolai-message-avatar {
+    background: var(--secondary);
+    color: var(--bg);
+}
+
+.jolai-message-content {
+    max-width: 80%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.jolai-message-bot .jolai-message-content {
+    background: var(--card);
+    color: var(--text);
+    border-bottom-left-radius: 6px;
+}
+
+.jolai-message-user .jolai-message-content {
+    background: linear-gradient(135deg, var(--primary), var(--primary-700));
+    color: white;
+    border-bottom-right-radius: 6px;
+}
+
+.jolai-typing {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.jolai-typing-dots {
+    display: flex;
+    gap: 4px;
+    padding: 12px 16px;
+    background: var(--card);
+    border-radius: 18px;
+    border-bottom-left-radius: 6px;
+}
+
+.jolai-typing-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--muted);
+    border-radius: 50%;
+    animation: jolai-typing 1.4s infinite;
+}
+
+.jolai-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.jolai-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes jolai-typing {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-4px); }
+}
+
+.jolai-prompts {
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--card);
+}
+
+.jolai-prompts-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.jolai-prompts-title {
+    color: var(--heading);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.jolai-refresh-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.jolai-refresh-btn:hover {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.jolai-prompts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.jolai-prompt-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    line-height: 1.4;
+}
+
+.jolai-prompt-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary);
+    transform: translateY(-1px);
+}
+
+.jolai-prompt-used {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.jolai-prompt-used:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.jolai-input-area {
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--surface);
+}
+
+.jolai-input-container {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+.jolai-input {
+    flex: 1;
+    background: var(--card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    color: var(--text);
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    transition: all 0.2s;
+    min-height: 44px;
+    max-height: 120px;
+}
+
+.jolai-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(113, 37, 235, 0.2);
+}
+
+.jolai-input::placeholder {
+    color: var(--muted);
+}
+
+.jolai-send-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-700));
+    border: none;
+    border-radius: var(--radius);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.jolai-send-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(113, 37, 235, 0.4);
+}
+
+.jolai-send-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.jolai-input-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.jolai-char-count {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.jolai-powered-by {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* Scrollbar Styling */
+.jolai-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.jolai-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.jolai-messages::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.jolai-messages::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}

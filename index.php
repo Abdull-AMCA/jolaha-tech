@@ -1182,188 +1182,343 @@ include 'includes/head.php';
       <a href="https://wa.me/+971123456789" class="floating-btn whatsapp-btn" target="_blank" rel="noopener">
           <i class="bi bi-whatsapp"></i>
       </a>
-    
+
       <!-- Back to Top Button -->
       <a href="#" class="floating-btn back-to-top">
           <i class="bi bi-arrow-up"></i>
       </a>
   </div>
 
-  <!-- Add this to your HTML page, e.g., at the bottom of the body -->
-<div id="chatbot-widget">
-    <!-- Chat Header -->
-    <div class="chat-header bg-primary text-white p-3 d-flex justify-content-between align-items-center">
-        <h6 class="mb-0">AI Assistant</h6>
-        <button id="chat-close" class="btn btn-sm btn-light">×</button>
-    </div>
-    <!-- Chat Messages Container -->
-    <div id="chat-messages" class="chat-messages p-3"></div>
-    <!-- Pre-defined Prompts -->
-    <div id="chat-prompts" class="chat-prompts p-2 border-top">
-        <small class="text-muted">Try asking:</small><br>
-        <button class="btn btn-sm btn-outline-secondary mt-1 prompt-btn">What web development services do you offer?</button>
-        <button class="btn btn-sm btn-outline-secondary mt-1 prompt-btn">Tell me about your mobile app development</button>
-        <button class="btn btn-sm btn-outline-secondary mt-1 prompt-btn">How can I contact Jolaha?</button>
-        <button class="btn btn-sm btn-outline-secondary mt-1 prompt-btn">What industries do you serve?</button>
-    </div>
-    <!-- Chat Input Area -->
-    <div class="chat-input p-3 border-top">
-        <div class="input-group">
-            <input type="text" id="user-input" class="form-control" placeholder="Type your message...">
-            <button id="send-btn" class="btn btn-primary">Send</button>
-        </div>
-    </div>
-</div>
+  <!-- Floating Chat Button -->
+  <div id="jolai-floating-btn" class="jolai-floating-btn">
+      <div class="jolai-avatar">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" fill="currentColor"/>
+              <path d="M12 6C9.79 6 8 7.79 8 10C8 12.21 9.79 14 12 14C14.21 14 16 12.21 16 10C16 7.79 14.21 6 12 6Z" fill="var(--bg)"/>
+              <path d="M12 16C8.67 16 6 18.13 6 20.67C6 21.4 6.6 22 7.33 22H16.67C17.4 22 18 21.4 18 20.67C18 18.13 15.33 16 12 16Z" fill="var(--bg)"/>
+          </svg>
+      </div>
+      <span class="jolai-pulse"></span>
+  </div>
 
-<!-- Include Bootstrap for styling -->
-<style>
-    /* Basic Chat Widget Styling */
-    #chatbot-widget {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 350px;
-        height: 500px;
-        background: white;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        display: flex;
-        flex-direction: column;
-        z-index: 1000;
-    }
-    .chat-messages {
-        flex-grow: 1;
-        overflow-y: auto;
-        background-color: #f8f9fa;
-    }
-    .message {
-        margin-bottom: 10px;
-        padding: 8px 12px;
-        border-radius: 15px;
-        max-width: 80%;
-    }
-    .user-message {
-        background-color: #007bff;
-        color: white;
-        margin-left: auto;
-        border-bottom-right-radius: 5px;
-    }
-    .bot-message {
-        background-color: #e9ecef;
-        color: #333;
-        margin-right: auto;
-        border-bottom-left-radius: 5px;
-    }
-</style>
+  <!-- Chat Widget -->
+  <div id="jolai-chat-widget" class="jolai-chat-widget jolai-hidden">
+      <!-- Chat Header -->
+      <div class="jolai-header">
+          <div class="jolai-header-content">
+              <div class="jolai-avatar-sm">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" fill="currentColor"/>
+                      <path d="M12 6C9.79 6 8 7.79 8 10C8 12.21 9.79 14 12 14C14.21 14 16 12.21 16 10C16 7.79 14.21 6 12 6Z" fill="var(--surface)"/>
+                      <path d="M12 16C8.67 16 6 18.13 6 20.67C6 21.4 6.6 22 7.33 22H16.67C17.4 22 18 21.4 18 20.67C18 18.13 15.33 16 12 16Z" fill="var(--surface)"/>
+                  </svg>
+              </div>
+              <div class="jolai-header-text">
+                  <h6 class="jolai-title">JolAI Assistant</h6>
+                  <span class="jolai-status">Online</span>
+              </div>
+          </div>
+          <button id="jolai-close" class="jolai-close-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+              </svg>
+          </button>
+      </div>
 
-<script>
-    // State Management
-    let conversationHistory = [];
+      <!-- Chat Messages Container -->
+      <div id="jolai-messages" class="jolai-messages">
+          <div class="jolai-welcome-message">
+              <div class="jolai-welcome-avatar">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" fill="var(--primary)"/>
+                      <path d="M12 6C9.79 6 8 7.79 8 10C8 12.21 9.79 14 12 14C14.21 14 16 12.21 16 10C16 7.79 14.21 6 12 6Z" fill="var(--surface)"/>
+                      <path d="M12 16C8.67 16 6 18.13 6 20.67C6 21.4 6.6 22 7.33 22H16.67C17.4 22 18 21.4 18 20.67C18 18.13 15.33 16 12 16Z" fill="var(--surface)"/>
+                  </svg>
+              </div>
+              <div class="jolai-welcome-text">
+                  <h4>Hello! I'm JolAI 👋</h4>
+                  <p>I'm here to help you learn about Jolaha's services and answer any questions you might have.</p>
+              </div>
+          </div>
+      </div>
 
-    // DOM Elements
-    const chatWidget = document.getElementById('chatbot-widget');
-    const chatMessages = document.getElementById('chat-messages');
-    const userInput = document.getElementById('user-input');
-    const sendBtn = document.getElementById('send-btn');
-    const promptButtons = document.querySelectorAll('.prompt-btn');
-    const closeBtn = document.getElementById('chat-close');
+      <!-- Dynamic Prompts -->
+      <div id="jolai-prompts" class="jolai-prompts">
+          <div class="jolai-prompts-header">
+              <span class="jolai-prompts-title">Quick Questions</span>
+              <button id="jolai-refresh-prompts" class="jolai-refresh-btn" title="Refresh suggestions">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M23 4v6h-6M1 20v-6h6"/>
+                      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                  </svg>
+              </button>
+          </div>
+          <div id="jolai-prompts-container" class="jolai-prompts-container">
+              <!-- Dynamic prompts will be inserted here -->
+          </div>
+      </div>
 
-    // Function to add a message to the chat UI
-    function addMessageToUI(content, isUser) {
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message');
-        messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
-        messageDiv.textContent = content;
-        chatMessages.appendChild(messageDiv);
-        // Auto-scroll to the latest message
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
+      <!-- Chat Input Area -->
+      <div class="jolai-input-area">
+          <div class="jolai-input-container">
+              <input type="text" id="jolai-user-input" class="jolai-input" placeholder="Message JolAI..." maxlength="500">
+              <button id="jolai-send-btn" class="jolai-send-btn">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                  </svg>
+              </button>
+          </div>
+          <div class="jolai-input-footer">
+              <span class="jolai-char-count">0/500</span>
+              <span class="jolai-powered-by">Powered by Jolaha Tech</span>
+          </div>
+      </div>
+  </div>
 
-    // Function to send a message to the backend
-    async function sendMessage(messageText) {
-        // Disable UI while processing
-        userInput.disabled = true;
-        sendBtn.disabled = true;
 
-        // Add user message to UI and history
-        addMessageToUI(messageText, true);
-        conversationHistory.push({ role: 'user', content: messageText });
+  <script>
+  // JolAI Chat Widget JavaScript
+  class JolAIChat {
+      constructor() {
+          this.conversationHistory = [];
+          this.usedPrompts = new Set();
+          this.availablePrompts = [
+              "What web development services do you offer?",
+              "Tell me about your mobile app development",
+              "How can I contact Jolaha?",
+              "What industries do you serve?",
+              "Do you provide ongoing support?",
+              "What's your typical project timeline?",
+              "Can you work with startups?",
+              "What technologies do you specialize in?",
+              "Do you offer UI/UX design services?",
+              "What makes Jolaha different from others?"
+          ];
+          
+          this.initializeElements();
+          this.bindEvents();
+          this.generatePrompts();
+      }
 
-        // Show a "typing..." indicator
-        const typingIndicator = document.createElement('div');
-        typingIndicator.id = 'typing';
-        typingIndicator.textContent = "AI is thinking...";
-        typingIndicator.classList.add('message', 'bot-message');
-        chatMessages.appendChild(typingIndicator);
+      initializeElements() {
+          this.floatingBtn = document.getElementById('jolai-floating-btn');
+          this.chatWidget = document.getElementById('jolai-chat-widget');
+          this.messagesContainer = document.getElementById('jolai-messages');
+          this.userInput = document.getElementById('jolai-user-input');
+          this.sendBtn = document.getElementById('jolai-send-btn');
+          this.closeBtn = document.getElementById('jolai-close');
+          this.promptsContainer = document.getElementById('jolai-prompts-container');
+          this.refreshPromptsBtn = document.getElementById('jolai-refresh-prompts');
+          this.charCount = document.querySelector('.jolai-char-count');
+      }
 
-        try {
-            const response = await fetch('chat_proxy.php', { // Path to your PHP proxy
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    message: messageText,
-                    history: conversationHistory
-                })
-            });
+      bindEvents() {
+          this.floatingBtn.addEventListener('click', () => this.toggleChat());
+          this.closeBtn.addEventListener('click', () => this.hideChat());
+          this.sendBtn.addEventListener('click', () => this.sendMessage());
+          this.userInput.addEventListener('keypress', (e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  this.sendMessage();
+              }
+          });
+          
+          this.userInput.addEventListener('input', () => this.updateCharCount());
+          this.refreshPromptsBtn.addEventListener('click', () => this.generatePrompts());
+          
+          // Click outside to close
+          document.addEventListener('click', (e) => {
+              if (!this.chatWidget.contains(e.target) && !this.floatingBtn.contains(e.target)) {
+                  this.hideChat();
+              }
+          });
+      }
 
-            const data = await response.json();
+      toggleChat() {
+          this.chatWidget.classList.toggle('jolai-hidden');
+          if (!this.chatWidget.classList.contains('jolai-hidden')) {
+              this.userInput.focus();
+          }
+      }
 
-            // Remove typing indicator
-            document.getElementById('typing').remove();
+      hideChat() {
+          this.chatWidget.classList.add('jolai-hidden');
+      }
 
-            if (data.error) {
-                addMessageToUI("Error: " + data.error, false);
-            } else {
-                // Add AI message to UI and history
-                addMessageToUI(data.reply, false);
-                conversationHistory.push({ role: 'assistant', content: data.reply });
-            }
-        } catch (error) {
-            document.getElementById('typing').remove();
-            addMessageToUI("Sorry, there was a connection error.", false);
-            console.error("Error:", error);
-        }
+      updateCharCount() {
+          const count = this.userInput.value.length;
+          this.charCount.textContent = `${count}/500`;
+          
+          if (count > 450) {
+              this.charCount.style.color = 'var(--secondary)';
+          } else {
+              this.charCount.style.color = 'var(--muted)';
+          }
+      }
 
-        // Re-enable UI
-        userInput.disabled = false;
-        sendBtn.disabled = false;
-        userInput.value = ''; // Clear input
-        userInput.focus();
-    }
+      generatePrompts() {
+          this.promptsContainer.innerHTML = '';
+          
+          // Filter out used prompts and get 3 random ones
+          const unusedPrompts = this.availablePrompts.filter(prompt => !this.usedPrompts.has(prompt));
+          const randomPrompts = this.shuffleArray([...unusedPrompts]).slice(0, 3);
+          
+          // If we don't have enough unused prompts, reuse some
+          if (randomPrompts.length < 3) {
+              const additional = this.shuffleArray([...this.usedPrompts]).slice(0, 3 - randomPrompts.length);
+              randomPrompts.push(...additional);
+          }
 
-    // Event Listeners
-    sendBtn.addEventListener('click', () => {
-        const message = userInput.value.trim();
-        if (message) {
-            sendMessage(message);
-        }
-    });
+          randomPrompts.forEach(prompt => {
+              const button = document.createElement('button');
+              button.className = `jolai-prompt-btn ${this.usedPrompts.has(prompt) ? 'jolai-prompt-used' : ''}`;
+              button.textContent = prompt;
+              button.addEventListener('click', () => {
+                  if (!this.usedPrompts.has(prompt)) {
+                      this.usedPrompts.add(prompt);
+                      button.classList.add('jolai-prompt-used');
+                      this.sendMessage(prompt);
+                  }
+              });
+              this.promptsContainer.appendChild(button);
+          });
+      }
 
-    userInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            const message = userInput.value.trim();
-            if (message) {
-                sendMessage(message);
-            }
-        }
-    });
+      shuffleArray(array) {
+          for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
+          }
+          return array;
+      }
 
-    // Add event listeners to prompt buttons
-    promptButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            sendMessage(e.target.textContent);
-        });
-    });
+      addMessage(content, isUser) {
+          const messageDiv = document.createElement('div');
+          messageDiv.className = `jolai-message ${isUser ? 'jolai-message-user' : 'jolai-message-bot'}`;
+          
+          const avatar = document.createElement('div');
+          avatar.className = 'jolai-message-avatar';
+          avatar.innerHTML = isUser ? 'You' : `
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" fill="currentColor"/>
+                  <path d="M12 6C9.79 6 8 7.79 8 10C8 12.21 9.79 14 12 14C14.21 14 16 12.21 16 10C16 7.79 14.21 6 12 6Z" fill="var(--surface)"/>
+                  <path d="M12 16C8.67 16 6 18.13 6 20.67C6 21.4 6.6 22 7.33 22H16.67C17.4 22 18 21.4 18 20.67C18 18.13 15.33 16 12 16Z" fill="var(--surface)"/>
+              </svg>
+          `;
+          
+          const contentDiv = document.createElement('div');
+          contentDiv.className = 'jolai-message-content';
+          contentDiv.textContent = content;
+          
+          messageDiv.appendChild(avatar);
+          messageDiv.appendChild(contentDiv);
+          this.messagesContainer.appendChild(messageDiv);
+          
+          this.scrollToBottom();
+      }
 
-    // Close chat widget
-    closeBtn.addEventListener('click', () => {
-        chatWidget.style.display = 'none';
-    });
+      showTypingIndicator() {
+          const typingDiv = document.createElement('div');
+          typingDiv.className = 'jolai-typing';
+          typingDiv.id = 'jolai-typing';
+          
+          const avatar = document.createElement('div');
+          avatar.className = 'jolai-message-avatar';
+          avatar.innerHTML = `
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" fill="currentColor"/>
+                  <path d="M12 6C9.79 6 8 7.79 8 10C8 12.21 9.79 14 12 14C14.21 14 16 12.21 16 10C16 7.79 14.21 6 12 6Z" fill="var(--surface)"/>
+                  <path d="M12 16C8.67 16 6 18.13 6 20.67C6 21.4 6.6 22 7.33 22H16.67C17.4 22 18 21.4 18 20.67C18 18.13 15.33 16 12 16Z" fill="var(--surface)"/>
+              </svg>
+          `;
+          
+          const dotsDiv = document.createElement('div');
+          dotsDiv.className = 'jolai-typing-dots';
+          dotsDiv.innerHTML = `
+              <div class="jolai-typing-dot"></div>
+              <div class="jolai-typing-dot"></div>
+              <div class="jolai-typing-dot"></div>
+          `;
+          
+          typingDiv.appendChild(avatar);
+          typingDiv.appendChild(dotsDiv);
+          this.messagesContainer.appendChild(typingDiv);
+          
+          this.scrollToBottom();
+      }
 
-    // Focus input on load
-    userInput.focus();
-</script>
+      removeTypingIndicator() {
+          const typing = document.getElementById('jolai-typing');
+          if (typing) {
+              typing.remove();
+          }
+      }
+
+      scrollToBottom() {
+          this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+      }
+
+      async sendMessage(prefilledMessage = null) {
+          const messageText = prefilledMessage || this.userInput.value.trim();
+          
+          if (!messageText) return;
+
+          // Add user message to UI and history
+          this.addMessage(messageText, true);
+          this.conversationHistory.push({ role: 'user', content: messageText });
+
+          // Clear input and update prompts if it's a new message
+          if (!prefilledMessage) {
+              this.userInput.value = '';
+              this.updateCharCount();
+              this.usedPrompts.add(messageText);
+              this.generatePrompts();
+          }
+
+          // Disable UI
+          this.userInput.disabled = true;
+          this.sendBtn.disabled = true;
+
+          // Show typing indicator
+          this.showTypingIndicator();
+
+          try {
+              const response = await fetch('chat_proxy.php', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                      message: messageText,
+                      history: this.conversationHistory
+                  })
+              });
+
+              const data = await response.json();
+              this.removeTypingIndicator();
+
+              if (data.error) {
+                  this.addMessage(`Error: ${data.error}`, false);
+              } else {
+                  this.addMessage(data.reply, false);
+                  this.conversationHistory.push({ role: 'assistant', content: data.reply });
+              }
+          } catch (error) {
+              this.removeTypingIndicator();
+              this.addMessage('Sorry, there was a connection error. Please try again.', false);
+              console.error('JolAI Error:', error);
+          }
+
+          // Re-enable UI
+          this.userInput.disabled = false;
+          this.sendBtn.disabled = false;
+          this.userInput.focus();
+      }
+  }
+
+  // Initialize JolAI when the page loads
+  document.addEventListener('DOMContentLoaded', () => {
+      new JolAIChat();
+  });
+  </script>
 
 <!-- Footer -->
 <?php
