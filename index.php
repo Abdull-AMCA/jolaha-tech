@@ -1189,6 +1189,182 @@ include 'includes/head.php';
       </a>
   </div>
 
+  <!-- Add this to your HTML page, e.g., at the bottom of the body -->
+<div id="chatbot-widget">
+    <!-- Chat Header -->
+    <div class="chat-header bg-primary text-white p-3 d-flex justify-content-between align-items-center">
+        <h6 class="mb-0">AI Assistant</h6>
+        <button id="chat-close" class="btn btn-sm btn-light">×</button>
+    </div>
+    <!-- Chat Messages Container -->
+    <div id="chat-messages" class="chat-messages p-3"></div>
+    <!-- Pre-defined Prompts -->
+    <div id="chat-prompts" class="chat-prompts p-2 border-top">
+        <small class="text-muted">Try asking:</small><br>
+        <button class="btn btn-sm btn-outline-secondary mt-1 prompt-btn">What web development services do you offer?</button>
+        <button class="btn btn-sm btn-outline-secondary mt-1 prompt-btn">Tell me about your mobile app development</button>
+        <button class="btn btn-sm btn-outline-secondary mt-1 prompt-btn">How can I contact Jolaha?</button>
+        <button class="btn btn-sm btn-outline-secondary mt-1 prompt-btn">What industries do you serve?</button>
+    </div>
+    <!-- Chat Input Area -->
+    <div class="chat-input p-3 border-top">
+        <div class="input-group">
+            <input type="text" id="user-input" class="form-control" placeholder="Type your message...">
+            <button id="send-btn" class="btn btn-primary">Send</button>
+        </div>
+    </div>
+</div>
+
+<!-- Include Bootstrap for styling -->
+<style>
+    /* Basic Chat Widget Styling */
+    #chatbot-widget {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 350px;
+        height: 500px;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        z-index: 1000;
+    }
+    .chat-messages {
+        flex-grow: 1;
+        overflow-y: auto;
+        background-color: #f8f9fa;
+    }
+    .message {
+        margin-bottom: 10px;
+        padding: 8px 12px;
+        border-radius: 15px;
+        max-width: 80%;
+    }
+    .user-message {
+        background-color: #007bff;
+        color: white;
+        margin-left: auto;
+        border-bottom-right-radius: 5px;
+    }
+    .bot-message {
+        background-color: #e9ecef;
+        color: #333;
+        margin-right: auto;
+        border-bottom-left-radius: 5px;
+    }
+</style>
+
+<script>
+    // State Management
+    let conversationHistory = [];
+
+    // DOM Elements
+    const chatWidget = document.getElementById('chatbot-widget');
+    const chatMessages = document.getElementById('chat-messages');
+    const userInput = document.getElementById('user-input');
+    const sendBtn = document.getElementById('send-btn');
+    const promptButtons = document.querySelectorAll('.prompt-btn');
+    const closeBtn = document.getElementById('chat-close');
+
+    // Function to add a message to the chat UI
+    function addMessageToUI(content, isUser) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message');
+        messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
+        messageDiv.textContent = content;
+        chatMessages.appendChild(messageDiv);
+        // Auto-scroll to the latest message
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Function to send a message to the backend
+    async function sendMessage(messageText) {
+        // Disable UI while processing
+        userInput.disabled = true;
+        sendBtn.disabled = true;
+
+        // Add user message to UI and history
+        addMessageToUI(messageText, true);
+        conversationHistory.push({ role: 'user', content: messageText });
+
+        // Show a "typing..." indicator
+        const typingIndicator = document.createElement('div');
+        typingIndicator.id = 'typing';
+        typingIndicator.textContent = "AI is thinking...";
+        typingIndicator.classList.add('message', 'bot-message');
+        chatMessages.appendChild(typingIndicator);
+
+        try {
+            const response = await fetch('chat_proxy.php', { // Path to your PHP proxy
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: messageText,
+                    history: conversationHistory
+                })
+            });
+
+            const data = await response.json();
+
+            // Remove typing indicator
+            document.getElementById('typing').remove();
+
+            if (data.error) {
+                addMessageToUI("Error: " + data.error, false);
+            } else {
+                // Add AI message to UI and history
+                addMessageToUI(data.reply, false);
+                conversationHistory.push({ role: 'assistant', content: data.reply });
+            }
+        } catch (error) {
+            document.getElementById('typing').remove();
+            addMessageToUI("Sorry, there was a connection error.", false);
+            console.error("Error:", error);
+        }
+
+        // Re-enable UI
+        userInput.disabled = false;
+        sendBtn.disabled = false;
+        userInput.value = ''; // Clear input
+        userInput.focus();
+    }
+
+    // Event Listeners
+    sendBtn.addEventListener('click', () => {
+        const message = userInput.value.trim();
+        if (message) {
+            sendMessage(message);
+        }
+    });
+
+    userInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            const message = userInput.value.trim();
+            if (message) {
+                sendMessage(message);
+            }
+        }
+    });
+
+    // Add event listeners to prompt buttons
+    promptButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            sendMessage(e.target.textContent);
+        });
+    });
+
+    // Close chat widget
+    closeBtn.addEventListener('click', () => {
+        chatWidget.style.display = 'none';
+    });
+
+    // Focus input on load
+    userInput.focus();
+</script>
+
 <!-- Footer -->
 <?php
 include 'includes/footer.php';
