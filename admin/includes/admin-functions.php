@@ -1076,4 +1076,90 @@ function update_call_booking_status($booking_id, $status) {
     }
 }
 
+///////////////////////// DASHBOARD STATS FUNCTIONSS /////////////////////////
+
+// Get total service enquiries
+function get_total_service_enquiries() {
+    global $connection;
+    
+    try {
+        $stmt = $connection->prepare("SELECT COUNT(*) as total FROM service_inquiries");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    } catch (PDOException $e) {
+        error_log("Error fetching service enquiries: " . $e->getMessage());
+        return 0;
+    }
+}
+
+// Get total call bookings
+function get_total_call_bookings() {
+    global $connection;
+    
+    try {
+        $stmt = $connection->prepare("SELECT COUNT(*) as total FROM call_bookings");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    } catch (PDOException $e) {
+        error_log("Error fetching call bookings: " . $e->getMessage());
+        return 0;
+    }
+}
+
+// Get new newsletter subscribers in the last 7 days
+function get_new_newsletter_subscribers() {
+    global $connection;
+    
+    try {
+        $stmt = $connection->prepare("
+            SELECT COUNT(*) as total 
+            FROM newsletter_subscribers 
+            WHERE subscription_date >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+        ");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    } catch (PDOException $e) {
+        error_log("Error fetching newsletter subscribers: " . $e->getMessage());
+        return 0;
+    }
+}
+
+// Get total products (if you have a products table)
+function get_total_products() {
+    global $connection;
+    
+    try {
+        $stmt = $connection->prepare("SELECT COUNT(*) as total FROM products WHERE is_active = 1");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    } catch (PDOException $e) {
+        error_log("Error fetching products: " . $e->getMessage());
+        return 0;
+    }
+}
+
+// Get total users (if you have a users table)
+function get_total_users() {
+    global $connection;
+    
+    try {
+        $stmt = $connection->prepare("SELECT COUNT(*) as total FROM users WHERE is_active = 1");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    } catch (PDOException $e) {
+        error_log("Error fetching users: " . $e->getMessage());
+        return 0;
+    }
+}
+
+function get_engagement_rate() {
+    // Example: (total interactions / total visitors) * 100
+    return "83%";
+}
+
 ?>

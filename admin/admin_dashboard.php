@@ -1,7 +1,16 @@
 <?php
+include 'includes/admin-functions.php';
 include 'includes/admin-head.php';
 include 'includes/admin-navbar.php';
 include 'includes/admin-sidebar.php';
+
+// Fetch dashboard stats
+$total_service_enquiries = get_total_service_enquiries();
+$total_call_bookings = get_total_call_bookings();
+$new_newsletter_subscribers = get_new_newsletter_subscribers();
+$total_products = get_total_products();
+$total_users = get_total_users();
+$engagement_rate = get_engagement_rate();
 ?>
 
     <!-- Main Content -->
@@ -19,32 +28,36 @@ include 'includes/admin-sidebar.php';
                 <div class="col-md-3 mb-3">
                     <div class="card stat-card">
                         <div class="card-body">
-                            <div class="stat-number">128</div>
-                            <div class="stat-title">Total Products</div>
+                            <div class="stat-number"><?php echo $total_service_enquiries; ?></div>
+                            <div class="stat-title">Service Enquiries</div>
+                            <div class="stat-subtitle">Total requests</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <div class="card stat-card">
                         <div class="card-body">
-                            <div class="stat-number">42</div>
-                            <div class="stat-title">Total Users</div>
+                            <div class="stat-number"><?php echo $total_call_bookings; ?></div>
+                            <div class="stat-title">Call Bookings</div>
+                            <div class="stat-subtitle">Scheduled calls</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <div class="card stat-card">
                         <div class="card-body">
-                            <div class="stat-number">24</div>
-                            <span class="stat-title">New Submissions</span>
+                            <div class="stat-number"><?php echo $new_newsletter_subscribers; ?></div>
+                            <div class="stat-title">New Subscribers</div>
+                            <div class="stat-subtitle">Last 7 days</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <div class="card stat-card">
                         <div class="card-body">
-                            <div class="stat-number">83%</div>
+                            <div class="stat-number"><?php echo $engagement_rate; ?></div>
                             <div class="stat-title">Engagement Rate</div>
+                            <div class="stat-subtitle">Overall performance</div>
                         </div>
                     </div>
                 </div>
