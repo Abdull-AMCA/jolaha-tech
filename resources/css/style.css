@@ -2155,57 +2155,12 @@ header .brand {
 }
 
 
-/* ================================
-   Footer
-   ================================ */
-footer { background: var(--surface); padding:3rem 1rem;}
-footer .footer-grid { display:grid; gap:2rem; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); }
-footer h4 { color:var(--heading); margin-bottom:1rem; }
-footer p, footer a { color:var(--muted); font-size:.95rem; }
-footer a:hover { color:var(--secondary); }
-footer .brand { font-size:1.2rem; font-weight:700; }
-
-.social-links {
-  margin-top: 1.5rem;
-}
-
-.social-links a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  margin-right: 1rem;
-  font-size: 1rem;   /* icon size */
-  color: var(--muted);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.social-links a:hover {
-  color: var(--secondary);
-  border-color: var(--secondary);
-  transform: translateY(-3px); /* subtle lift effect */
-}
-
-/* Responsive */
-@media (max-width: 980px){
-  .hero-inner { grid-template-columns:1fr; }
-  .menu { display:none; position:absolute; top:60px; right:20px; background:var(--card); flex-direction:column; padding:1rem; border-radius:var(--radius); box-shadow:var(--shadow); }
-  .menu.show { display:flex; animation:fadeIn .3s ease; }
-  .menu-toggle { display:flex; }
-}
-
-@keyframes fadeIn { from{opacity:0; transform:translateY(-10px);} to{opacity:1; transform:translateY(0);} }
-
 
 
 /* ================================
-   Footer
+   JolAI Chat Widget
    ================================ */
 
-/* JolAI Chat Widget Styles */
 .jolai-floating-btn {
     position: fixed;
     bottom: 140px;
@@ -2230,8 +2185,8 @@ footer .brand { font-size:1.2rem; font-weight:700; }
 }
 
 .jolai-avatar {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     color: var(--text);
 }
 
@@ -2260,7 +2215,7 @@ footer .brand { font-size:1.2rem; font-weight:700; }
     background: var(--surface);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow);
+    box-shadow: 0 20px 40px rgba(235, 143, 37, 0.3);
     display: flex;
     flex-direction: column;
     z-index: 10001;
@@ -2613,3 +2568,49 @@ footer .brand { font-size:1.2rem; font-weight:700; }
 .jolai-messages::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.2);
 }
+
+
+/* ================================
+   Footer
+   ================================ */
+footer { background: var(--surface); padding:3rem 1rem;}
+footer .footer-grid { display:grid; gap:2rem; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); }
+footer h4 { color:var(--heading); margin-bottom:1rem; }
+footer p, footer a { color:var(--muted); font-size:.95rem; }
+footer a:hover { color:var(--secondary); }
+footer .brand { font-size:1.2rem; font-weight:700; }
+
+.social-links {
+  margin-top: 1.5rem;
+}
+
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 1rem;
+  font-size: 1rem;   /* icon size */
+  color: var(--muted);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+  color: var(--secondary);
+  border-color: var(--secondary);
+  transform: translateY(-3px); /* subtle lift effect */
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .hero-inner { grid-template-columns:1fr; }
+  .menu { display:none; position:absolute; top:60px; right:20px; background:var(--card); flex-direction:column; padding:1rem; border-radius:var(--radius); box-shadow:var(--shadow); }
+  .menu.show { display:flex; animation:fadeIn .3s ease; }
+  .menu-toggle { display:flex; }
+}
+
+@keyframes fadeIn { from{opacity:0; transform:translateY(-10px);} to{opacity:1; transform:translateY(0);} }
+

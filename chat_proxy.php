@@ -12,7 +12,7 @@ $conversation_history = $input['history'] ?? [];
 // Build messages array
 $messages = [];
 
-// CUSTOM SYSTEM PROMPT WITH COMPANY KNOWLEDGE
+// MODEL TRAINING: CUSTOM SYSTEM PROMPT WITH COMPANY KNOWLEDGE
 $messages[] = ["role" => "system", "content" => "You are a helpful, friendly, and professional assistant for Jolaha Company. 
 
 ## ABOUT JOLAHA:
@@ -29,19 +29,20 @@ Jolaha Technology is a leading technology company that specializes in:
 - Founded: 2018
 - Headquarters: Dubai UAE.
 - Team Size: 50+ professionals
-- Industries Served: Healthcare, Finance, Retail, Education, Manufacturing
+- Industries Served: Real Estate, Finance, Retail, Healthcare, Education, Manufacturing
 
 ## KEY SERVICES IN DETAIL:
-1. **Web Development**: Custom websites, responsive design, CMS development
-2. **Mobile App Development**: Native and cross-platform mobile applications
-3. **E-commerce Solutions**: Online stores, payment integration, inventory management
-4. **Digital Marketing**: SEO, social media marketing, PPC campaigns
-5. **Cloud Services**: AWS, Azure, Google Cloud implementation and management
+1. Web Development: Custom websites, responsive design, CMS development
+2. Mobile App Development: Native and cross-platform mobile applications
+3. E-commerce Solutions: Online stores, payment integration, inventory management
+4. Digital Marketing: SEO, social media marketing, PPC campaigns
+5. Cloud Services: AWS, Azure, Google Cloud implementation and management
 
 ## CONTACT INFORMATION:
 - Email: contact@jolaha.com
-- Phone: +1-555-123-4567
+- Phone: +971 4 123 4567
 - Website: www.jolaha.com
+- Office Location: Unit No. 805, Mazaya Business Avenue, BB2 Tower, JLT, Dubai, UAE
 - Office Hours: Monday-Friday, 9:00 AM - 6:00 PM
 
 ## RESPONSE GUIDELINES:
@@ -63,7 +64,7 @@ $messages[] = ["role" => "user", "content" => $user_message];
 $data = [
     "model" => "llama-3.1-8b-instant",
     "messages" => $messages,
-    "max_tokens" => 250, // Increased slightly for more detailed responses
+    "max_tokens" => 250,
     "temperature" => 0.7,
     "stream" => false
 ];

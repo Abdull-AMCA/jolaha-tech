@@ -1192,27 +1192,17 @@ include 'includes/head.php';
   <!-- Floating Chat Button -->
   <div id="jolai-floating-btn" class="jolai-floating-btn">
       <div class="jolai-avatar">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" fill="currentColor"/>
-              <path d="M12 6C9.79 6 8 7.79 8 10C8 12.21 9.79 14 12 14C14.21 14 16 12.21 16 10C16 7.79 14.21 6 12 6Z" fill="var(--bg)"/>
-              <path d="M12 16C8.67 16 6 18.13 6 20.67C6 21.4 6.6 22 7.33 22H16.67C17.4 22 18 21.4 18 20.67C18 18.13 15.33 16 12 16Z" fill="var(--bg)"/>
-          </svg>
+          <img src="resources/img/jolai-2.svg" alt="JolAI Assistant" width="40" height="40" />
       </div>
       <span class="jolai-pulse"></span>
   </div>
 
-  <!-- Chat Widget -->
+  <!-- JolAI Chat Widget -->
   <div id="jolai-chat-widget" class="jolai-chat-widget jolai-hidden">
       <!-- Chat Header -->
       <div class="jolai-header">
           <div class="jolai-header-content">
-              <div class="jolai-avatar-sm">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" fill="currentColor"/>
-                      <path d="M12 6C9.79 6 8 7.79 8 10C8 12.21 9.79 14 12 14C14.21 14 16 12.21 16 10C16 7.79 14.21 6 12 6Z" fill="var(--surface)"/>
-                      <path d="M12 16C8.67 16 6 18.13 6 20.67C6 21.4 6.6 22 7.33 22H16.67C17.4 22 18 21.4 18 20.67C18 18.13 15.33 16 12 16Z" fill="var(--surface)"/>
-                  </svg>
-              </div>
+              <img src="resources/img/jolai-2.svg" alt="JolAI Assistant" width="25" height="25" />
               <div class="jolai-header-text">
                   <h6 class="jolai-title">JolAI Assistant</h6>
                   <span class="jolai-status">Online</span>
@@ -1229,15 +1219,11 @@ include 'includes/head.php';
       <div id="jolai-messages" class="jolai-messages">
           <div class="jolai-welcome-message">
               <div class="jolai-welcome-avatar">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" fill="var(--primary)"/>
-                      <path d="M12 6C9.79 6 8 7.79 8 10C8 12.21 9.79 14 12 14C14.21 14 16 12.21 16 10C16 7.79 14.21 6 12 6Z" fill="var(--surface)"/>
-                      <path d="M12 16C8.67 16 6 18.13 6 20.67C6 21.4 6.6 22 7.33 22H16.67C17.4 22 18 21.4 18 20.67C18 18.13 15.33 16 12 16Z" fill="var(--surface)"/>
-                  </svg>
+                  <img src="resources/img/jolai-2.svg" alt="JolAI Assistant" width="40" height="40" />
               </div>
               <div class="jolai-welcome-text">
                   <h4>Hello! I'm JolAI 👋</h4>
-                  <p>I'm here to help you learn about Jolaha's services and answer any questions you might have.</p>
+                  <p>Jolaha's AI Assistant. I'm here to help you learn about Jolaha's services and answer any questions you might have.</p>
               </div>
           </div>
       </div>
