@@ -131,7 +131,3 @@
             </div>
         </div>
     </div>
-
-<?php
-    include 'admin-footer.php';
-?>

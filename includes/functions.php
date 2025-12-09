@@ -277,7 +277,7 @@ function handle_service_inquiry() {
     $project_type  = sanitize_input(trim($_POST['project_type'] ?? ''));
     $budget_range  = sanitize_input(trim($_POST['budget_range'] ?? ''));
     $timeline      = sanitize_input(trim($_POST['timeline'] ?? ''));
-    $description   = sanitize_input(trim($_POST['description'] ?? ''));
+    $description   = nl2br(htmlspecialchars(sanitize_input(trim($_POST['description'] ?? ''))));
 
     // Required fields
     if (empty($full_name) || empty($email) || empty($service_type)) {
@@ -285,7 +285,6 @@ function handle_service_inquiry() {
         return;
     }
 
-    // Validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         show_modal("serviceenqerrorModal", "Please enter a valid email address.");
         return;
@@ -308,105 +307,144 @@ function handle_service_inquiry() {
         $stmt->bindParam(':timeline',      $timeline);
         $stmt->bindParam(':description',   $description);
 
-        // Successful insert
         if ($stmt->execute()) {
 
-            // ======================================
+            // ==========================
+            // ADMIN EMAIL BODY TEMPLATE
+            // ==========================
+            $adminEmailBody = <<<HTML
+            <table width="100%" style="font-family:Arial;background:#f5f7fb;padding:20px;">
+            <tr><td align="center">
+                <table width="600" style="background:#fff;padding:30px;border-radius:10px;">
+                    <tr><td style="text-align:center;">
+                        <h2 style="color:#222;">New Service Inquiry</h2>
+                        <p style="color:#555;">A new customer has submitted a service inquiry.</p>
+                    </td></tr>
+
+                    <tr><td>
+                        <h3 style="color:#222;">Client Information</h3>
+                        <p><strong>Name:</strong> {$full_name}</p>
+                        <p><strong>Email:</strong> {$email}</p>
+                        <p><strong>Company:</strong> {$company_name}</p>
+
+                        <h3 style="color:#222;margin-top:20px;">Project Details</h3>
+                        <p><strong>Service Required:</strong> {$service_type}</p>
+                        <p><strong>Project Type:</strong> {$project_type}</p>
+                        <p><strong>Budget Range:</strong> {$budget_range}</p>
+                        <p><strong>Timeline:</strong> {$timeline}</p>
+
+                        <h3 style="color:#222;margin-top:20px;">Description</h3>
+                        <p style="color:#444;">{$description}</p>
+                    </td></tr>
+
+                    <tr><td style="text-align:center;padding-top:20px;">
+                        <p style="color:#888;font-size:12px;">This message was generated from the Jolaha Tech website.</p>
+                    </td></tr>
+                </table>
+            </td></tr>
+            </table>
+            HTML;
+
+            // ==========================
+            // USER EMAIL BODY TEMPLATE
+            // ==========================
+            $userEmailBody = <<<HTML
+            <table width="100%" style="font-family:Arial;background:#f4f6fa;padding:20px;">
+            <tr><td align="center">
+                <table width="600" style="background:#fff;padding:30px;border-radius:10px;">
+
+                    <tr><td style="text-align:center;">
+                        <h2 style="color:#222;">Thank You, {$full_name}</h2>
+                        <p style="color:#555;">Your inquiry has been received.</p>
+                    </td></tr>
+
+                    <tr><td>
+                        <p style="color:#444;">Thank you for contacting <strong>Jolaha Tech</strong>. Our team will review your details and contact you soon.</p>
+
+                        <h3 style="color:#222;margin-top:20px;">Your Submission</h3>
+                        <p><strong>Service:</strong> {$service_type}</p>
+                        <p><strong>Project Type:</strong> {$project_type}</p>
+                        <p><strong>Budget Range:</strong> {$budget_range}</p>
+                        <p><strong>Timeline:</strong> {$timeline}</p>
+
+                        <h3 style="color:#222;margin-top:20px;">Description</h3>
+                        <p style="color:#444;">{$description}</p>
+
+                        <p style="color:#444;margin-top:20px;">If you need to update anything, simply reply to this email.</p>
+
+                        <p style="margin-top:30px;color:#222;font-weight:bold;">— Jolaha Tech Team</p>
+                    </td></tr>
+
+                    <tr><td style="text-align:center;padding-top:20px;">
+                        <p style="color:#888;font-size:12px;">You received this email because you submitted an inquiry at Jolaha Tech.</p>
+                    </td></tr>
+
+                </table>
+            </td></tr>
+            </table>
+            HTML;
+
+            // ======================
             // SEND EMAIL TO ADMIN
-            // ======================================
+            // ======================
             try {
                 $mail = new PHPMailer(true);
                 $mail->isSMTP();
-                $mail->Host       = 'smtp.gmail.com';
-                $mail->SMTPAuth   = true;
-                $mail->Username   = 'abdullabalaamca@gmail.com';
-                $mail->Password   = 'xnae stou zjvv bgec'; // Gmail app password
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'abdullabalaamca@gmail.com';
+                $mail->Password = 'xnae stou zjvv bgec';
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port       = 587;
+                $mail->Port = 587;
 
                 $mail->setFrom('abdullabalaamca@gmail.com', 'Jolaha Tech – Inquiry Alert');
                 $mail->addAddress('abdullabalaamca@gmail.com');
 
                 $mail->isHTML(true);
-                $mail->Subject = "New Service Inquiry – $full_name";
+                $mail->Subject = "New Service Inquiry – {$full_name}";
+                $mail->Body = $adminEmailBody;
+                $mail->AltBody = strip_tags($adminEmailBody);
 
-                $mail->Body = "
-                    <h2>New Service Inquiry Received</h2>
-                    <p><strong>Full Name:</strong> $full_name</p>
-                    <p><strong>Email:</strong> $email</p>
-                    <p><strong>Company:</strong> $company_name</p>
-                    <p><strong>Service Required:</strong> $service_type</p>
-                    <p><strong>Project Type:</strong> $project_type</p>
-                    <p><strong>Budget Range:</strong> $budget_range</p>
-                    <p><strong>Timeline:</strong> $timeline</p>
-                    <p><strong>Description:</strong><br>$description</p>
-                    <hr>
-                    <p>This notification was automatically generated from the Jolaha Tech website.</p>
-                ";
-
-                $mail->AltBody = strip_tags($mail->Body);
                 $mail->send();
-
             } catch (Exception $e) {
                 error_log("Admin Email Error: " . $e->getMessage());
             }
 
-
-            // ======================================
-            // SEND CONFIRMATION EMAIL TO USER
-            // ======================================
+            // ======================
+            // SEND USER CONFIRMATION
+            // ======================
             try {
                 $mail = new PHPMailer(true);
                 $mail->isSMTP();
-                $mail->Host       = 'smtp.gmail.com';
-                $mail->SMTPAuth   = true;
-                $mail->Username   = 'abdullabalaamca@gmail.com';
-                $mail->Password   = 'xnae stou zjvv bgec';
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'abdullabalaamca@gmail.com';
+                $mail->Password = 'xnae stou zjvv bgec';
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port       = 587;
+                $mail->Port = 587;
 
                 $mail->setFrom('abdullabalaamca@gmail.com', 'Jolaha Tech');
                 $mail->addAddress($email, $full_name);
 
                 $mail->isHTML(true);
-                $mail->Subject = "We Have Received Your Service Inquiry";
+                $mail->Subject = "We Have Received Your Inquiry";
+                $mail->Body = $userEmailBody;
+                $mail->AltBody = strip_tags($userEmailBody);
 
-                $mail->Body = "
-                    <h2>Thank You, $full_name</h2>
-                    <p>Your service inquiry has been successfully received by the Jolaha Tech team.</p>
-                    <p>Our specialists will review your request and reach out to you shortly.</p>
-
-                    <h3 style='margin-top:20px;'>Your Inquiry Details</h3>
-                    <p><strong>Service:</strong> $service_type</p>
-                    <p><strong>Project Type:</strong> $project_type</p>
-                    <p><strong>Budget Range:</strong> $budget_range</p>
-                    <p><strong>Timeline:</strong> $timeline</p>
-                    <p><strong>Description:</strong><br>$description</p>
-
-                    <hr>
-                    <p>If you have any additional information or would like to update your request, simply reply to this email.</p>
-                    <p>Best regards,<br><strong>Jolaha Tech Team</strong></p>
-                ";
-
-                $mail->AltBody = strip_tags($mail->Body);
                 $mail->send();
-
             } catch (Exception $e) {
                 error_log("User Email Error: " . $e->getMessage());
             }
 
-
-            // Show success modal
             show_modal("serviceenqsuccessModal");
 
         } else {
-            show_modal("serviceenqerrorModal", "An error occurred while saving your inquiry. Please try again.");
+            show_modal("serviceenqerrorModal", "Unable to save your inquiry. Please try again.");
         }
 
     } catch (PDOException $e) {
-
-        error_log('Service Inquiry Error: ' . $e->getMessage());
-        show_modal("serviceenqerrorModal", "A server error occurred. Please try again later.");
+        error_log("Inquiry Error: " . $e->getMessage());
+        show_modal("serviceenqerrorModal", "A server error occurred.");
     }
 }
 
