@@ -943,7 +943,7 @@ include 'includes/head.php';
   </div>
 
   <!-- Service Inquiry Error Modal -->
-  <div class="modal fade" id="serviceenqerrorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+  <div class="modal fade" id="serviceenqerrorModalMessage" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="background-color: var(--bg-light); color: var(--primary); border-radius: var(--radius);">
         <div class="modal-header border-0">

@@ -257,32 +257,33 @@ function handle_service_inquiry() {
     }
 
     // Sanitize form data
-    $full_name = sanitize_input(trim($_POST['full_name'] ?? ''));
-    $email = sanitize_input(trim($_POST['email'] ?? ''));
-    $company_name = sanitize_input(trim($_POST['company_name'] ?? ''));
-    $service_type = sanitize_input(trim($_POST['service_type'] ?? ''));
-    $project_type = sanitize_input(trim($_POST['project_type'] ?? ''));
-    $budget_range = sanitize_input(trim($_POST['budget_range'] ?? ''));
-    $timeline = sanitize_input(trim($_POST['timeline'] ?? ''));
-    $description = sanitize_input(trim($_POST['description'] ?? ''));
+    $full_name     = sanitize_input(trim($_POST['full_name'] ?? ''));
+    $email         = sanitize_input(trim($_POST['email'] ?? ''));
+    $company_name  = sanitize_input(trim($_POST['company_name'] ?? ''));
+    $service_type  = sanitize_input(trim($_POST['service_type'] ?? ''));
+    $project_type  = sanitize_input(trim($_POST['project_type'] ?? ''));
+    $budget_range  = sanitize_input(trim($_POST['budget_range'] ?? ''));
+    $timeline      = sanitize_input(trim($_POST['timeline'] ?? ''));
+    $description   = sanitize_input(trim($_POST['description'] ?? ''));
 
-    // Validate
+    // Validate required fields
     if (empty($full_name) || empty($email) || empty($service_type)) {
         echo "<script>
             document.addEventListener('DOMContentLoaded', () => {
                 const modal = new bootstrap.Modal(document.getElementById('serviceenqerrorModal'));
-                document.getElementById('errorModalMessage').innerText = 'Please fill in all required fields.';
+                document.getElementById('serviceenqerrorModalMessage').innerText = 'Please fill in all required fields.';
                 modal.show();
             });
         </script>";
         return;
     }
 
+    // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo "<script>
             document.addEventListener('DOMContentLoaded', () => {
                 const modal = new bootstrap.Modal(document.getElementById('serviceenqerrorModal'));
-                document.getElementById('errorModalMessage').innerText = 'Please enter a valid email address.';
+                document.getElementById('serviceenqerrorModalMessage').innerText = 'Please enter a valid email address.';
                 modal.show();
             });
         </script>";
@@ -290,43 +291,98 @@ function handle_service_inquiry() {
     }
 
     try {
-        // Insert data into database
+        // Insert into DB
         $query = "INSERT INTO service_inquiries 
                   (service_type, full_name, email, company_name, project_type, budget_range, timeline, description)
                   VALUES (:service_type, :full_name, :email, :company_name, :project_type, :budget_range, :timeline, :description)";
-        $stmt = $connection->prepare($query);
-        $stmt->bindParam(':service_type', $service_type);
-        $stmt->bindParam(':full_name', $full_name);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':company_name', $company_name);
-        $stmt->bindParam(':project_type', $project_type);
-        $stmt->bindParam(':budget_range', $budget_range);
-        $stmt->bindParam(':timeline', $timeline);
-        $stmt->bindParam(':description', $description);
 
+        $stmt = $connection->prepare($query);
+
+        $stmt->bindParam(':service_type',  $service_type);
+        $stmt->bindParam(':full_name',     $full_name);
+        $stmt->bindParam(':email',         $email);
+        $stmt->bindParam(':company_name',  $company_name);
+        $stmt->bindParam(':project_type',  $project_type);
+        $stmt->bindParam(':budget_range',  $budget_range);
+        $stmt->bindParam(':timeline',      $timeline);
+        $stmt->bindParam(':description',   $description);
+
+        // SUCCESSFUL INSERT
         if ($stmt->execute()) {
+
+            // =========================
+            // SEND EMAIL TO ADMIN
+            // =========================
+            try {
+                $mail = new PHPMailer(true);
+
+                // SMTP Settings
+                $mail->isSMTP();
+                $mail->Host       = 'smtp.gmail.com';
+                $mail->SMTPAuth   = true;
+                $mail->Username   = 'abdullabalaamca@gmail.com';  // Admin email
+                $mail->Password   = 'xnae stou zjvv bgec';         // Gmail app password
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port       = 587;
+
+                // Recipients
+                $mail->setFrom('abdullabalaamca@gmail.com', 'Jolaha Tech – Service Inquiry');
+                $mail->addAddress('abdullabalaamca@gmail.com'); // Admin email
+
+                // Email Content
+                $mail->isHTML(true);
+                $mail->Subject = "New Service Inquiry from $full_name";
+
+                $mail->Body = "
+                    <h2>New Service Inquiry</h2>
+                    <p><strong>Full Name:</strong> $full_name</p>
+                    <p><strong>Email:</strong> $email</p>
+                    <p><strong>Company:</strong> $company_name</p>
+                    <p><strong>Service Required:</strong> $service_type</p>
+                    <p><strong>Project Type:</strong> $project_type</p>
+                    <p><strong>Budget Range:</strong> $budget_range</p>
+                    <p><strong>Timeline:</strong> $timeline</p>
+                    <p><strong>Description:</strong><br>$description</p>
+                    <hr>
+                    <p>This message was automatically generated from the Jolaha Tech website.</p>
+                ";
+
+                $mail->AltBody = strip_tags($mail->Body);
+                $mail->send();
+
+            } catch (Exception $emailError) {
+                error_log("Service Inquiry Email Error: " . $emailError->getMessage());
+            }
+
+            // Show success modal
             echo "<script>
                 document.addEventListener('DOMContentLoaded', () => {
                     const modal = new bootstrap.Modal(document.getElementById('serviceenqsuccessModal'));
                     modal.show();
                 });
             </script>";
+
         } else {
+
+            // DB insert failed
             echo "<script>
                 document.addEventListener('DOMContentLoaded', () => {
                     const modal = new bootstrap.Modal(document.getElementById('serviceenqerrorModal'));
-                    document.getElementById('errorModalMessage').innerText = 'Sorry, there was an error submitting your inquiry. Please try again.';
+                    document.getElementById('serviceenqerrorModalMessage').innerText = 'Sorry, there was an error submitting your inquiry. Please try again.';
                     modal.show();
                 });
             </script>";
+
         }
 
     } catch (PDOException $e) {
+
         error_log('Service Inquiry Error: ' . $e->getMessage());
+
         echo "<script>
             document.addEventListener('DOMContentLoaded', () => {
                 const modal = new bootstrap.Modal(document.getElementById('serviceenqerrorModal'));
-                document.getElementById('errorModalMessage').innerText = 'A server error occurred. Please try again later.';
+                document.getElementById('serviceenqerrorModalMessage').innerText = 'A server error occurred. Please try again later.';
                 modal.show();
             });
         </script>";
