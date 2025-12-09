@@ -13,6 +13,19 @@ define('SMTP_PASSWORD', 'your-app-password');
 define('SMTP_FROM_EMAIL', 'noreply@jolaha.com');
 define('SMTP_FROM_NAME', 'Jolaha Tech');
 
+
+function show_modal($modalId, $message = "") {
+    echo "<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = new bootstrap.Modal(document.getElementById('$modalId'));
+            ".(!empty($message) ? "document.getElementById('{$modalId}Message').innerText = '$message';" : "")."
+            modal.show();
+        });
+    </script>";
+}
+
+
+
 // Enhanced send_email function using PHPMailer
 function send_email($to, $subject, $message, $attachments = []) {
     try {
@@ -266,32 +279,20 @@ function handle_service_inquiry() {
     $timeline      = sanitize_input(trim($_POST['timeline'] ?? ''));
     $description   = sanitize_input(trim($_POST['description'] ?? ''));
 
-    // Validate required fields
+    // Required fields
     if (empty($full_name) || empty($email) || empty($service_type)) {
-        echo "<script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const modal = new bootstrap.Modal(document.getElementById('serviceenqerrorModal'));
-                document.getElementById('serviceenqerrorModalMessage').innerText = 'Please fill in all required fields.';
-                modal.show();
-            });
-        </script>";
+        show_modal("serviceenqerrorModal", "Please fill in all required fields.");
         return;
     }
 
-    // Validate email format
+    // Validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "<script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const modal = new bootstrap.Modal(document.getElementById('serviceenqerrorModal'));
-                document.getElementById('serviceenqerrorModalMessage').innerText = 'Please enter a valid email address.';
-                modal.show();
-            });
-        </script>";
+        show_modal("serviceenqerrorModal", "Please enter a valid email address.");
         return;
     }
 
     try {
-        // Insert into DB
+        // Insert DB record
         $query = "INSERT INTO service_inquiries 
                   (service_type, full_name, email, company_name, project_type, budget_range, timeline, description)
                   VALUES (:service_type, :full_name, :email, :company_name, :project_type, :budget_range, :timeline, :description)";
@@ -307,34 +308,30 @@ function handle_service_inquiry() {
         $stmt->bindParam(':timeline',      $timeline);
         $stmt->bindParam(':description',   $description);
 
-        // SUCCESSFUL INSERT
+        // Successful insert
         if ($stmt->execute()) {
 
-            // =========================
+            // ======================================
             // SEND EMAIL TO ADMIN
-            // =========================
+            // ======================================
             try {
                 $mail = new PHPMailer(true);
-
-                // SMTP Settings
                 $mail->isSMTP();
                 $mail->Host       = 'smtp.gmail.com';
                 $mail->SMTPAuth   = true;
-                $mail->Username   = 'abdullabalaamca@gmail.com';  // Admin email
-                $mail->Password   = 'xnae stou zjvv bgec';         // Gmail app password
+                $mail->Username   = 'abdullabalaamca@gmail.com';
+                $mail->Password   = 'xnae stou zjvv bgec'; // Gmail app password
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port       = 587;
 
-                // Recipients
-                $mail->setFrom('abdullabalaamca@gmail.com', 'Jolaha Tech – Service Inquiry');
-                $mail->addAddress('abdullabalaamca@gmail.com'); // Admin email
+                $mail->setFrom('abdullabalaamca@gmail.com', 'Jolaha Tech – Inquiry Alert');
+                $mail->addAddress('abdullabalaamca@gmail.com');
 
-                // Email Content
                 $mail->isHTML(true);
-                $mail->Subject = "New Service Inquiry from $full_name";
+                $mail->Subject = "New Service Inquiry – $full_name";
 
                 $mail->Body = "
-                    <h2>New Service Inquiry</h2>
+                    <h2>New Service Inquiry Received</h2>
                     <p><strong>Full Name:</strong> $full_name</p>
                     <p><strong>Email:</strong> $email</p>
                     <p><strong>Company:</strong> $company_name</p>
@@ -344,48 +341,72 @@ function handle_service_inquiry() {
                     <p><strong>Timeline:</strong> $timeline</p>
                     <p><strong>Description:</strong><br>$description</p>
                     <hr>
-                    <p>This message was automatically generated from the Jolaha Tech website.</p>
+                    <p>This notification was automatically generated from the Jolaha Tech website.</p>
                 ";
 
                 $mail->AltBody = strip_tags($mail->Body);
                 $mail->send();
 
-            } catch (Exception $emailError) {
-                error_log("Service Inquiry Email Error: " . $emailError->getMessage());
+            } catch (Exception $e) {
+                error_log("Admin Email Error: " . $e->getMessage());
             }
 
+
+            // ======================================
+            // SEND CONFIRMATION EMAIL TO USER
+            // ======================================
+            try {
+                $mail = new PHPMailer(true);
+                $mail->isSMTP();
+                $mail->Host       = 'smtp.gmail.com';
+                $mail->SMTPAuth   = true;
+                $mail->Username   = 'abdullabalaamca@gmail.com';
+                $mail->Password   = 'xnae stou zjvv bgec';
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port       = 587;
+
+                $mail->setFrom('abdullabalaamca@gmail.com', 'Jolaha Tech');
+                $mail->addAddress($email, $full_name);
+
+                $mail->isHTML(true);
+                $mail->Subject = "We Have Received Your Service Inquiry";
+
+                $mail->Body = "
+                    <h2>Thank You, $full_name</h2>
+                    <p>Your service inquiry has been successfully received by the Jolaha Tech team.</p>
+                    <p>Our specialists will review your request and reach out to you shortly.</p>
+
+                    <h3 style='margin-top:20px;'>Your Inquiry Details</h3>
+                    <p><strong>Service:</strong> $service_type</p>
+                    <p><strong>Project Type:</strong> $project_type</p>
+                    <p><strong>Budget Range:</strong> $budget_range</p>
+                    <p><strong>Timeline:</strong> $timeline</p>
+                    <p><strong>Description:</strong><br>$description</p>
+
+                    <hr>
+                    <p>If you have any additional information or would like to update your request, simply reply to this email.</p>
+                    <p>Best regards,<br><strong>Jolaha Tech Team</strong></p>
+                ";
+
+                $mail->AltBody = strip_tags($mail->Body);
+                $mail->send();
+
+            } catch (Exception $e) {
+                error_log("User Email Error: " . $e->getMessage());
+            }
+
+
             // Show success modal
-            echo "<script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    const modal = new bootstrap.Modal(document.getElementById('serviceenqsuccessModal'));
-                    modal.show();
-                });
-            </script>";
+            show_modal("serviceenqsuccessModal");
 
         } else {
-
-            // DB insert failed
-            echo "<script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    const modal = new bootstrap.Modal(document.getElementById('serviceenqerrorModal'));
-                    document.getElementById('serviceenqerrorModalMessage').innerText = 'Sorry, there was an error submitting your inquiry. Please try again.';
-                    modal.show();
-                });
-            </script>";
-
+            show_modal("serviceenqerrorModal", "An error occurred while saving your inquiry. Please try again.");
         }
 
     } catch (PDOException $e) {
 
         error_log('Service Inquiry Error: ' . $e->getMessage());
-
-        echo "<script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const modal = new bootstrap.Modal(document.getElementById('serviceenqerrorModal'));
-                document.getElementById('serviceenqerrorModalMessage').innerText = 'A server error occurred. Please try again later.';
-                modal.show();
-            });
-        </script>";
+        show_modal("serviceenqerrorModal", "A server error occurred. Please try again later.");
     }
 }
 
